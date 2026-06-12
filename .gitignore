@@ -43,3 +43,6 @@ next-env.d.ts
 # velite
 .velite
 /public/static
+
+# scripts
+/scripts/create-pr.js
