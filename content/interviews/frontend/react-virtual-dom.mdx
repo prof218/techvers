@@ -1,0 +1,24 @@
+---
+title: "What is the Virtual DOM in React and how does it improve performance?"
+category: "frontend"
+difficulty: "easy"
+company: "Meta"
+tags: ["React", "JavaScript", "Virtual DOM", "Reconciliation"]
+---
+
+The Virtual DOM is a programming concept where an ideal, or "virtual", representation of a UI is kept in memory and synced with the "real" DOM by a library such as ReactDOM. This process is called **reconciliation**.
+
+## Detailed Answer
+
+React creates a tree of custom elements representing the UI. When state or props update, React builds a new virtual tree. Instead of rendering this entire tree immediately to the browser, it compares (diffs) it against the previous virtual tree.
+
+### Step-by-Step Process:
+
+1. **State Change** — An update triggers a re-render.
+2. **Compute New Virtual DOM** — React calls component functions to generate a new structure.
+3. **Diffing Algorithm** — React runs an $O(N)$ heuristic diffing algorithm between the new and old Virtual DOM.
+4. **Batch Updates (Reconciliation)** — React computes the minimal set of changes required (dirty nodes) and updates the real DOM in a single batched repaint.
+
+### Why is it faster?
+
+Direct DOM manipulation is slow because changes trigger browser **reflows** (recalculating layouts) and **repaints**. The Virtual DOM aggregates changes, minimizing reflows and repaints to the absolute bare minimum, resulting in smoother rendering performance.

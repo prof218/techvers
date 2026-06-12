@@ -1,0 +1,46 @@
+---
+title: "Explain the difference between SQL and NoSQL databases. When would you choose one over the other?"
+category: "backend"
+difficulty: "medium"
+company: "Amazon"
+tags: ["Databases", "SQL", "NoSQL", "PostgreSQL", "MongoDB"]
+---
+
+Databases are broadly divided into relational (SQL) and non-relational (NoSQL) systems, each optimized for different data shapes and scaling requirements.
+
+## Detailed Answer
+
+### 1. SQL (Relational Databases)
+SQL databases store data in structured tables with defined rows and columns. They use Schema definitions and enforce relationships through foreign keys. Examples: PostgreSQL, MySQL, SQLite.
+- **Transactions:** High ACID (Atomicity, Consistency, Isolation, Durability) compliance.
+- **Scaling:** Scaled vertically (upgrading CPU/RAM on a single machine). Horizontal scaling is complex.
+
+### 2. NoSQL (Non-Relational Databases)
+NoSQL databases store unstructured or semi-structured data in formats like documents (MongoDB), key-values (Redis), wide-columns (Cassandra), or graphs (Neo4j).
+- **Transactions:** Typically follow BASE (Basically Available, Soft state, Eventual consistency).
+- **Scaling:** Designed to scale horizontally (adding more server nodes easily).
+
+---
+
+## Comparison Table
+
+| Feature | SQL Databases | NoSQL Databases |
+|:---|:---|:---|
+| **Data Model** | Tables / Rows | Documents, Key-Value, Columns, Graphs |
+| **Schema** | Static, Predefined | Dynamic, Flexible |
+| **Transactions** | ACID Compliant (Strong Consistency) | BASE (Eventual Consistency) |
+| **Scaling** | Vertical (Scale Up) | Horizontal (Scale Out) |
+
+---
+
+## When to Choose Which?
+
+### Choose SQL when:
+- You need absolute transaction integrity (e.g., financial and banking apps).
+- Your data schema is stable and highly relational.
+- You perform complex analytical queries and reporting.
+
+### Choose NoSQL when:
+- You store large amounts of unstructured or semi-structured data (e.g., user profiles, catalogs).
+- You require high write/read throughput at massive scale.
+- You require rapid development speed and a highly flexible schema.

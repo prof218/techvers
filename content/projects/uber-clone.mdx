@@ -1,0 +1,102 @@
+---
+title: "Uber Clone Architecture"
+category: "Ride-sharing"
+description: "Real-time dispatch system architecture featuring geospatial indexing (h3/s2), WebSocket connections, Redis Geo commands, and Apache Kafka message streaming."
+techStack: ["React Native", "Node.js", "PostgreSQL", "Redis", "Kafka", "WebSockets"]
+difficulty: "advanced"
+---
+
+# Uber Clone Architecture Case Study
+
+This case study reviews the system design, geofencing mechanisms, database schemas, and WebSocket dispatch pipelines required to construct a reliable, real-time ride-matching platform.
+
+## System Architecture
+
+Ride-sharing applications are built on a high-availability event-driven architecture, connecting drivers and riders dynamically based on coordinate matches.
+
+```
++---------------+              +---------------+
+|  Rider Client | <-----------> |               |
++---------------+              |   WebSocket   |
+                               | Gateway Server|
++---------------+              |               |
+| Driver Client | <-----------> |               |
++---------------+              +---------------+
+                                       |
+                                       v
+                               +---------------+      +--------------+
+                               | Dispatcher    | ---> | Kafka Topic  |
+                               | (Node.js)     |      | (Location)   |
+                               +---------------+      +--------------+
+```
+
+### Core Architecture Components
+1. **Websocket Gateways** — Manages persistent bi-directional communication channels for both drivers and riders. Receives driver location pings every 4 seconds.
+2. **Geospatial Indexer** — Maps coordinate pairs (lat, lng) to hexagonal H3 cells. Restricts matching searches to adjacent driver cells.
+3. **Dispatch Coordinator** — Queries nearby idle drivers, scores compatibility, sends push offers, and processes driver acceptances.
+
+---
+
+## Database Design
+
+Rider information and billing records require high integrity and are stored in PostgreSQL. Real-time locations are held exclusively in memory within a Redis cluster.
+
+### Driver Location Key (Redis GEO)
+- Drivers post location data to a Redis Geo spatial index:
+```bash
+# Add driver location (lng, lat, driverId)
+GEOADD drivers:active -122.4194 37.7749 driver_998312
+```
+
+### Ride Record Schema (PostgreSQL Table: `rides`)
+```sql
+CREATE TABLE rides (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    rider_id UUID REFERENCES users(id),
+    driver_id UUID REFERENCES users(id),
+    status VARCHAR(50) DEFAULT 'requested', -- requested, accepted, active, completed, cancelled
+    pickup_coords POINT NOT NULL,
+    dropoff_coords POINT NOT NULL,
+    fare_cents INTEGER NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    completed_at TIMESTAMP WITH TIME ZONE
+);
+
+CREATE INDEX idx_rides_status ON rides(status);
+```
+
+---
+
+## API Design
+
+### 1. Request a Ride
+- **Endpoint:** `POST /api/v1/rides/request`
+- **Request Body:**
+```json
+{
+  "pickupLat": 37.7749,
+  "pickupLng": -122.4194,
+  "dropoffLat": 37.7858,
+  "dropoffLng": -122.4008,
+  "vehicleType": "standard"
+}
+```
+- **Response:**
+```json
+{
+  "rideId": "50fa1bca-e940-42f0-91bf-a81d11e51b14",
+  "status": "searching",
+  "estimatedFare": 1550,
+  "etaMinutes": 6
+}
+```
+
+---
+
+## Scalability & Performance
+
+### 1. GPS Ping Throttle & Buffering
+Sending driver GPS updates continuously can overwhelm servers. Driver clients compress coordinates, batch them, and send updates every 4 seconds. Gateways write these coordinates directly to a Kafka location stream, decoupling ingestion from matching operations.
+
+### 2. Localized Geo-Hashing
+Instead of scanning all drivers, driver searches are bucketed using Uber's H3 Hexagonal Hierarchical Index. This ensures search operations have an $O(1)$ lookup complexity, returning nearby driver ids in under **5ms**.

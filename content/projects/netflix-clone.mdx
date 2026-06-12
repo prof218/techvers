@@ -1,0 +1,107 @@
+---
+title: "Netflix Clone Architecture"
+category: "Streaming"
+description: "High-performance video streaming platform architecture featuring distributed system designs, custom content delivery networks (CDNs), recommendation engines, and Redis caching layers."
+techStack: ["React", "Node.js", "MongoDB", "Redis", "AWS S3", "CloudFront"]
+difficulty: "advanced"
+---
+
+# Netflix Clone Architecture Case Study
+
+This case study breaks down the system design, database schemas, API architecture, and scalability strategies required to support a Netflix-like video streaming service at scale.
+
+## System Architecture
+
+The streaming platform relies on a split-plane architecture:
+1. **Control Plane** — Handles user signups, payment processing, browsing catalogs, search queries, and content metadata.
+2. **Data/Media Plane** — Handles video ingestion, transcoding, packaging, and high-throughput video delivery.
+
+```
++------------------+     +--------------------+     +-------------------+
+|  Client Browser  | --> | API Gateway (Kong) | --> | Metadata Service  |
++------------------+     +--------------------+     +-------------------+
+        |                                                     |
+        v                                                     v
++------------------+                                +-------------------+
+|  AWS CloudFront  | <----------------------------- |    MongoDB DB     |
+|   (Video CDN)    |                                +-------------------+
++------------------+
+```
+
+### Key Scaling Strategies
+- **Video Transcoding Pipelines** — Ingested videos are automatically split into 10-second chunks, transcoded in parallel into multiple resolutions (1080p, 720p, 480p) and bitrates, and stored in AWS S3 buckets.
+- **Adaptive Bitrate Streaming (ABR)** — The frontend media player dynamically queries alternative chunks based on the user's current network bandwidth, switching quality smoothly without buffering.
+
+---
+
+## Database Design
+
+Metadata for videos, users, and progress is stored in a document database to handle flexible schemas, while transactional billing information resides in a relational DB.
+
+### Media Catalog Schema (MongoDB Collection: `videos`)
+```json
+{
+  "_id": "ObjectId",
+  "title": "Stranger Things",
+  "description": "A group of young friends witness supernatural forces...",
+  "releaseYear": 2016,
+  "maturityRating": "TV-14",
+  "genres": ["Sci-Fi", "Drama"],
+  "cast": ["Winona Ryder", "David Harbour"],
+  "assets": {
+    "thumbnail": "https://cdn.techverse.dev/st-thumb.jpg",
+    "hlsPlaylist": "https://cdn.techverse.dev/manifests/st.m3u8"
+  }
+}
+```
+
+### User Watch Progress Schema (MongoDB Collection: `progress`)
+```json
+{
+  "_id": "ObjectId",
+  "userId": "ObjectId",
+  "videoId": "ObjectId",
+  "lastWatchedPositionSeconds": 1420,
+  "completed": false,
+  "updatedAt": "2026-06-12T16:21:00Z"
+}
+```
+
+---
+
+## API Design
+
+Endpoints are optimized for low latency. High-volume read routes (like the home page catalog) are heavily cached in Redis.
+
+### 1. Get Video Stream Manifest
+- **Endpoint:** `GET /api/v1/videos/:id/stream`
+- **Response:**
+```json
+{
+  "videoId": "st-109283",
+  "streamUrl": "https://stream.techverse.dev/st/manifest.m3u8",
+  "drmToken": "jwt-token-here",
+  "supportedResolutions": ["1080p", "720p", "480p"]
+}
+```
+
+### 2. Update Watch Progress (Heartbeat)
+- **Endpoint:** `POST /api/v1/videos/:id/progress`
+- **Request Body:**
+```json
+{
+  "positionSeconds": 1420,
+  "completed": false
+}
+```
+- **Response:** `200 OK` (processed asynchronously via Message Queue to avoid DB bottlenecks).
+
+---
+
+## Scalability & Performance
+
+### 1. Multi-Region CDNs
+Video manifests and playlist files are served from Edge nodes near the user. We configure AWS CloudFront caches to intercept traffic before reaching origin servers, reducing first-byte latency.
+
+### 2. Cache Warm-Up
+Popular trending shows are pre-cached in Redis clusters during off-peak hours. The landing catalog queries Redis directly, allowing response times under **15ms** for concurrent millions of homepage hits.
