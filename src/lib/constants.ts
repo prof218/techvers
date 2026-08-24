@@ -6,7 +6,7 @@ export const siteConfig = {
   name: "TechVerse",
   description:
     "The ultimate IT learning and discovery platform. Explore technologies, career paths, AI tools, roadmaps, and interview prep — all in one premium experience.",
-  url: "https://techverse.dev",
+  url: "https://techverse-flax.vercel.app",
   ogImage: "/og-default.png",
   creator: "TechVerse Team",
   // TODO(owner): replace with your real public contact address before launch.
