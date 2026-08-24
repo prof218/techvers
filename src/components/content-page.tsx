@@ -14,7 +14,7 @@ interface ContentPageProps {
 export function ContentPage({ title, subtitle, updated, children }: ContentPageProps) {
   return (
     <div className="min-h-screen">
-      <section className="relative py-16 sm:py-20 overflow-hidden border-b border-[var(--border)]">
+      <section className="relative pt-10 pb-14 sm:pt-14 sm:pb-16 overflow-hidden border-b border-[var(--border)]">
         <div className="absolute inset-0 bg-gradient-to-b from-[var(--background-secondary)] to-[var(--background)]" />
         <div className="absolute inset-0 grid-pattern opacity-30" />
         <div className="relative container-tight">

@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Fraunces } from "next/font/google";
 import { Header } from "@/components/layout/header";
 import { CommandPalette } from "@/components/layout/command-palette";
 import { Footer } from "@/components/layout/footer";
+import { BackToTop } from "@/components/ui/back-to-top";
 import { JsonLd } from "@/components/json-ld";
 import { siteConfig } from "@/lib/constants";
 import "./globals.css";
@@ -97,10 +98,11 @@ export default function RootLayout({
         />
         <Header />
         <CommandPalette />
-        <main id="main-content" className="flex-1 pt-24 lg:pt-28">
+        <main id="main-content" className="flex-1 pt-16 lg:pt-20">
           {children}
         </main>
         <Footer />
+        <BackToTop />
       </body>
     </html>
   );

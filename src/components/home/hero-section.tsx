@@ -63,7 +63,7 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[var(--border)] bg-[var(--surface)] text-sm text-[var(--foreground-muted)] shadow-[var(--shadow-sm)]"
+          className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[var(--border)] bg-[var(--surface)] text-sm text-[var(--foreground-muted)] shadow-[var(--shadow-sm)] mt-4"
         >
           <Sparkles className="w-3.5 h-3.5 text-[var(--primary)]" />
           A calmer way to learn the tech that matters
@@ -74,7 +74,7 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.05 }}
-          className="mt-7 font-display text-5xl sm:text-6xl lg:text-7xl leading-[1.05] text-balance text-[var(--foreground)]"
+          className="mt-3 font-display text-5xl sm:text-6xl lg:text-7xl leading-[1.05] text-balance text-[var(--foreground)]"
         >
           Master the craft of
           <br />

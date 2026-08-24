@@ -2,9 +2,10 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "motion/react";
-import { Search, Menu, X, ChevronDown, Command, Sparkles, Bookmark } from "lucide-react";
+import { Search, Menu, X, ChevronDown, Command, Bookmark } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CategoryIcon } from "@/components/ui/category-icon";
 import { mainNavigation, type NavItem } from "@/lib/constants";
@@ -61,13 +62,15 @@ export function Header() {
         <div className="container-wide">
           <div className="flex items-center justify-between h-16 lg:h-20">
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-2.5 group shrink-0">
-              <div className="relative w-9 h-9 rounded-xl bg-[var(--foreground)] flex items-center justify-center transition-transform duration-300 group-hover:-rotate-6">
-                <Sparkles className="w-[18px] h-[18px] text-[var(--background)]" />
-              </div>
-              <span className="text-[1.35rem] font-bold tracking-tight text-[var(--foreground)]">
-                Tech<span className="text-[var(--primary)]">Verse</span>
-              </span>
+            <Link href="/" className="flex items-center shrink-0" aria-label="TechVerse home">
+              <Image
+                src="/tv-logo2.png"
+                alt="TechVerse — Learn, Explore, Grow"
+                width={240}
+                height={80}
+                priority
+                className="h-12 sm:h-14 lg:h-16 w-auto"
+              />
             </Link>
 
             {/* Desktop nav */}

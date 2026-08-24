@@ -2,8 +2,8 @@
 
 import { useState, type FormEvent } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
-  Sparkles,
   Globe,
   MessageCircle,
   Briefcase,
@@ -77,13 +77,14 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-8">
           {/* Brand column */}
           <div className="lg:col-span-2 space-y-4">
-            <Link href="/" className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-xl bg-[var(--foreground)] flex items-center justify-center">
-                <Sparkles className="w-[18px] h-[18px] text-[var(--background)]" />
-              </div>
-              <span className="text-xl font-bold tracking-tight text-[var(--foreground)]">
-                Tech<span className="text-[var(--primary)]">Verse</span>
-              </span>
+            <Link href="/" className="inline-flex items-center" aria-label="TechVerse home">
+              <Image
+                src="/tv-logo2.png"
+                alt="TechVerse — Learn, Explore, Grow"
+                width={252}
+                height={84}
+                className="h-14 lg:h-16 w-auto"
+              />
             </Link>
             <p className="text-sm text-[var(--foreground-muted)] max-w-sm leading-relaxed">
               {siteConfig.description}

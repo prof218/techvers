@@ -58,7 +58,7 @@ export default async function InterviewCategoryPage({ params }: Props) {
             Back to Interview Hub
           </Link>
 
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[var(--warning)]/30 bg-[var(--warning)]/5 text-sm text-[var(--warning)] mb-4">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[var(--warning)]/30 bg-[var(--warning)]/5 text-sm text-[var(--warning)] mt-3 mb-1">
             <MessageSquare className="w-3.5 h-3.5" />
             {categoryQuestions.length} Questions
           </div>

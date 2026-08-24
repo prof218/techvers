@@ -19,7 +19,7 @@ export default function AIToolsPage() {
         <div className="absolute inset-0 -z-10 grid-pattern" />
         <div className="absolute -top-20 -right-16 w-[26rem] h-[26rem] rounded-full bg-[var(--accent)]/10 blur-[120px] -z-10" />
         <div className="container-tight py-16 sm:py-24 text-center">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[var(--border)] bg-[var(--surface)] text-sm text-[var(--foreground-muted)] shadow-[var(--shadow-sm)] mb-5">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[var(--border)] bg-[var(--surface)] text-sm text-[var(--foreground-muted)] shadow-[var(--shadow-sm)] mt-4 mb-1">
             <Sparkles className="w-3.5 h-3.5 text-[var(--accent)]" />
             {aiTools.length} tools reviewed
           </div>

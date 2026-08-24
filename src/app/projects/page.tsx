@@ -21,7 +21,7 @@ export default function ProjectsPage() {
         <div className="absolute -top-20 -left-16 w-[26rem] h-[26rem] rounded-full bg-[var(--primary)]/8 blur-[120px] -z-10" />
 
         <div className="container-tight py-16 sm:py-24 text-center">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[var(--border)] bg-[var(--surface)] text-sm text-[var(--foreground-muted)] shadow-[var(--shadow-sm)] mb-5">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[var(--border)] bg-[var(--surface)] text-sm text-[var(--foreground-muted)] shadow-[var(--shadow-sm)] mt-4 mb-1">
             <Layers className="w-3.5 h-3.5 text-[var(--primary)]" />
             {projects.length} system case studies
           </div>

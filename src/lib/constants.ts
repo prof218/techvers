@@ -9,7 +9,7 @@ export const siteConfig = {
   url: "https://techverse-flax.vercel.app",
   ogImage: "/og-default.png",
   creator: "TechVerse Team",
-  contactEmail: "contact@shreevya.com",
+  contactEmail: "contact@techverse.com",
   // TODO(owner): replace with your real profiles (or set to "" to hide the icon).
   links: {
     github: "https://github.com/techverse",
