@@ -6,6 +6,10 @@ import { ArrowLeft, DollarSign, TrendingUp, Briefcase, Award, Target, BookOpen, 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { careerPaths } from "@/lib/constants";
+import { CategoryIcon } from "@/components/ui/category-icon";
+import { BookmarkButton } from "@/components/ui/bookmark-button";
+import { JsonLd } from "@/components/json-ld";
+import { articleJsonLd } from "@/lib/seo";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -198,6 +202,14 @@ export default async function CareerDetailPage({ params }: Props) {
 
   return (
     <div className="min-h-screen">
+      <JsonLd
+        data={articleJsonLd({
+          title: `${career.title} Career Path`,
+          description: `Salary ranges, required skills, and a learning roadmap to become a ${career.title}.`,
+          path: `/careers/${career.slug}`,
+          section: "Careers",
+        })}
+      />
       {/* Hero */}
       <section className="relative py-16 sm:py-24 overflow-hidden border-b border-[var(--border)]">
         <div className="absolute inset-0 bg-gradient-to-b from-[var(--background-secondary)] to-[var(--background)]" />
@@ -212,10 +224,12 @@ export default async function CareerDetailPage({ params }: Props) {
             <span className="text-[var(--foreground)]">{career.title}</span>
           </nav>
 
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+          <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-6">
             <div className="space-y-4">
-              <div className="flex items-center gap-3">
-                <span className="text-4xl">{career.icon}</span>
+              <div className="flex items-center gap-4">
+                <span className="w-14 h-14 rounded-2xl bg-[var(--secondary)] flex items-center justify-center text-[var(--primary)] flex-shrink-0">
+                  <CategoryIcon slug={career.slug} className="w-7 h-7" />
+                </span>
                 <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-[var(--foreground)]">
                   {career.title}
                 </h1>
@@ -233,6 +247,10 @@ export default async function CareerDetailPage({ params }: Props) {
                   Growth Potential: <span className="font-bold text-[var(--foreground)] ml-0.5">{career.growth}</span>
                 </div>
               </div>
+              <BookmarkButton
+                variant="labeled"
+                item={{ type: "career", slug: career.slug, title: career.title, url: `/careers/${career.slug}` }}
+              />
             </div>
           </div>
         </div>

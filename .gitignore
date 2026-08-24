@@ -46,3 +46,7 @@ next-env.d.ts
 
 # scripts
 /scripts/create-pr.js
+
+# local logs
+build.log
+dev-server.log

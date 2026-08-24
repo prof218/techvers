@@ -1,13 +1,50 @@
 ---
-title: "What is Vector embedding and cosine similarity search? (Variant 3)"
+title: "What are vector embeddings and how does cosine similarity search work?"
 category: "ai"
 difficulty: "medium"
 company: "Amazon"
-tags: ["ai","interview-prep","topic-2"]
+tags: ["ai", "interview-prep"]
 ---
+Vector embeddings are numerical representations of data that capture semantic meanings or features in a high-dimensional space. They are commonly used in machine learning, especially in natural language processing (NLP), to represent words, sentences, or even larger text structures as vectors. Cosine similarity search is a technique that measures the cosine of the angle between two non-zero vectors in this space, providing a metric for similarity between the data points they represent.
 
-Detailed answer for: **What is Vector embedding and cosine similarity search? (Variant 3)**
+### Key points
 
-### Key Details
-- Focus on practical trade-offs.
-- Illustrate with architectural diagrams where applicable.
+- **Vector Embeddings**: 
+  - **Definition**: A mapping from discrete data (such as text) into a continuous vector space.
+  - **Dimensionality**: Typically, embeddings are high-dimensional; for example, GloVe might use 300 dimensions for word vectors.
+  - **Uses**: Facilitate machine learning tasks by making data amenable to clustering, classification, and similarity calculations.
+  - **Methods**: Common methods for generating embeddings include Word2Vec, GloVe, and transformer-based models like BERT.
+
+- **Cosine Similarity**:
+  - **Definition**: Measures the cosine of the angle between two vectors, ranging from -1 (opposite) to 1 (identical), with 0 indicating orthogonality.
+  - **Formula**: 
+    ```
+    
+    cosine_similarity(vec_a, vec_b) = (vec_a • vec_b) / (||vec_a|| * ||vec_b||)
+    
+    ```
+  - **Advantages**: Scale-invariant and emphasizes the direction of vectors, making it suitable when magnitude differences are irrelevant.
+  - **Applications**: Used in recommendation systems, document similarity, and clustering tasks where the semantic content is more important than the vector magnitude.
+
+- **Example**: Consider two word vectors, `vec1` and `vec2`, representing "king" and "queen".
+  
+  ```python
+  import numpy as np
+
+  vec1 = np.array([0.2, 0.3, 0.5])  # Example vector for 'king'
+  vec2 = np.array([0.4, 0.1, 0.6])  # Example vector for 'queen'
+
+  cosine_similarity = np.dot(vec1, vec2) / (np.linalg.norm(vec1) * np.linalg.norm(vec2))
+  print(cosine_similarity)
+  ```
+
+### Common follow-ups
+
+- **How do vector embeddings differ from traditional feature vectors?**
+  - Traditional feature vectors are often manually engineered and may not capture semantic relationships as effectively as embeddings learned from large datasets.
+
+- **Why might cosine similarity be preferred over Euclidean distance in some contexts?**
+  - Cosine similarity focuses on direction rather than magnitude, making it ideal for applications where the relative orientation of vectors is more meaningful than their size.
+
+- **How do you handle large-scale similarity searches efficiently?**
+  - Techniques such as Approximate Nearest Neighbor (ANN) search, implemented in libraries like FAISS or Annoy, help manage large datasets by providing fast similarity searches with acceptable approximation levels.

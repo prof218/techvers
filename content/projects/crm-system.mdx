@@ -1,15 +1,68 @@
 ---
 title: "CRM System Architecture"
 category: "Enterprise"
-description: "Production architecture breakdown of CRM System."
-techStack: ["React","Node.js","PostgreSQL","Elasticsearch"]
+description: "A detailed system design case study for building an enterprise CRM system using React, Node.js, PostgreSQL, and Elasticsearch."
+techStack: ["React", "Node.js", "PostgreSQL", "Elasticsearch"]
 difficulty: "intermediate"
 ---
+## Core Requirements
 
-# CRM System Production Architecture
+### Functional Requirements
 
-Case study overview of the CRM System system architecture.
+1. **User Management:** Ability for users to register, log in, and manage profiles.
+2. **Contact Management:** Create, update, delete, and search for contact information.
+3. **Sales Tracking:** Log and track sales opportunities and customer interactions.
+4. **Reports and Dashboards:** Generate insights and visualize data for decision-making.
 
-## Scaling
-- Vertical database replication.
-- Horizontal application server clusters.
+### Non-Functional Requirements
+
+1. **Scalability:** Support thousands of concurrent users and large datasets.
+2. **Performance:** Fast search and retrieval times for contacts and sales data.
+3. **Security:** Ensure data privacy and secure access control.
+4. **Reliability:** System uptime of 99.9% with frequent backups.
+
+## High-Level Architecture
+
+The architecture leverages a microservices approach to separate concerns and improve maintainability.
+
+### Components
+
+- **Frontend:** Built with React for a dynamic and responsive user interface. It handles routing, state management, and API calls to the backend.
+- **Backend:** Implemented using Node.js, this layer exposes RESTful APIs for the frontend. Express.js is used for routing and middleware management.
+- **Database:** PostgreSQL stores structured data, such as user profiles, contact details, and sales records. It supports ACID transactions for data integrity.
+- **Search Engine:** Elasticsearch is integrated for full-text search capabilities. It indexes contact and sales data to enable quick search and retrieval.
+
+### Data Flow
+
+1. **User Interaction:** Users interact with the React frontend, which makes HTTP requests to the Node.js backend.
+2. **Data Processing:** The backend processes requests, interacts with PostgreSQL for data storage/retrieval, and updates Elasticsearch indices as needed.
+3. **Response:** Processed data is sent back to the frontend, where it is rendered for the user.
+
+## Key Design Decisions and Trade-offs
+
+- **React for Frontend:** Chosen for its component-based architecture and extensive ecosystem. Alternatives like Angular or Vue.js were considered but React's popularity and community support tipped the scale.
+- **Node.js for Backend:** Provides asynchronous I/O operations, which is beneficial for handling multiple requests concurrently. Compared to Java Spring Boot, Node.js offers more flexibility in terms of tooling and setup time.
+- **PostgreSQL for Data Storage:** Offers strong relational data support and rich query capabilities. While NoSQL databases like MongoDB were considered for flexibility, the structured nature of CRM data made PostgreSQL a better fit.
+- **Elasticsearch for Search:** Capable of handling complex search queries efficiently, making it ideal for a CRM system where search speed is critical. The trade-off is the additional complexity in maintaining data synchronization between PostgreSQL and Elasticsearch.
+
+## Data Model Highlights
+
+- **Users Table:** Includes columns for user_id (UUID), username, email, hashed_password, and roles.
+- **Contacts Table:** Stores contact_id (UUID), user_id (foreign key), name, email, phone, and address.
+- **Sales Table:** Consists of sale_id (UUID), contact_id (foreign key), user_id (foreign key), status, amount, and created_at.
+
+Indexes are created on frequently queried fields like email and contact_id to enhance performance.
+
+## Scalability
+
+- **Horizontal Scaling:** The frontend and backend services can be replicated across multiple instances to handle increased load, using a load balancer to distribute traffic.
+- **Database Scaling:** PostgreSQL supports read replicas for scaling read-heavy workloads. Sharding techniques can be applied for further horizontal scaling if necessary.
+- **Elasticsearch Clustering:** Elasticsearch nodes can be added to increase indexing and search capacity, maintaining fast response times as the dataset grows.
+
+## Main Challenges
+
+1. **Data Synchronization:** Keeping Elasticsearch indices in sync with PostgreSQL data is crucial. Implementing a change data capture (CDC) mechanism or utilizing tools like Kafka for event-driven updates can address this.
+2. **Real-time Data Updates:** Ensuring that users see real-time updates of contacts and sales data. WebSockets or server-sent events (SSE) could be used to push updates to the frontend.
+3. **Security Concerns:** Protecting against common web vulnerabilities such as SQL injection, XSS, and CSRF. This involves using security headers, input validation, and secure authentication mechanisms.
+
+By leveraging React, Node.js, PostgreSQL, and Elasticsearch, this CRM system can efficiently handle enterprise-level requirements while remaining flexible enough to scale as demand grows.

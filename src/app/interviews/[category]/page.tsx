@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Metadata } from "next";
 import { interviewCategories } from "@/lib/constants";
 import { ArrowLeft, MessageSquare } from "lucide-react";
+import { CategoryIcon } from "@/components/ui/category-icon";
 import InterviewsPageClient from "./page-client";
 
 interface Props {
@@ -60,8 +61,9 @@ export default async function InterviewCategoryPage({ params }: Props) {
             <MessageSquare className="w-3.5 h-3.5" />
             {categoryQuestions.length} Questions
           </div>
-          <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-[var(--foreground)]">
-            {catInfo.icon} {catInfo.name} Questions
+          <h1 className="flex items-center justify-center gap-3 text-4xl sm:text-5xl font-extrabold tracking-tight text-[var(--foreground)]">
+            <CategoryIcon slug={catInfo.slug} className="w-8 h-8 text-[var(--primary)]" />
+            {catInfo.name} Questions
           </h1>
           <p className="mt-4 text-lg text-[var(--foreground-muted)] max-w-2xl mx-auto leading-relaxed">
             Practice and master {catInfo.name} interviews. Explore detailed step-by-step solutions with architectural guidelines.

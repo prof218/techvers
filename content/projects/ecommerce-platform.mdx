@@ -1,15 +1,89 @@
 ---
 title: "E-Commerce Platform Architecture"
 category: "E-Commerce"
-description: "Production architecture breakdown of E-Commerce Platform."
-techStack: ["Next.js","Stripe","PostgreSQL","Redis"]
+description: "A detailed system-design case study for building an e-commerce platform using Next.js, Stripe, PostgreSQL, and Redis."
+techStack: ["Next.js", "Stripe", "PostgreSQL", "Redis"]
 difficulty: "intermediate"
 ---
+## Core Requirements
 
-# E-Commerce Platform Production Architecture
+Building an e-commerce platform involves several core requirements, both functional and non-functional.
 
-Case study overview of the E-Commerce Platform system architecture.
+### Functional Requirements
+- **User Registration & Authentication:** Users should be able to register, login, and manage their account details.
+- **Product Catalog:** Display products with details such as name, description, price, and availability.
+- **Shopping Cart:** Allow users to add, update, and remove products before proceeding to checkout.
+- **Order Processing:** Manage order placement, payment processing, and order confirmation.
+- **Payment Integration:** Securely handle payments using Stripe.
+- **Admin Panel:** For managing products, users, and orders.
 
-## Scaling
-- Vertical database replication.
-- Horizontal application server clusters.
+### Non-Functional Requirements
+- **Scalability:** Must handle high traffic, especially during sales or promotions.
+- **Performance:** Fast page load times and quick response to user interactions.
+- **Security:** Protect user data and transactions, especially during payment processing.
+- **Reliability:** Ensure system uptime and handle failures gracefully.
+
+## High-Level Architecture
+
+The architecture consists of several interconnected components designed for scalability and performance:
+
+- **Frontend:** Built with Next.js to leverage its server-side rendering (SSR) capabilities for faster initial page loads and improved SEO. The frontend communicates with the backend via RESTful APIs.
+
+- **Backend:** A Node.js server that handles business logic and API requests. It interacts with PostgreSQL for data persistence and Redis for caching.
+
+- **Database Layer:** PostgreSQL is used for storing user data, product information, and order details. Redis is utilized for caching frequently accessed data like product listings and user sessions to improve response times.
+
+- **Payment Gateway:** Stripe handles payment processing. It integrates with the backend to securely manage payment intents and transactions.
+
+- **Deployment:** The application is deployed on a cloud platform like Vercel (for Next.js) and AWS (for the backend and database), ensuring scalability and high availability.
+
+### Data Flow
+1. **User Interaction:** User actions on the frontend (e.g., adding a product to the cart) trigger API calls to the backend.
+2. **Backend Processing:** The backend processes these requests, interacts with PostgreSQL for data retrieval/storage, and uses Redis to cache data.
+3. **Payment Processing:** On checkout, the backend communicates with Stripe to handle payment processing.
+4. **Response:** Results are sent back to the frontend for user display.
+
+## Key Design Decisions and Trade-Offs
+
+### Next.js for Frontend
+- **Decision:** Use Next.js for its SSR and Static Site Generation (SSG) capabilities.
+- **Trade-Offs:** While SSR improves initial load times, it adds complexity to the caching strategy to ensure quick client-side navigation.
+
+### PostgreSQL for Data Storage
+- **Decision:** Opt for PostgreSQL due to its robust ACID compliance and support for complex queries.
+- **Trade-Offs:** Requires careful schema design to optimize performance for read-heavy operations typical in e-commerce.
+
+### Redis for Caching
+- **Decision:** Implement Redis to cache product listings and user sessions.
+- **Trade-Offs:** Adds complexity in cache invalidation strategies, especially when product data changes frequently.
+
+### Stripe for Payments
+- **Decision:** Use Stripe for its ease of integration and strong security features.
+- **Trade-Offs:** Stripe fees (2.9% + $0.30 per transaction) can add up, impacting profit margins on smaller transactions.
+
+## Data Model Highlights
+
+- **User Table:** Stores user information including email, password hash, and profile details.
+- **Product Table:** Contains product details such as SKU, name, description, price, and stock.
+- **Order Table:** Tracks each order's user, product details, status, and Stripe transaction ID.
+
+## Scalability
+
+Scalability is achieved through:
+- **Horizontal Scaling:** Deploying multiple instances of the backend to handle increased loads.
+- **Load Balancing:** Distributing requests across server instances to prevent bottlenecks.
+- **Caching with Redis:** Reducing load on the database by caching high-traffic data.
+- **Database Optimization:** Indexing frequently queried fields and using read replicas for PostgreSQL.
+
+## Main Challenges
+
+### Handling High Traffic
+Designing the system to manage traffic spikes during promotions requires careful load balancing and caching strategies.
+
+### Payment Security
+Ensuring secure handling of sensitive payment information necessitates compliance with PCI DSS standards and relying on Stripe's security features.
+
+### Data Consistency
+Maintaining consistency between cached data and the database is crucial, especially when products are updated frequently, requiring robust cache invalidation mechanisms.
+
+By employing a modern tech stack and thoughtful architectural decisions, this e-commerce platform is designed to be efficient, scalable, and secure, meeting both current demands and future growth.

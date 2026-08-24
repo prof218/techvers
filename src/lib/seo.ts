@@ -57,6 +57,31 @@ export function generateSEOMetadata({
   };
 }
 
+export function articleJsonLd({
+  type = "Article",
+  title,
+  description,
+  path,
+  section,
+}: {
+  type?: string;
+  title: string;
+  description: string;
+  path: string;
+  section?: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": type,
+    headline: title,
+    description,
+    url: `${siteConfig.url}${path}`,
+    ...(section ? { articleSection: section } : {}),
+    author: { "@type": "Organization", name: siteConfig.name, url: siteConfig.url },
+    publisher: { "@id": `${siteConfig.url}#org` },
+  };
+}
+
 export function generateStructuredData(type: string, data: Record<string, unknown>) {
   return {
     __html: JSON.stringify({

@@ -1,19 +1,68 @@
 ---
 title: "Figma"
 category: "design"
-description: "A comprehensive guide to Figma. Explore features, specifications, and learning paths."
-icon: "⚡"
+description: "Figma is a web-based design tool that enables collaborative interface design and prototyping across teams."
+icon: "🎨"
 difficulty: "beginner"
-tags: ["DESIGN", "Figma"]
-features: ["Feature 1", "Feature 2", "Feature 3"]
-website: "https://example.com"
-github: "https://github.com"
+tags: ["design", "UI", "collaboration", "prototyping", "web"]
+features: ["Real-time collaboration", "Vector networks", "Prototyping", "Version history", "Component system", "Plugin ecosystem"]
 ---
+## What is Figma?
 
-# Figma
+Figma is a web-based design application primarily used for UI/UX design. It functions directly in the browser, allowing users to create, collaborate, and share designs in real-time without needing any installation. Unlike traditional design tools like Adobe Illustrator or Sketch, Figma's cloud-based nature makes it especially suited for teams working remotely or across different locations.
 
-Detailed content stubs for Figma will be filled in soon. This placeholder serves as a guide for category learning.
+### The Problem Figma Solves
 
-## Key Takeaways
-- Industry standard for design operations.
-- Strong community support and documentation.
+Before Figma, designers often juggled multiple files and faced issues with version control and collaboration. Tools like Adobe XD or Sketch required third-party apps or plugins for real-time collaboration. Figma eliminates these hurdles by allowing multiple designers to work on the same project simultaneously, much like Google Docs for text documents.
+
+### Minimal Real Code Example
+
+Figma supports plugins, which are scripts you can run to automate tasks in your design workflow. Below is a simple example of a Figma plugin that creates a rectangle on the canvas:
+
+```javascript
+figma.showUI(`<p>Hello, Figma!</p>`);
+
+const rect = figma.createRectangle();
+rect.x = 150;
+rect.y = 150;
+rect.fills = [{ type: 'SOLID', color: { r: 0, g: 0.5, b: 0.5 } }];
+figma.currentPage.appendChild(rect);
+
+figma.closePlugin();
+```
+
+This script uses Figma's Plugin API to create a rectangle filled with a teal color, demonstrating how developers can automate design tasks directly within Figma.
+
+### Core Concepts
+
+- **Frames and Artboards**: Frames are the primary containers for your design elements. They function similarly to artboards in other design tools. Developers can use frames to organize UI components logically.
+
+- **Components**: These are reusable design elements. Once you create a component, you can use instances of it throughout your design. This is particularly useful for maintaining consistency across a project.
+
+- **Prototyping**: Figma allows you to create interactive prototypes directly from your designs. You can link frames, define interactions, and simulate user flows without leaving the app.
+
+- **Vector Networks**: Unlike traditional path manipulation, Figma's vector networks allow for non-linear paths, providing more flexibility in vector design.
+
+- **Styles**: You can create consistent styling by saving text, color, and effect styles. This ensures a uniform look and feel across all components.
+
+### When to Use Figma vs Alternatives
+
+Figma is ideal for teams that require real-time collaboration and version control without the hassle of managing local files. It’s also a strong choice if your team is distributed globally, as it eliminates the need for file transfers and merges.
+
+While Figma excels in collaboration, tools like Sketch might be preferable for individuals who need offline access or have existing workflows deeply integrated with macOS-specific features. Adobe XD can be a good alternative for those heavily invested in the Adobe ecosystem and seeking tight integration with other Adobe products.
+
+### Getting Started with Figma
+
+1. **Sign Up**: Visit [figma.com](https://www.figma.com) and create a free account. Figma offers a free tier with basic features, suitable for individual use or small projects. Paid plans start at $12/month for additional features like team libraries and more extensive version history.
+
+2. **Explore Figma's Interface**: Spend time familiarizing yourself with the interface. The left panel lists layers and assets, the center is your canvas, and the right panel contains properties.
+
+3. **Create a New Project**: Click on the "New Design File" button to start your first project. Use frames to set up your design layout, then add text, shapes, and images.
+
+4. **Use Components and Styles**: Begin by creating components for commonly used elements like buttons or icons. Define styles for text and colors to maintain consistency.
+
+5. **Collaborate**: Invite team members to view or edit your design. Use comments to provide feedback or discuss changes.
+
+6. **Prototype**: Switch to the prototype tab to define interactions and transitions between frames. Use the play button to preview the prototype.
+
+By starting with these steps, you can quickly become productive in Figma, leveraging its strengths in collaborative design to enhance your team's workflow.

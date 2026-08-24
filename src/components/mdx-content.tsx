@@ -3,12 +3,48 @@
 import React from "react";
 import * as runtime from "react/jsx-runtime";
 import Link from "next/link";
+import { Copy, Check } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+
+function CodeBlock(props: React.HTMLAttributes<HTMLPreElement>) {
+  const ref = React.useRef<HTMLPreElement>(null);
+  const [copied, setCopied] = React.useState(false);
+  const copy = async () => {
+    const text = ref.current?.innerText ?? "";
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    } catch {
+      /* ignore */
+    }
+  };
+  return (
+    <div className="relative group/code my-6">
+      <button
+        type="button"
+        onClick={copy}
+        aria-label="Copy code"
+        className="absolute top-2.5 right-2.5 z-10 inline-flex items-center gap-1 h-7 px-2 rounded-md border border-[var(--border)] bg-[var(--surface)] text-[10px] font-medium text-[var(--foreground-subtle)] opacity-0 group-hover/code:opacity-100 hover:text-[var(--foreground)] transition-opacity"
+      >
+        {copied ? <Check className="w-3 h-3 text-[var(--success)]" /> : <Copy className="w-3 h-3" />}
+        {copied ? "Copied" : "Copy"}
+      </button>
+      <pre
+        ref={ref}
+        className="overflow-x-auto rounded-xl border border-[var(--border)] bg-[var(--background-tertiary)] p-4 font-mono text-sm leading-relaxed [&_code]:bg-transparent [&_code]:border-0 [&_code]:p-0 [&_code]:text-[var(--foreground)]"
+        {...props}
+      />
+    </div>
+  );
+}
 
 // Hook to parse compiled MDX code string
 const useMDXComponent = (code: string) => {
-  const fn = new Function(code);
-  return fn(runtime).default;
+  return React.useMemo(() => {
+    const fn = new Function(code);
+    return fn(runtime).default;
+  }, [code]);
 };
 
 // Custom MDX Components mapping
@@ -31,10 +67,10 @@ const sharedComponents = {
   // Custom Callout component inside MDX
   Callout: ({ children, type = "info" }: { children: React.ReactNode; type?: "info" | "warning" | "success" | "error" }) => {
     const borders = {
-      info: "border-blue-500/30 bg-blue-500/5 text-blue-200",
-      warning: "border-amber-500/30 bg-amber-500/5 text-amber-200",
-      success: "border-emerald-500/30 bg-emerald-500/5 text-emerald-200",
-      error: "border-red-500/30 bg-red-500/5 text-red-200",
+      info: "border-[var(--info)]/25 bg-[var(--info)]/8 text-[var(--foreground-muted)]",
+      warning: "border-[var(--warning)]/25 bg-[var(--warning)]/8 text-[var(--foreground-muted)]",
+      success: "border-[var(--success)]/25 bg-[var(--success)]/8 text-[var(--foreground-muted)]",
+      error: "border-[var(--error)]/25 bg-[var(--error)]/8 text-[var(--foreground-muted)]",
     };
     return (
       <div className={`p-4 my-6 rounded-xl border ${borders[type]} leading-relaxed`}>
@@ -112,9 +148,7 @@ const sharedComponents = {
   blockquote: (props: React.HTMLAttributes<HTMLQuoteElement>) => (
     <blockquote className="mt-6 border-l-2 border-[var(--primary)] pl-6 italic text-[var(--foreground-muted)]" {...props} />
   ),
-  pre: (props: React.HTMLAttributes<HTMLPreElement>) => (
-    <pre className="mb-4 mt-6 overflow-x-auto rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4 font-mono text-sm leading-relaxed" {...props} />
-  ),
+  pre: CodeBlock,
   code: (props: React.HTMLAttributes<HTMLElement>) => (
     <code className="rounded bg-[var(--surface-hover)] px-[0.4rem] py-[0.2rem] font-mono text-xs font-semibold text-[var(--foreground)] border border-[var(--border)]" {...props} />
   ),
@@ -122,10 +156,11 @@ const sharedComponents = {
 
 interface MdxProps {
   code: string;
-  components?: Record<string, React.ComponentType<any>>;
+  components?: Record<string, React.ComponentType<any>>; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 
 export function MdxContent({ code, components = {} }: MdxProps) {
+  // eslint-disable-next-line react-hooks/static-components
   const Component = useMDXComponent(code);
   return <Component components={{ ...sharedComponents, ...components }} />;
 }

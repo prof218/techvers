@@ -1,13 +1,85 @@
 ---
-title: "Explain Consistent Hashing and its application in cache distribution. (Variant 2)"
+title: "Explain consistent hashing and its application in cache distribution."
 category: "system-design"
 difficulty: "easy"
 company: "Meta"
-tags: ["system-design","interview-prep","topic-1"]
+tags: ["system-design", "interview-prep"]
 ---
+Consistent hashing is a distributed hashing technique used to evenly distribute data across a set of nodes, such as servers or caches, in a way that minimizes re-distribution when nodes are added or removed. It is particularly useful in scenarios where the system's capacity may need to dynamically scale.
 
-Detailed answer for: **Explain Consistent Hashing and its application in cache distribution. (Variant 2)**
+### Key points
 
-### Key Details
-- Focus on practical trade-offs.
-- Illustrate with architectural diagrams where applicable.
+1. **Hash Ring Concept**:
+   - In consistent hashing, both the keys and the nodes are mapped to a circular hash space or "ring". This ring is a logical representation where the largest hash value wraps around to the smallest hash value.
+   - Each node is assigned a position on the ring based on its hash value.
+
+2. **Key Placement**:
+   - A key is placed on the ring according to its hash value.
+   - The key is stored in the first node encountered when traveling clockwise around the ring from the key's position.
+
+3. **Node Addition/Removal**:
+   - When a node is added, only the keys that map to the new node are reassigned, minimizing disruption.
+   - Conversely, when a node is removed, the keys that were mapped to it are reassigned to the next node on the ring. This property reduces the amount of rehashing needed compared to other techniques, such as modulo-based hashing.
+
+4. **Virtual Nodes**:
+   - To alleviate uneven distribution, "virtual nodes" or "v-nodes" can be used. Each physical node is associated with multiple virtual nodes, each placed at different points on the ring.
+   - This increases uniformity and improves load balancing since nodes can capture more key/value pairs across the ring.
+
+5. **Applications in Cache Distribution**:
+   - Consistent hashing is widely used in distributed caching systems like Memcached or Redis Cluster.
+   - It allows for efficient scaling of the cache infrastructure by ensuring that the cache keys are evenly distributed, and minimizes cache misses during scaling activities.
+
+```python
+# Example: Pythonic pseudo-code for consistent hashing
+import hashlib
+
+def hash_function(key):
+    return int(hashlib.md5(key.encode()).hexdigest(), 16)
+
+class ConsistentHashRing:
+    def __init__(self, nodes=None, num_vnodes=3):
+        self.ring = dict()
+        self.sorted_keys = []
+        self.num_vnodes = num_vnodes
+        if nodes:
+            for node in nodes:
+                self.add_node(node)
+
+    def add_node(self, node):
+        for i in range(self.num_vnodes):
+            v_node_key = f"{node}-{i}"
+            key = hash_function(v_node_key)
+            self.ring[key] = node
+            self.sorted_keys.append(key)
+        self.sorted_keys.sort()
+
+    def remove_node(self, node):
+        for i in range(self.num_vnodes):
+            v_node_key = f"{node}-{i}"
+            key = hash_function(v_node_key)
+            del self.ring[key]
+            self.sorted_keys.remove(key)
+
+    def get_node(self, key):
+        hash_key = hash_function(key)
+        for k in self.sorted_keys:
+            if hash_key <= k:
+                return self.ring[k]
+        return self.ring[self.sorted_keys[0]]  # wrap around
+
+# Example usage
+nodes = ['cache1', 'cache2', 'cache3']
+ring = ConsistentHashRing(nodes)
+print(ring.get_node('my_data_key'))
+```
+
+### Common follow-ups
+
+- **How does consistent hashing handle node failures?**
+  - When a node fails, consistent hashing ensures the keys mapped to the failed node are redistributed to the next node in the ring, minimizing the impact.
+
+- **What are the trade-offs of using consistent hashing?**
+  - Consistent hashing can be more complex to implement compared to simpler hashing techniques. It also requires a good hash function to ensure even distribution.
+
+- **How does consistent hashing compare to rendezvous hashing?**
+  - Rendezvous hashing (HRW hashing) is another technique to achieve similar goals, often simpler in some cases and providing better load balancing in others.

@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import { ThemeProvider } from "@/components/providers/theme-provider";
+import { Geist, Geist_Mono, Fraunces } from "next/font/google";
 import { Header } from "@/components/layout/header";
 import { CommandPalette } from "@/components/layout/command-palette";
 import { Footer } from "@/components/layout/footer";
+import { JsonLd } from "@/components/json-ld";
 import { siteConfig } from "@/lib/constants";
 import "./globals.css";
 
@@ -15,6 +15,13 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
+  subsets: ["latin"],
+  display: "swap",
+  style: ["normal", "italic"],
 });
 
 export const metadata: Metadata = {
@@ -62,22 +69,38 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable}`}
+      className={`${geistSans.variable} ${geistMono.variable} ${fraunces.variable}`}
     >
-      <body className="min-h-screen flex flex-col antialiased">
-        <ThemeProvider
-          attribute="data-theme"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <Header />
-          <CommandPalette />
-          <main id="main-content" className="flex-1 pt-16 lg:pt-18">
-            {children}
-          </main>
-          <Footer />
-        </ThemeProvider>
+      <body className="min-h-screen flex flex-col antialiased" suppressHydrationWarning>
+        <JsonLd
+          data={{
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "Organization",
+                "@id": `${siteConfig.url}#org`,
+                name: siteConfig.name,
+                url: siteConfig.url,
+                description: siteConfig.description,
+                logo: `${siteConfig.url}/icon.svg`,
+              },
+              {
+                "@type": "WebSite",
+                "@id": `${siteConfig.url}#site`,
+                url: siteConfig.url,
+                name: siteConfig.name,
+                description: siteConfig.description,
+                publisher: { "@id": `${siteConfig.url}#org` },
+              },
+            ],
+          }}
+        />
+        <Header />
+        <CommandPalette />
+        <main id="main-content" className="flex-1 pt-24 lg:pt-28">
+          {children}
+        </main>
+        <Footer />
       </body>
     </html>
   );

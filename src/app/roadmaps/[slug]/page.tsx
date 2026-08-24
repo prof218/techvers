@@ -4,8 +4,13 @@ import { notFound } from "next/navigation";
 import { MdxContent } from "@/components/mdx-content";
 import Link from "next/link";
 import { Metadata } from "next";
-import { ArrowLeft, Clock, Map, Sparkles } from "lucide-react";
+import { Clock, Sparkles } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { BookmarkButton } from "@/components/ui/bookmark-button";
+import { ReadingProgress } from "@/components/ui/reading-progress";
+import { RoadmapProgress } from "@/components/ui/roadmap-progress";
+import { JsonLd } from "@/components/json-ld";
+import { articleJsonLd } from "@/lib/seo";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -43,11 +48,19 @@ export default async function RoadmapDetailPage({ params }: Props) {
 
   return (
     <div className="min-h-screen">
+      <ReadingProgress />
+      <JsonLd
+        data={articleJsonLd({
+          title: roadmap.title,
+          description: roadmap.description,
+          path: `/roadmaps/${roadmap.slug}`,
+          section: roadmap.category,
+        })}
+      />
       {/* Hero */}
       <section className="relative py-16 sm:py-24 overflow-hidden border-b border-[var(--border)]">
-        <div className="absolute inset-0 bg-gradient-to-b from-[var(--background-secondary)] to-[var(--background)]" />
-        <div className="absolute inset-0 grid-pattern opacity-30" />
-        <div className="absolute bottom-0 right-0 w-72 h-72 bg-[#8b5cf6]/10 rounded-full blur-[100px]" />
+        <div className="absolute inset-0 grid-pattern" />
+        <div className="absolute bottom-0 right-0 w-72 h-72 bg-[var(--primary)]/10 rounded-full blur-[100px]" />
 
         <div className="relative container-tight">
           {/* Breadcrumbs */}
@@ -80,9 +93,13 @@ export default async function RoadmapDetailPage({ params }: Props) {
             {roadmap.estimatedTime && (
               <div className="flex items-center gap-2 text-sm text-[var(--foreground-muted)] font-medium">
                 <Clock className="w-4 h-4 text-[var(--primary)]" />
-                Estimated time to master: <span className="text-[var(--foreground)] font-bold">{roadmap.estimatedTime}</span>
+                Estimated time: <span className="text-[var(--foreground)] font-bold">{roadmap.estimatedTime}</span>
               </div>
             )}
+            <BookmarkButton
+              variant="labeled"
+              item={{ type: "roadmap", slug: roadmap.slug, title: roadmap.title, url: `/roadmaps/${roadmap.slug}`, category: roadmap.category }}
+            />
           </div>
         </div>
       </section>
@@ -90,17 +107,19 @@ export default async function RoadmapDetailPage({ params }: Props) {
       {/* Timeline Content */}
       <section className="section-padding">
         <div className="container-tight max-w-3xl">
-          <div className="mb-8 p-4 rounded-xl border border-[#8b5cf6]/20 bg-[#8b5cf6]/5 flex items-start gap-3">
-            <Sparkles className="w-5 h-5 text-[#8b5cf6] mt-0.5 flex-shrink-0" />
+          <RoadmapProgress slug={roadmap.slug} />
+
+          <div className="mb-8 p-4 rounded-xl border border-[var(--primary)]/20 bg-[var(--primary)]/5 flex items-start gap-3">
+            <Sparkles className="w-5 h-5 text-[var(--primary)] mt-0.5 flex-shrink-0" />
             <div>
               <h4 className="text-sm font-bold text-[var(--foreground)]">How to use this roadmap</h4>
               <p className="text-xs text-[var(--foreground-muted)] mt-1 leading-relaxed">
-                Take your time with each node. Make sure to build projects and write code for every topic before moving on to the next. Click on resources to view curated documentation and practice material.
+                Check off each stage in the tracker above as you finish it — your progress is saved on this device. Build something real for every stage before moving on.
               </p>
             </div>
           </div>
 
-          <div className="prose prose-invert max-w-none">
+          <div className="roadmap-content prose max-w-none">
             <MdxContent code={roadmap.content} />
           </div>
         </div>

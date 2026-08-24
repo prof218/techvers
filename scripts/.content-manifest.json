@@ -1,0 +1,346 @@
+{
+  "content\\ai-tools\\coding\\github-copilot.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T05:55:14.893Z"
+  },
+  "content\\ai-tools\\coding\\cursor.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T05:55:25.046Z"
+  },
+  "content\\ai-tools\\coding\\windsurf.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T05:55:36.141Z"
+  },
+  "content\\ai-tools\\coding\\v0-by-vercel.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T05:56:04.932Z"
+  },
+  "content\\ai-tools\\coding\\codeium.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T05:56:13.706Z"
+  },
+  "content\\ai-tools\\coding\\replit-agent.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T05:56:23.809Z"
+  },
+  "content\\ai-tools\\coding\\tabnine.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T05:56:33.819Z"
+  },
+  "content\\ai-tools\\writing\\chatgpt.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T05:56:44.029Z"
+  },
+  "content\\ai-tools\\writing\\claude.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T05:56:52.829Z"
+  },
+  "content\\ai-tools\\writing\\gemini.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T05:57:01.389Z"
+  },
+  "content\\ai-tools\\writing\\jasper.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T05:57:12.017Z"
+  },
+  "content\\ai-tools\\writing\\quillbot.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T05:57:22.940Z"
+  },
+  "content\\ai-tools\\writing\\copy-ai.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T05:57:32.363Z"
+  },
+  "content\\ai-tools\\design\\midjourney.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T05:57:42.480Z"
+  },
+  "content\\ai-tools\\design\\dall-e-3.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T05:57:52.684Z"
+  },
+  "content\\ai-tools\\design\\stable-diffusion.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T05:58:01.300Z"
+  },
+  "content\\ai-tools\\design\\canva-ai.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T05:58:13.184Z"
+  },
+  "content\\ai-tools\\design\\adobe-firefly.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T05:58:22.931Z"
+  },
+  "content\\ai-tools\\video\\runway-gen-2.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T05:58:33.293Z"
+  },
+  "content\\ai-tools\\video\\openai-sora.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T05:58:41.427Z"
+  },
+  "content\\ai-tools\\video\\synthesia.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T05:58:50.537Z"
+  },
+  "content\\ai-tools\\video\\heygen.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T05:59:01.329Z"
+  },
+  "content\\ai-tools\\video\\descript.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T05:59:09.215Z"
+  },
+  "content\\ai-tools\\automation\\zapier-ai.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T05:59:17.569Z"
+  },
+  "content\\ai-tools\\automation\\make-com.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T05:59:25.682Z"
+  },
+  "content\\ai-tools\\automation\\n8n-ai.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T05:59:35.119Z"
+  },
+  "content\\ai-tools\\research\\perplexity-ai.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T05:59:43.526Z"
+  },
+  "content\\ai-tools\\research\\notebooklm.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T05:59:51.508Z"
+  },
+  "content\\ai-tools\\productivity\\notion-ai.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:00:01.227Z"
+  },
+  "content\\ai-tools\\productivity\\grammarly.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:00:13.969Z"
+  },
+  "content\\technologies\\frontend\\react.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:00:24.796Z"
+  },
+  "content\\technologies\\frontend\\nextjs.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:00:37.063Z"
+  },
+  "content\\technologies\\frontend\\typescript.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:00:49.292Z"
+  },
+  "content\\technologies\\frontend\\vue.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:01:03.082Z"
+  },
+  "content\\technologies\\frontend\\tailwind-css.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:01:14.690Z"
+  },
+  "content\\technologies\\backend\\node-js.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:01:25.665Z"
+  },
+  "content\\technologies\\backend\\django.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:01:36.445Z"
+  },
+  "content\\technologies\\backend\\fastapi.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:01:47.408Z"
+  },
+  "content\\technologies\\backend\\graphql.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:01:58.843Z"
+  },
+  "content\\technologies\\databases\\postgresql.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:02:07.952Z"
+  },
+  "content\\technologies\\databases\\mongodb.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:02:18.463Z"
+  },
+  "content\\technologies\\databases\\redis.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:02:30.398Z"
+  },
+  "content\\technologies\\cloud\\aws.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:02:47.060Z"
+  },
+  "content\\technologies\\cloud\\vercel.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:02:57.194Z"
+  },
+  "content\\technologies\\devops\\docker.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:03:07.684Z"
+  },
+  "content\\technologies\\devops\\kubernetes.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:03:16.840Z"
+  },
+  "content\\technologies\\ai\\openai.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:03:27.802Z"
+  },
+  "content\\technologies\\ai\\langchain.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:03:38.086Z"
+  },
+  "content\\technologies\\data\\pandas.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:03:53.942Z"
+  },
+  "content\\technologies\\mobile\\flutter.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:04:05.048Z"
+  },
+  "content\\interviews\\frontend\\frontend-q-2.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:11:33.311Z"
+  },
+  "content\\interviews\\frontend\\frontend-q-3.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:11:41.532Z"
+  },
+  "content\\interviews\\backend\\backend-q-2.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:11:48.206Z"
+  },
+  "content\\interviews\\backend\\backend-q-3.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:11:54.602Z"
+  },
+  "content\\interviews\\system-design\\system-design-q-1.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:12:01.427Z"
+  },
+  "content\\interviews\\system-design\\system-design-q-2.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:12:09.979Z"
+  },
+  "content\\interviews\\system-design\\system-design-q-3.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:12:21.194Z"
+  },
+  "content\\interviews\\ai\\ai-q-1.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:12:28.118Z"
+  },
+  "content\\interviews\\ai\\ai-q-2.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:12:36.107Z"
+  },
+  "content\\interviews\\ai\\ai-q-3.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:12:42.731Z"
+  },
+  "content\\interviews\\devops\\devops-q-1.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:12:49.983Z"
+  },
+  "content\\interviews\\cloud\\cloud-q-1.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:12:57.406Z"
+  },
+  "content\\interviews\\cybersecurity\\cybersecurity-q-1.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:13:05.502Z"
+  },
+  "content\\roadmaps\\frontend-developer.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:05:44.497Z"
+  },
+  "content\\roadmaps\\backend-developer.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:05:50.865Z"
+  },
+  "content\\roadmaps\\fullstack-developer.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:05:56.605Z"
+  },
+  "content\\roadmaps\\devops-engineer.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:06:05.138Z"
+  },
+  "content\\roadmaps\\ai-engineer.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:06:11.981Z"
+  },
+  "content\\roadmaps\\cloud-engineer.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:06:19.339Z"
+  },
+  "content\\roadmaps\\system-design.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:06:24.829Z"
+  },
+  "content\\roadmaps\\data-scientist.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:06:30.867Z"
+  },
+  "content\\projects\\netflix-clone.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:06:41.053Z"
+  },
+  "content\\projects\\uber-clone.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:06:51.548Z"
+  },
+  "content\\projects\\ecommerce-platform.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:07:03.961Z"
+  },
+  "content\\projects\\whatsapp-clone.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:07:14.429Z"
+  },
+  "content\\projects\\crm-system.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:07:24.630Z"
+  },
+  "content\\projects\\ai-saas.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:07:37.257Z"
+  },
+  "content\\projects\\food-delivery.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:07:50.195Z"
+  },
+  "content\\projects\\banking-platform.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:07:59.785Z"
+  },
+  "content\\projects\\healthcare-platform.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:08:09.769Z"
+  },
+  "content\\projects\\lms.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:08:19.180Z"
+  },
+  "content\\technologies\\mobile\\react-native.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:27:50.276Z"
+  },
+  "content\\technologies\\design\\figma.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:28:00.474Z"
+  },
+  "content\\technologies\\design\\tailwind-ui.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:28:13.070Z"
+  },
+  "content\\technologies\\cybersecurity\\zero-trust.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:28:25.517Z"
+  },
+  "content\\technologies\\cybersecurity\\penetration-testing.mdx": {
+    "model": "gpt-4o",
+    "at": "2026-08-24T06:28:34.950Z"
+  }
+}

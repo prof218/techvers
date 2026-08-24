@@ -7,6 +7,10 @@ import { Metadata } from "next";
 import { ArrowLeft, Star, ExternalLink, Check, X, Sparkles, Layers } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { BookmarkButton } from "@/components/ui/bookmark-button";
+import { ReadingProgress } from "@/components/ui/reading-progress";
+import { JsonLd } from "@/components/json-ld";
+import { articleJsonLd } from "@/lib/seo";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -38,11 +42,19 @@ export default async function AIToolPage({ params }: Props) {
 
   return (
     <div className="min-h-screen">
+      <ReadingProgress />
+      <JsonLd
+        data={articleJsonLd({
+          title: `${tool.title} Review`,
+          description: tool.description,
+          path: `/ai-tools/${tool.slug}`,
+          section: tool.category,
+        })}
+      />
       {/* Hero */}
       <section className="relative py-16 sm:py-24 overflow-hidden border-b border-[var(--border)]">
-        <div className="absolute inset-0 bg-gradient-to-b from-[var(--background-secondary)] to-[var(--background)]" />
-        <div className="absolute inset-0 grid-pattern opacity-30" />
-        <div className="absolute top-1/4 -left-20 w-72 h-72 bg-[#06b6d4]/10 rounded-full blur-[100px]" />
+        <div className="absolute inset-0 grid-pattern" />
+        <div className="absolute top-1/4 -left-20 w-72 h-72 bg-[var(--primary)]/10 rounded-full blur-[100px]" />
 
         <div className="relative container-tight">
           {/* Breadcrumbs */}
@@ -85,14 +97,20 @@ export default async function AIToolPage({ params }: Props) {
               </div>
             </div>
 
-            {tool.website && (
-              <Button asChild size="lg" className="w-full md:w-auto gap-2 bg-[#06b6d4] hover:bg-[#06b6d4]/90 text-white cursor-pointer shadow-lg shadow-[#06b6d4]/20 hover:scale-[1.02] transition-all duration-300">
-                <a href={tool.website} target="_blank" rel="noopener noreferrer">
-                  Visit Official Site
-                  <ExternalLink className="w-4 h-4" />
-                </a>
-              </Button>
-            )}
+            <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+              {tool.website && (
+                <Button asChild size="lg" variant="gradient" className="gap-2 rounded-full">
+                  <a href={tool.website} target="_blank" rel="noopener noreferrer">
+                    Visit Official Site
+                    <ExternalLink className="w-4 h-4" />
+                  </a>
+                </Button>
+              )}
+              <BookmarkButton
+                variant="labeled"
+                item={{ type: "ai-tool", slug: tool.slug, title: tool.title, url: `/ai-tools/${tool.slug}`, category: tool.category }}
+              />
+            </div>
           </div>
         </div>
       </section>

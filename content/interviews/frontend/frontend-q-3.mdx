@@ -1,13 +1,69 @@
 ---
-title: "What is the difference between useMemo and useCallback in React? (Variant 3)"
+title: "What is the difference between useMemo and useCallback in React?"
 category: "frontend"
 difficulty: "medium"
 company: "Amazon"
-tags: ["frontend","interview-prep","topic-2"]
+tags: ["frontend", "interview-prep"]
 ---
+React introduced `useMemo` and `useCallback` hooks in version 16.8 to optimize performance by caching the results of expensive calculations and functions. 
 
-Detailed answer for: **What is the difference between useMemo and useCallback in React? (Variant 3)**
+The primary difference between `useMemo` and `useCallback` is that `useMemo` is used to memoize a value (the result of a function) to avoid recalculating it on every render, whereas `useCallback` is used to memoize a function reference to prevent unnecessary re-creations of functions, which helps in preventing unnecessary rendering of child components that depend on the function.
 
-### Key Details
-- Focus on practical trade-offs.
-- Illustrate with architectural diagrams where applicable.
+### Key points
+
+- **`useMemo(fn, deps)`**: 
+  - **Purpose**: Caches the result of a computation.
+  - **Usage**: Use it when you have a complex calculation that you want to avoid running on every render.
+  - **Returns**: The cached result of the computation.
+  - **Dependencies**: The computation is re-run only if one of the dependencies has changed.
+
+- **`useCallback(fn, deps)`**:
+  - **Purpose**: Caches a function definition.
+  - **Usage**: Use it when you need to pass a stable function reference to child components.
+  - **Returns**: The memoized function.
+  - **Dependencies**: The function is re-created only if one of the dependencies has changed.
+
+Here's a simple example illustrating both:
+
+```javascript
+import React, { useState, useMemo, useCallback } from 'react';
+
+const ExampleComponent = () => {
+  const [count, setCount] = useState(0);
+
+  const expensiveComputation = useMemo(() => {
+    console.log('Running expensive computation');
+    return count * 2;
+  }, [count]);
+
+  const increment = useCallback(() => {
+    setCount((prev) => prev + 1);
+  }, []);
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <p>Expensive Computation Result: {expensiveComputation}</p>
+      <button onClick={increment}>Increment</button>
+    </div>
+  );
+};
+```
+
+In this example, `useMemo` is used to cache the result of multiplying `count` by 2, and `useCallback` is used to prevent the re-creation of the `increment` function on every render.
+
+### Common follow-ups
+
+1. **When would you choose not to use `useMemo` or `useCallback`?**
+   - They add complexity and should only be used when performance issues are identified. Overusing them can lead to more complex code without noticeable performance gains.
+
+2. **How do `useMemo` and `useCallback` differ from `React.memo`?**
+   - `React.memo` is a higher-order component that memoizes the result of a component render. It is used to prevent a component from re-rendering if its props have not changed.
+
+3. **What are some potential pitfalls of using `useCallback`?**
+   - It can lead to stale closures if not managed correctly, especially when dependencies are incorrect, causing bugs due to outdated state or properties.
+
+4. **How do these hooks relate to `useEffect`?**
+   - They all accept a dependencies array. While `useEffect` runs side-effects based on dependencies' changes, `useMemo` and `useCallback` cache computations and functions, respectively.
+
+Understanding these hooks is essential for optimizing performance in React applications. They should be applied judiciously, focusing on identified bottlenecks.

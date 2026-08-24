@@ -89,6 +89,18 @@ export function CommandPalette() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
+  // Allow any component to open the palette (optionally with an initial query)
+  // by dispatching: window.dispatchEvent(new CustomEvent("open-command-palette", { detail: { query } }))
+  useEffect(() => {
+    const openHandler = (e: Event) => {
+      const detail = (e as CustomEvent<{ query?: string }>).detail;
+      setIsOpen(true);
+      if (detail?.query !== undefined) setSearchQuery(detail.query);
+    };
+    window.addEventListener("open-command-palette", openHandler);
+    return () => window.removeEventListener("open-command-palette", openHandler);
+  }, []);
+
   // Set default initial results
   useEffect(() => {
     if (searchQuery.trim() === "") {
@@ -108,7 +120,8 @@ export function CommandPalette() {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "unset";
-      setSearchQuery("");
+      const timer = setTimeout(() => setSearchQuery(""), 0);
+      return () => clearTimeout(timer);
     }
   }, [isOpen]);
 
@@ -224,7 +237,7 @@ export function CommandPalette() {
             })
           ) : (
             <div className="text-center py-12">
-              <p className="text-sm text-[var(--foreground-muted)]">No results found for "{searchQuery}"</p>
+              <p className="text-sm text-[var(--foreground-muted)]">No results found for &ldquo;{searchQuery}&rdquo;</p>
             </div>
           )}
         </div>

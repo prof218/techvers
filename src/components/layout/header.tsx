@@ -4,35 +4,28 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "motion/react";
-import {
-  Search,
-  Menu,
-  X,
-  ChevronDown,
-  Moon,
-  Sun,
-  Command,
-  Sparkles,
-} from "lucide-react";
-import { useTheme } from "next-themes";
+import { Search, Menu, X, ChevronDown, Command, Sparkles, Bookmark } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { mainNavigation } from "@/lib/constants";
+import { CategoryIcon } from "@/components/ui/category-icon";
+import { mainNavigation, type NavItem } from "@/lib/constants";
 import { cn } from "@/lib/utils";
+
+function slugFromHref(href: string) {
+  if (href.includes("?category=")) return href.split("=").pop() || "";
+  return href.split("/").filter(Boolean).pop() || "";
+}
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const pathname = usePathname();
-  const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onScroll = () => setIsScrolled(window.scrollY > 12);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   useEffect(() => {
@@ -40,192 +33,132 @@ export function Header() {
     setActiveMenu(null);
   }, [pathname]);
 
-  // Close menu on escape
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
+    const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         setActiveMenu(null);
         setIsMobileOpen(false);
       }
     };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
   }, []);
+
+  const openSearch = () =>
+    window.dispatchEvent(new CustomEvent("open-command-palette", { detail: { query: "" } }));
 
   return (
     <>
-      <a href="#main-content" className="skip-link">
-        Skip to main content
-      </a>
+      <a href="#main-content" className="skip-link">Skip to main content</a>
       <header
         className={cn(
-          "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+          "fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b",
           isScrolled
-            ? "glass-strong shadow-lg"
-            : "bg-transparent"
+            ? "glass-strong border-[var(--border)] shadow-[0_1px_0_rgba(0,0,0,0.02),0_8px_30px_rgba(24,22,18,0.06)]"
+            : "border-transparent bg-[color-mix(in_srgb,var(--background)_75%,transparent)] backdrop-blur-md"
         )}
       >
         <div className="container-wide">
-          <div className="flex items-center justify-between h-16 lg:h-18">
+          <div className="flex items-center justify-between h-16 lg:h-20">
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-2.5 group">
-              <div className="relative w-8 h-8 rounded-lg bg-gradient-to-br from-[#6366f1] to-[#8b5cf6] flex items-center justify-center shadow-[0_0_15px_rgba(99,102,241,0.4)] group-hover:shadow-[0_0_25px_rgba(99,102,241,0.6)] transition-shadow duration-300">
-                <Sparkles className="w-4 h-4 text-white" />
+            <Link href="/" className="flex items-center gap-2.5 group shrink-0">
+              <div className="relative w-9 h-9 rounded-xl bg-[var(--foreground)] flex items-center justify-center transition-transform duration-300 group-hover:-rotate-6">
+                <Sparkles className="w-[18px] h-[18px] text-[var(--background)]" />
               </div>
-              <span className="text-xl font-bold tracking-tight">
-                <span className="gradient-text">Tech</span>
-                <span className="text-[var(--foreground)]">Verse</span>
+              <span className="text-[1.35rem] font-bold tracking-tight text-[var(--foreground)]">
+                Tech<span className="text-[var(--primary)]">Verse</span>
               </span>
             </Link>
 
-            {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center gap-1">
+            {/* Desktop nav */}
+            <nav className="hidden lg:flex items-center gap-0.5">
               {mainNavigation.map((item) => (
                 <div
                   key={item.title}
                   className="relative"
-                  onMouseEnter={() =>
-                    item.children ? setActiveMenu(item.title) : setActiveMenu(null)
-                  }
+                  onMouseEnter={() => setActiveMenu(item.children ? item.title : null)}
                   onMouseLeave={() => setActiveMenu(null)}
                 >
                   <Link
                     href={item.href}
                     className={cn(
-                      "flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200",
+                      "flex items-center gap-1 px-3.5 py-2 rounded-full text-[0.925rem] font-medium transition-colors duration-200",
                       pathname.startsWith(item.href)
-                        ? "text-[var(--primary)] bg-[var(--primary)]/10"
-                        : "text-[var(--foreground-muted)] hover:text-[var(--foreground)] hover:bg-[var(--surface-hover)]"
+                        ? "text-[var(--foreground)]"
+                        : "text-[var(--foreground-muted)] hover:text-[var(--foreground)]"
                     )}
                   >
                     {item.title}
                     {item.children && (
                       <ChevronDown
                         className={cn(
-                          "w-3.5 h-3.5 transition-transform duration-200",
+                          "w-3.5 h-3.5 transition-transform duration-200 opacity-60",
                           activeMenu === item.title && "rotate-180"
                         )}
                       />
                     )}
                   </Link>
 
-                  {/* Dropdown */}
                   <AnimatePresence>
                     {item.children && activeMenu === item.title && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 8, scale: 0.96 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: 8, scale: 0.96 }}
-                        transition={{ duration: 0.15 }}
-                        className="absolute top-full left-1/2 -translate-x-1/2 pt-2 w-72"
-                      >
-                        <div className="glass-strong rounded-xl border border-[var(--border)] shadow-xl p-2 space-y-0.5">
-                          {item.children.map((child) => (
-                            <Link
-                              key={child.href}
-                              href={child.href}
-                              className="flex items-start gap-3 p-2.5 rounded-lg hover:bg-[var(--surface-hover)] transition-colors group/item"
-                            >
-                              <span className="text-lg mt-0.5 flex-shrink-0">
-                                {child.icon}
-                              </span>
-                              <div>
-                                <div className="text-sm font-medium text-[var(--foreground)] group-hover/item:text-[var(--primary)] transition-colors">
-                                  {child.title}
-                                </div>
-                                {child.description && (
-                                  <div className="text-xs text-[var(--foreground-subtle)] mt-0.5 line-clamp-1">
-                                    {child.description}
-                                  </div>
-                                )}
-                              </div>
-                            </Link>
-                          ))}
-                        </div>
-                      </motion.div>
+                      <MegaMenu item={item} />
                     )}
                   </AnimatePresence>
                 </div>
               ))}
             </nav>
 
-            {/* Right side actions */}
-            <div className="flex items-center gap-2">
-              {/* Search trigger */}
-              <Button
-                variant="ghost"
-                size="sm"
-                className="hidden sm:flex items-center gap-2 text-[var(--foreground-muted)] hover:text-[var(--foreground)] border border-[var(--border)] rounded-lg px-3"
-                onClick={() => {
-                  // Will be connected to command palette
-                  document.dispatchEvent(
-                    new KeyboardEvent("keydown", { key: "k", metaKey: true })
-                  );
-                }}
+            {/* Right actions */}
+            <div className="flex items-center gap-1.5 shrink-0">
+              <button
+                onClick={openSearch}
+                className="hidden sm:flex items-center gap-2 h-9 pl-3 pr-2 rounded-full border border-[var(--border)] bg-[var(--surface)] text-[var(--foreground-subtle)] hover:border-[var(--border-hover)] hover:text-[var(--foreground-muted)] transition-colors"
               >
                 <Search className="w-3.5 h-3.5" />
-                <span className="text-xs">Search...</span>
-                <kbd className="hidden md:inline-flex h-5 select-none items-center gap-1 rounded border border-[var(--border)] bg-[var(--surface)] px-1.5 font-mono text-[10px] font-medium text-[var(--foreground-subtle)]">
+                <span className="text-xs pr-1">Search</span>
+                <kbd className="hidden md:inline-flex h-5 items-center gap-0.5 rounded-md border border-[var(--border)] bg-[var(--background)] px-1.5 font-mono text-[10px] text-[var(--foreground-subtle)]">
                   <Command className="w-2.5 h-2.5" />K
                 </kbd>
-              </Button>
+              </button>
 
-              {/* Theme toggle */}
-              {mounted && (
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() =>
-                    setTheme(theme === "dark" ? "light" : "dark")
-                  }
-                  className="text-[var(--foreground-muted)] hover:text-[var(--foreground)]"
-                  aria-label="Toggle theme"
-                >
-                  {theme === "dark" ? (
-                    <Sun className="w-4 h-4" />
-                  ) : (
-                    <Moon className="w-4 h-4" />
-                  )}
-                </Button>
-              )}
-
-              {/* Auth buttons */}
-              <div className="hidden sm:flex items-center gap-2">
-                <Button variant="ghost" size="sm" asChild>
-                  <Link href="/auth/signin">Sign In</Link>
-                </Button>
-                <Button variant="gradient" size="sm" asChild>
-                  <Link href="/auth/signup">Get Started</Link>
-                </Button>
-              </div>
-
-              {/* Mobile menu toggle */}
               <Button
                 variant="ghost"
                 size="icon"
-                className="lg:hidden text-[var(--foreground-muted)]"
+                asChild
+                className="rounded-full text-[var(--foreground-muted)] hover:text-[var(--foreground)]"
+                aria-label="Saved items"
+              >
+                <Link href="/saved"><Bookmark className="w-[18px] h-[18px]" /></Link>
+              </Button>
+
+              <div className="hidden sm:block">
+                <Button variant="gradient" size="sm" asChild className="rounded-full px-4">
+                  <Link href="/roadmaps">Start Learning</Link>
+                </Button>
+              </div>
+
+              <Button
+                variant="ghost"
+                size="icon"
+                className="lg:hidden rounded-full text-[var(--foreground-muted)]"
                 onClick={() => setIsMobileOpen(!isMobileOpen)}
                 aria-label="Toggle menu"
               >
-                {isMobileOpen ? (
-                  <X className="w-5 h-5" />
-                ) : (
-                  <Menu className="w-5 h-5" />
-                )}
+                {isMobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
               </Button>
             </div>
           </div>
         </div>
 
-        {/* Mobile Navigation */}
+        {/* Mobile nav */}
         <AnimatePresence>
           {isMobileOpen && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.2 }}
-              className="lg:hidden overflow-hidden glass-strong border-t border-[var(--border)]"
+              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+              className="lg:hidden overflow-hidden bg-[var(--surface)] border-t border-[var(--border)]"
             >
               <div className="container-wide py-4 space-y-1">
                 {mainNavigation.map((item) => (
@@ -233,21 +166,18 @@ export function Header() {
                     key={item.href}
                     href={item.href}
                     className={cn(
-                      "block px-4 py-3 rounded-lg text-sm font-medium transition-colors",
+                      "block px-4 py-3 rounded-xl text-sm font-medium transition-colors",
                       pathname.startsWith(item.href)
-                        ? "text-[var(--primary)] bg-[var(--primary)]/10"
+                        ? "text-[var(--primary)] bg-[var(--secondary)]"
                         : "text-[var(--foreground-muted)] hover:text-[var(--foreground)] hover:bg-[var(--surface-hover)]"
                     )}
                   >
                     {item.title}
                   </Link>
                 ))}
-                <div className="pt-4 flex flex-col gap-2 px-4 border-t border-[var(--border)] mt-2">
-                  <Button variant="outline" size="sm" asChild className="w-full">
-                    <Link href="/auth/signin">Sign In</Link>
-                  </Button>
-                  <Button variant="gradient" size="sm" asChild className="w-full">
-                    <Link href="/auth/signup">Get Started</Link>
+                <div className="pt-3 px-4 border-t border-[var(--border)] mt-2">
+                  <Button variant="gradient" size="sm" asChild className="w-full rounded-full">
+                    <Link href="/roadmaps">Start Learning</Link>
                   </Button>
                 </div>
               </div>
@@ -256,5 +186,48 @@ export function Header() {
         </AnimatePresence>
       </header>
     </>
+  );
+}
+
+function MegaMenu({ item }: { item: NavItem }) {
+  const children = item.children || [];
+  const twoCol = children.length > 5;
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 10, scale: 0.98 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, y: 10, scale: 0.98 }}
+      transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
+      className={cn(
+        "absolute top-full left-1/2 -translate-x-1/2 pt-3",
+        twoCol ? "w-[34rem]" : "w-72"
+      )}
+    >
+      <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow-xl)] p-2.5">
+        <div className={cn("grid gap-1", twoCol ? "grid-cols-2" : "grid-cols-1")}>
+          {children.map((child) => (
+            <Link
+              key={child.href}
+              href={child.href}
+              className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-[var(--surface-hover)] transition-colors group/item"
+            >
+              <span className="w-9 h-9 rounded-lg bg-[var(--secondary)] border border-[var(--border)] flex items-center justify-center text-[var(--primary)] flex-shrink-0 group-hover/item:bg-[var(--primary)] group-hover/item:text-[var(--primary-foreground)] group-hover/item:border-[var(--primary)] transition-colors">
+                <CategoryIcon slug={slugFromHref(child.href)} className="w-[18px] h-[18px]" />
+              </span>
+              <span className="min-w-0">
+                <span className="block text-sm font-semibold text-[var(--foreground)] group-hover/item:text-[var(--primary)] transition-colors">
+                  {child.title}
+                </span>
+                {child.description && (
+                  <span className="block text-xs text-[var(--foreground-subtle)] mt-0.5 line-clamp-1">
+                    {child.description}
+                  </span>
+                )}
+              </span>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </motion.div>
   );
 }

@@ -1,107 +1,98 @@
 ---
 title: "Netflix Clone Architecture"
 category: "Streaming"
-description: "High-performance video streaming platform architecture featuring distributed system designs, custom content delivery networks (CDNs), recommendation engines, and Redis caching layers."
-techStack: ["React", "Node.js", "MongoDB", "Redis", "AWS S3", "CloudFront"]
-difficulty: "advanced"
+description: "A case study on designing a Netflix clone using React, Node.js, MongoDB, and Redis, highlighting architecture, scaling, and key challenges."
+techStack: ["React", "Node.js", "MongoDB", "Redis"]
+difficulty: "intermediate"
 ---
+## Core Requirements
 
-# Netflix Clone Architecture Case Study
+### Functional Requirements
+- **User Authentication:** Allow users to sign up, log in, and manage their accounts.
+- **Content Management:** Host a library of videos with metadata such as title, genre, and ratings.
+- **Video Streaming:** Stream videos efficiently with adaptive bitrate streaming.
+- **Search and Filter:** Enable users to search and filter content by various criteria.
+- **Recommendations:** Provide personalized content recommendations.
+- **User Interaction:** Implement features like watchlists and user ratings.
 
-This case study breaks down the system design, database schemas, API architecture, and scalability strategies required to support a Netflix-like video streaming service at scale.
+### Non-Functional Requirements
+- **Scalability:** Handle millions of concurrent users and requests.
+- **Availability:** Ensure high availability with minimal downtime.
+- **Performance:** Fast response times and smooth streaming.
+- **Security:** Protect user data and prevent unauthorized access.
 
-## System Architecture
+## High-Level Architecture
 
-The streaming platform relies on a split-plane architecture:
-1. **Control Plane** — Handles user signups, payment processing, browsing catalogs, search queries, and content metadata.
-2. **Data/Media Plane** — Handles video ingestion, transcoding, packaging, and high-throughput video delivery.
+### Client
+- **React Frontend:** Develop a responsive UI for browsing, searching, and streaming content. React Router manages navigation between pages. Use Axios or Fetch API for making HTTP requests to the backend.
 
-```
-+------------------+     +--------------------+     +-------------------+
-|  Client Browser  | --> | API Gateway (Kong) | --> | Metadata Service  |
-+------------------+     +--------------------+     +-------------------+
-        |                                                     |
-        v                                                     v
-+------------------+                                +-------------------+
-|  AWS CloudFront  | <----------------------------- |    MongoDB DB     |
-|   (Video CDN)    |                                +-------------------+
-+------------------+
-```
+### Server
+- **Node.js API:** Acts as the backend, handling client requests, authenticating users with JWT, and interacting with the database.
+- **Express Framework:** Used to set up RESTful APIs for serving data and handling user sessions.
 
-### Key Scaling Strategies
-- **Video Transcoding Pipelines** — Ingested videos are automatically split into 10-second chunks, transcoded in parallel into multiple resolutions (1080p, 720p, 480p) and bitrates, and stored in AWS S3 buckets.
-- **Adaptive Bitrate Streaming (ABR)** — The frontend media player dynamically queries alternative chunks based on the user's current network bandwidth, switching quality smoothly without buffering.
+### Database
+- **MongoDB:** Stores user data, video metadata, and user interactions like watch history and ratings. Opt for a sharded cluster to manage large datasets.
 
----
+### Caching
+- **Redis:** Caches frequently accessed data, such as user sessions and popular content, to reduce database load and improve response times.
 
-## Database Design
+### Video Delivery
+- **Content Delivery Network (CDN):** Use a CDN for efficient video streaming, reducing latency by caching content close to users.
+- **Adaptive Bitrate Streaming:** Implement via HLS or DASH protocols to adjust video quality based on user bandwidth.
 
-Metadata for videos, users, and progress is stored in a document database to handle flexible schemas, while transactional billing information resides in a relational DB.
+## Key Design Decisions and Trade-offs
 
-### Media Catalog Schema (MongoDB Collection: `videos`)
-```json
-{
-  "_id": "ObjectId",
-  "title": "Stranger Things",
-  "description": "A group of young friends witness supernatural forces...",
-  "releaseYear": 2016,
-  "maturityRating": "TV-14",
-  "genres": ["Sci-Fi", "Drama"],
-  "cast": ["Winona Ryder", "David Harbour"],
-  "assets": {
-    "thumbnail": "https://cdn.techverse.dev/st-thumb.jpg",
-    "hlsPlaylist": "https://cdn.techverse.dev/manifests/st.m3u8"
+### Database Choice
+MongoDB was chosen for its flexibility and scalability with a document-oriented approach, which suits storing diverse metadata for videos. However, this choice involves trade-offs in terms of complex transactions, where relational databases might be more suitable.
+
+### Caching Strategy
+Redis is used for its speed and efficiency in managing sessions and caching popular queries. This reduces load on MongoDB and speeds up access to frequently used data. The trade-off is increased complexity in maintaining cache consistency.
+
+### Authentication
+JWT (JSON Web Tokens) ensures stateless authentication, reducing server load. However, it requires robust token management to prevent security issues such as token hijacking.
+
+### Video Streaming Protocol
+Choosing adaptive bitrate streaming optimizes user experience across different network conditions, but requires more sophisticated video processing and storage solutions.
+
+## Data Model Highlights
+
+- **User Collection:** Stores user profiles, authentication details, and preferences.
+  ```json
+  {
+    "_id": "ObjectId",
+    "username": "string",
+    "email": "string",
+    "passwordHash": "string",
+    "watchlist": [ "videoId1", "videoId2" ],
+    "history": [ { "videoId": "string", "watchedAt": "Date" } ]
   }
-}
-```
+  ```
 
-### User Watch Progress Schema (MongoDB Collection: `progress`)
-```json
-{
-  "_id": "ObjectId",
-  "userId": "ObjectId",
-  "videoId": "ObjectId",
-  "lastWatchedPositionSeconds": 1420,
-  "completed": false,
-  "updatedAt": "2026-06-12T16:21:00Z"
-}
-```
+- **Video Collection:** Contains video metadata.
+  ```json
+  {
+    "_id": "ObjectId",
+    "title": "string",
+    "genre": "string",
+    "description": "string",
+    "thumbnailUrl": "string",
+    "videoUrl": "string",
+    "ratings": [ { "userId": "ObjectId", "score": "number" } ]
+  }
+  ```
 
----
+## Scalability
 
-## API Design
+### Horizontal Scaling
+- **Node.js Instances:** Deploy multiple instances behind a load balancer to handle increased traffic.
+- **MongoDB Sharding:** Distribute data across multiple servers to manage large datasets and maintain performance.
+- **CDN Usage:** Offloads the video streaming load from the primary servers, reducing bandwidth and latency issues.
 
-Endpoints are optimized for low latency. High-volume read routes (like the home page catalog) are heavily cached in Redis.
+### Challenges
 
-### 1. Get Video Stream Manifest
-- **Endpoint:** `GET /api/v1/videos/:id/stream`
-- **Response:**
-```json
-{
-  "videoId": "st-109283",
-  "streamUrl": "https://stream.techverse.dev/st/manifest.m3u8",
-  "drmToken": "jwt-token-here",
-  "supportedResolutions": ["1080p", "720p", "480p"]
-}
-```
+- **Data Consistency:** Ensuring consistent data across distributed systems, especially with caching layers.
+- **Security:** Protecting against unauthorized access requires consistent updates to security practices.
+- **Load Balancing:** Efficiently distributing user requests to prevent server overloads, particularly during peak times.
+- **Content Processing:** Managing video encoding and storage efficiently to support adaptive bitrate streaming.
 
-### 2. Update Watch Progress (Heartbeat)
-- **Endpoint:** `POST /api/v1/videos/:id/progress`
-- **Request Body:**
-```json
-{
-  "positionSeconds": 1420,
-  "completed": false
-}
-```
-- **Response:** `200 OK` (processed asynchronously via Message Queue to avoid DB bottlenecks).
-
----
-
-## Scalability & Performance
-
-### 1. Multi-Region CDNs
-Video manifests and playlist files are served from Edge nodes near the user. We configure AWS CloudFront caches to intercept traffic before reaching origin servers, reducing first-byte latency.
-
-### 2. Cache Warm-Up
-Popular trending shows are pre-cached in Redis clusters during off-peak hours. The landing catalog queries Redis directly, allowing response times under **15ms** for concurrent millions of homepage hits.
+This architecture provides a solid foundation for developing a Netflix clone using the given tech stack, addressing scalability, performance, and user experience challenges effectively.

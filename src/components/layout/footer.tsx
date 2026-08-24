@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, type FormEvent } from "react";
 import Link from "next/link";
 import {
   Sparkles,
@@ -10,7 +11,7 @@ import {
   ArrowUpRight,
   Heart,
 } from "lucide-react";
-import { mainNavigation, siteConfig } from "@/lib/constants";
+import { siteConfig } from "@/lib/constants";
 
 const footerSections = [
   {
@@ -25,13 +26,13 @@ const footerSections = [
     ],
   },
   {
-    title: "Resources",
+    title: "Popular",
     links: [
-      { label: "News & Trends", href: "/news" },
-      { label: "Visual Learning", href: "/learn" },
-      { label: "Cheat Sheets", href: "/learn?type=cheat-sheets" },
-      { label: "Comparisons", href: "/learn?type=comparisons" },
-      { label: "Architecture Diagrams", href: "/learn?type=architecture" },
+      { label: "AI Coding Tools", href: "/ai-tools?category=coding" },
+      { label: "Frontend Guides", href: "/technologies/frontend" },
+      { label: "System Design Q&A", href: "/interviews/system-design" },
+      { label: "Project Case Studies", href: "/projects" },
+      { label: "Learning Roadmaps", href: "/roadmaps" },
     ],
   },
   {
@@ -46,13 +47,26 @@ const footerSections = [
 ];
 
 const socialLinks = [
-  { label: "GitHub", href: "https://github.com/techverse", icon: Globe },
-  { label: "Twitter", href: "https://twitter.com/techverse", icon: MessageCircle },
-  { label: "LinkedIn", href: "https://linkedin.com/company/techverse", icon: Briefcase },
-  { label: "Email", href: "mailto:hello@techverse.dev", icon: Mail },
-];
+  { label: "GitHub", href: siteConfig.links.github, icon: Globe },
+  { label: "Twitter", href: siteConfig.links.twitter, icon: MessageCircle },
+  { label: "LinkedIn", href: siteConfig.links.linkedin, icon: Briefcase },
+  { label: "Email", href: `mailto:${siteConfig.contactEmail}`, icon: Mail },
+].filter((s) => s.href);
 
 export function Footer() {
+  const [email, setEmail] = useState("");
+
+  const handleSubscribe = (e: FormEvent) => {
+    e.preventDefault();
+    if (!email) return;
+    const subject = encodeURIComponent("Newsletter subscription");
+    const body = encodeURIComponent(
+      `Please add ${email} to the TechVerse newsletter.`
+    );
+    // No backend yet: route the signup to the site owner's inbox.
+    window.location.href = `mailto:${siteConfig.contactEmail}?subject=${subject}&body=${body}`;
+  };
+
   return (
     <footer className="relative border-t border-[var(--border)] bg-[var(--background-secondary)]">
       {/* Gradient decoration */}
@@ -64,12 +78,11 @@ export function Footer() {
           {/* Brand column */}
           <div className="lg:col-span-2 space-y-4">
             <Link href="/" className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#6366f1] to-[#8b5cf6] flex items-center justify-center shadow-[0_0_15px_rgba(99,102,241,0.3)]">
-                <Sparkles className="w-4 h-4 text-white" />
+              <div className="w-9 h-9 rounded-xl bg-[var(--foreground)] flex items-center justify-center">
+                <Sparkles className="w-[18px] h-[18px] text-[var(--background)]" />
               </div>
-              <span className="text-xl font-bold tracking-tight">
-                <span className="gradient-text">Tech</span>
-                <span className="text-[var(--foreground)]">Verse</span>
+              <span className="text-xl font-bold tracking-tight text-[var(--foreground)]">
+                Tech<span className="text-[var(--primary)]">Verse</span>
               </span>
             </Link>
             <p className="text-sm text-[var(--foreground-muted)] max-w-sm leading-relaxed">
@@ -126,16 +139,23 @@ export function Footer() {
                 Get weekly insights on tech trends, new tools, and career advice.
               </p>
             </div>
-            <div className="flex items-center gap-2 w-full sm:w-auto">
+            <form onSubmit={handleSubscribe} className="flex items-center gap-2 w-full sm:w-auto">
               <input
                 type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email"
+                aria-label="Email address"
                 className="flex-1 sm:w-64 h-10 px-4 rounded-lg bg-[var(--background)] border border-[var(--border)] text-sm text-[var(--foreground)] placeholder:text-[var(--foreground-subtle)] focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
               />
-              <button className="h-10 px-5 rounded-lg bg-gradient-to-r from-[#6366f1] to-[#8b5cf6] text-white text-sm font-medium hover:from-[#818cf8] hover:to-[#a78bfa] transition-all duration-200 shadow-md hover:shadow-lg whitespace-nowrap cursor-pointer">
+              <button
+                type="submit"
+                className="h-10 px-5 rounded-lg bg-[var(--foreground)] text-[var(--background)] text-sm font-medium hover:opacity-90 transition-all duration-200 shadow-md hover:shadow-lg whitespace-nowrap cursor-pointer"
+              >
                 Subscribe
               </button>
-            </div>
+            </form>
           </div>
         </div>
 

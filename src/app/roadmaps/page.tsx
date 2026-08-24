@@ -14,22 +14,21 @@ export default function RoadmapsPage() {
   return (
     <div className="min-h-screen">
       {/* Hero */}
-      <section className="relative py-20 sm:py-28 overflow-hidden border-b border-[var(--border)]">
-        <div className="absolute inset-0 bg-gradient-to-b from-[var(--background-secondary)] to-[var(--background)]" />
-        <div className="absolute inset-0 grid-pattern opacity-40" />
-        <div className="absolute bottom-0 right-0 w-72 h-72 bg-[#8b5cf6]/10 rounded-full blur-[100px]" />
+      <section className="relative overflow-hidden border-b border-[var(--border)]">
+        <div className="absolute inset-0 -z-10 grid-pattern" />
+        <div className="absolute -top-20 right-0 w-[26rem] h-[26rem] rounded-full bg-[var(--primary)]/8 blur-[120px] -z-10" />
 
-        <div className="relative container-wide text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#8b5cf6]/30 bg-[#8b5cf6]/5 text-sm text-[#8b5cf6] mb-6">
-            <Map className="w-3.5 h-3.5" />
-            {roadmaps.length} Guided Pathways
+        <div className="container-tight py-16 sm:py-24 text-center">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[var(--border)] bg-[var(--surface)] text-sm text-[var(--foreground-muted)] shadow-[var(--shadow-sm)] mb-5">
+            <Map className="w-3.5 h-3.5 text-[var(--primary)]" />
+            {roadmaps.length} guided pathways
           </div>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight">
-            <span className="text-[var(--foreground)]">Interactive </span>
-            <span className="gradient-text">Roadmaps</span>
+          <h1 className="font-display text-5xl sm:text-6xl text-[var(--foreground)] text-balance leading-[1.05]">
+            Roadmaps that actually finish
           </h1>
-          <p className="mt-4 text-lg text-[var(--foreground-muted)] max-w-2xl mx-auto leading-relaxed">
-            Visual, node-based pathways to guide your learning from absolute beginner to industry expert. Track your steps and master technologies.
+          <p className="mt-5 text-lg text-[var(--foreground-muted)] max-w-2xl mx-auto leading-relaxed text-pretty">
+            Ordered, stage-by-stage paths from beginner to job-ready — check off each step
+            and watch your progress fill in.
           </p>
         </div>
       </section>

@@ -14,22 +14,21 @@ export default function ProjectsPage() {
   return (
     <div className="min-h-screen">
       {/* Hero */}
-      <section className="relative py-20 sm:py-28 overflow-hidden border-b border-[var(--border)]">
-        <div className="absolute inset-0 bg-gradient-to-b from-[var(--background-secondary)] to-[var(--background)]" />
-        <div className="absolute inset-0 grid-pattern opacity-40" />
-        <div className="absolute top-1/3 -left-20 w-72 h-72 bg-[#22c55e]/10 rounded-full blur-[100px]" />
+      <section className="relative overflow-hidden border-b border-[var(--border)]">
+        <div className="absolute inset-0 -z-10 grid-pattern" />
+        <div className="absolute -top-20 -left-16 w-[26rem] h-[26rem] rounded-full bg-[var(--primary)]/8 blur-[120px] -z-10" />
 
-        <div className="relative container-wide text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#22c55e]/30 bg-[#22c55e]/5 text-sm text-[#22c55e] mb-6">
-            <Layers className="w-3.5 h-3.5" />
-            {projects.length} System Case Studies
+        <div className="container-tight py-16 sm:py-24 text-center">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[var(--border)] bg-[var(--surface)] text-sm text-[var(--foreground-muted)] shadow-[var(--shadow-sm)] mb-5">
+            <Layers className="w-3.5 h-3.5 text-[var(--primary)]" />
+            {projects.length} system case studies
           </div>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight">
-            <span className="text-[var(--foreground)]">Project </span>
-            <span className="gradient-text">Architecture</span>
+          <h1 className="font-display text-5xl sm:text-6xl text-[var(--foreground)] text-balance leading-[1.05]">
+            How real products are built
           </h1>
-          <p className="mt-4 text-lg text-[var(--foreground-muted)] max-w-2xl mx-auto leading-relaxed">
-            Deep-dive into database schema schemas, API layout designs, and microservice topologies from real-world, high-traffic systems.
+          <p className="mt-5 text-lg text-[var(--foreground-muted)] max-w-2xl mx-auto leading-relaxed text-pretty">
+            Architecture breakdowns of products you know — the components, data flow, trade-offs,
+            and how each one scales. Perfect for system-design practice.
           </p>
         </div>
       </section>

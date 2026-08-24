@@ -1,15 +1,96 @@
 ---
 title: "Banking Platform Architecture"
 category: "FinTech"
-description: "Production architecture breakdown of Banking Platform."
-techStack: ["Java","Spring Boot","PostgreSQL","Kafka"]
+description: "A detailed system design for a scalable banking platform using Java, Spring Boot, PostgreSQL, and Kafka."
+techStack: ["Java", "Spring Boot", "PostgreSQL", "Kafka"]
 difficulty: "intermediate"
 ---
+## Core Requirements
 
-# Banking Platform Production Architecture
+### Functional Requirements
+- **Account Management**: Users can create, update, and delete accounts.
+- **Transactions**: Support for deposits, withdrawals, and transfers.
+- **Balance Enquiry**: Users can check their current balance.
+- **Notifications**: Users receive notifications for transactions.
 
-Case study overview of the Banking Platform system architecture.
+### Non-Functional Requirements
+- **Scalability**: Must handle thousands of concurrent transactions.
+- **Reliability**: Ensure consistency and availability of data.
+- **Security**: Protect sensitive user data and transactions.
+- **Performance**: Low-latency transaction processing.
 
-## Scaling
-- Vertical database replication.
-- Horizontal application server clusters.
+## High-Level Architecture
+
+The architecture is built around a microservices approach using **Java** and **Spring Boot**. Each service handles a specific domain of functionality:
+
+1. **Account Service**: Manages user accounts and interacts with the PostgreSQL database for CRUD operations.
+2. **Transaction Service**: Processes transactions and ensures ACID properties using database transactions.
+3. **Notification Service**: Sends notifications using Kafka as the message broker.
+4. **API Gateway**: Routes requests to appropriate services and handles authentication.
+5. **Kafka**: Used for event-driven communication, particularly for transaction notifications.
+6. **PostgreSQL**: The primary relational database for storing account and transaction data.
+
+### Data Flow
+- User requests are sent to the API Gateway.
+- The gateway authenticates and forwards requests to the relevant service.
+- The Account Service manages account data via PostgreSQL.
+- The Transaction Service performs financial operations and publishes events to Kafka.
+- The Notification Service consumes Kafka events and sends notifications to users.
+
+## Key Design Decisions and Trade-offs
+
+### Use of Kafka for Event-Driven Architecture
+Kafka is chosen for its ability to handle high throughput and its durability features. It allows the platform to decouple services, enabling scalability and resilience. However, this introduces eventual consistency challenges, requiring careful design to ensure users receive timely and accurate notifications.
+
+### PostgreSQL for RDBMS
+PostgreSQL is selected due to its robustness in handling transactions, support for complex queries, and extensions like JSONB for semi-structured data. While it provides strong ACID guarantees, the trade-off is potential performance bottlenecks under extreme load, which necessitates optimized indexing strategies and careful schema design.
+
+### Java and Spring Boot
+Java, complemented by Spring Boot, provides a well-supported framework for building scalable, secure applications. The trade-off here is the increased complexity in managing microservices compared to a monolithic architecture.
+
+## Data Model Highlights
+
+### Account Table
+```sql
+CREATE TABLE accounts (
+    id SERIAL PRIMARY KEY,
+    user_id UUID NOT NULL UNIQUE,
+    balance NUMERIC(15, 2) NOT NULL CHECK (balance >= 0),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+### Transaction Table
+```sql
+CREATE TABLE transactions (
+    id SERIAL PRIMARY KEY,
+    account_id INT REFERENCES accounts(id),
+    type VARCHAR(10) CHECK (type IN ('deposit', 'withdrawal', 'transfer')),
+    amount NUMERIC(15, 2) NOT NULL CHECK (amount > 0),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+These tables ensure data integrity with constraints and foreign key relationships, crucial for maintaining accurate financial records.
+
+## Scalability
+
+### Horizontal Scaling
+- **Kafka Clusters**: Kafka can be scaled horizontally to handle increased messaging loads. Each topic can have multiple partitions, allowing parallel consumption by multiple consumers.
+- **Microservices**: Each service can be independently scaled based on demand, using container orchestration tools like Kubernetes.
+
+### Database Scaling
+- PostgreSQL can be scaled vertically to a point, but for horizontal scaling, techniques like sharding or read replicas (using tools like Citus) can be employed.
+
+## Main Challenges
+
+### Consistency vs. Availability
+In a distributed system, achieving both consistency and availability is challenging, especially with financial transactions. The system prioritizes consistency for transactions using database constraints and transaction isolation levels.
+
+### Security
+Protecting sensitive data is paramount. The platform must implement encryption for data at rest and in transit, use secure authentication mechanisms (e.g., OAuth 2.0), and regularly audit for vulnerabilities.
+
+### Performance Optimization
+As the user base grows, optimizing query performance and tuning Kafka to minimize latency becomes essential.
+
+Building a banking platform with this tech stack involves balancing trade-offs between scalability, consistency, and performance, while maintaining strong security controls to protect user data.

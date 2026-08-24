@@ -1,102 +1,95 @@
 ---
 title: "Uber Clone Architecture"
 category: "Ride-sharing"
-description: "Real-time dispatch system architecture featuring geospatial indexing (h3/s2), WebSocket connections, Redis Geo commands, and Apache Kafka message streaming."
-techStack: ["React Native", "Node.js", "PostgreSQL", "Redis", "Kafka", "WebSockets"]
-difficulty: "advanced"
+description: "A detailed system design case study for developing an Uber-like ride-sharing app using React Native, Node.js, PostgreSQL, and Redis."
+techStack: ["React Native", "Node.js", "PostgreSQL", "Redis"]
+difficulty: "intermediate"
 ---
+## Core Requirements
 
-# Uber Clone Architecture Case Study
+Building an Uber-like ride-sharing app involves implementing both functional and non-functional requirements. 
 
-This case study reviews the system design, geofencing mechanisms, database schemas, and WebSocket dispatch pipelines required to construct a reliable, real-time ride-matching platform.
+### Functional Requirements
 
-## System Architecture
+1. **User Authentication:** Users must be able to register, log in, and manage their profiles.
+2. **Ride Booking:** Users can request rides, view available drivers, and track their rides in real-time.
+3. **Driver Management:** Drivers should be able to manage their availability and accept ride requests.
+4. **Payments:** Integration with payment gateways to handle transactions securely.
+5. **Notifications:** Real-time notifications for ride status updates.
+6. **Ratings and Reviews:** Allow users and drivers to rate each other.
 
-Ride-sharing applications are built on a high-availability event-driven architecture, connecting drivers and riders dynamically based on coordinate matches.
+### Non-Functional Requirements
 
+1. **Scalability:** The system must handle a large number of users, especially during peak hours.
+2. **Reliability:** Ensure high availability and fault tolerance.
+3. **Performance:** Fast response times for ride requests and updates.
+4. **Security:** Secure user data and transactions.
+
+## High-Level Architecture
+
+The architecture is divided into several components, each responsible for specific functions.
+
+### Components
+
+- **Frontend:** Built with React Native, this component handles the user interface for both riders and drivers, ensuring cross-platform compatibility for iOS and Android.
+- **Backend API:** Developed using Node.js, it manages business logic, processes requests, and communicates with the database.
+- **Database:** PostgreSQL is used for persistent storage of user data, ride information, and transaction records.
+- **Cache:** Redis is utilized to store session data and frequently accessed information to enhance performance.
+
+### Data Flow
+
+1. **User Interaction:** Users interact with the app via the React Native frontend.
+2. **API Requests:** Actions like booking a ride or updating profiles are sent as HTTP requests to the Node.js server.
+3. **Database Operations:** The server interacts with PostgreSQL to retrieve or store data.
+4. **Real-Time Updates:** WebSockets or push notifications deliver real-time ride status updates.
+
+## Key Design Decisions and Trade-offs
+
+- **React Native vs. Native Development:** React Native is chosen for its ability to produce apps for both iOS and Android from a single codebase, reducing development time and costs. Trade-off: Slightly reduced performance compared to fully native apps.
+- **Node.js for Backend:** Chosen for its event-driven architecture, which is well-suited for handling concurrent requests and real-time updates. Trade-off: Single-threaded nature may require additional effort to manage CPU-intensive tasks.
+- **PostgreSQL vs. NoSQL:** PostgreSQL provides strong ACID compliance, essential for transactional operations like payments. Trade-off: NoSQL solutions might offer better horizontal scalability, but at the cost of complex consistency models.
+- **Redis for Caching:** Redis is selected for its speed and support for data structures, crucial for caching session data and reducing database load. Trade-off: Being an in-memory store, Redis requires careful management of memory resources.
+
+## Data Model Highlights
+
+### User Table
+
+```sql
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  username VARCHAR(255) UNIQUE NOT NULL,
+  password_hash TEXT NOT NULL,
+  email VARCHAR(255) UNIQUE NOT NULL,
+  role ENUM('rider', 'driver') NOT NULL
+);
 ```
-+---------------+              +---------------+
-|  Rider Client | <-----------> |               |
-+---------------+              |   WebSocket   |
-                               | Gateway Server|
-+---------------+              |               |
-| Driver Client | <-----------> |               |
-+---------------+              +---------------+
-                                       |
-                                       v
-                               +---------------+      +--------------+
-                               | Dispatcher    | ---> | Kafka Topic  |
-                               | (Node.js)     |      | (Location)   |
-                               +---------------+      +--------------+
-```
 
-### Core Architecture Components
-1. **Websocket Gateways** — Manages persistent bi-directional communication channels for both drivers and riders. Receives driver location pings every 4 seconds.
-2. **Geospatial Indexer** — Maps coordinate pairs (lat, lng) to hexagonal H3 cells. Restricts matching searches to adjacent driver cells.
-3. **Dispatch Coordinator** — Queries nearby idle drivers, scores compatibility, sends push offers, and processes driver acceptances.
+### Ride Table
 
----
-
-## Database Design
-
-Rider information and billing records require high integrity and are stored in PostgreSQL. Real-time locations are held exclusively in memory within a Redis cluster.
-
-### Driver Location Key (Redis GEO)
-- Drivers post location data to a Redis Geo spatial index:
-```bash
-# Add driver location (lng, lat, driverId)
-GEOADD drivers:active -122.4194 37.7749 driver_998312
-```
-
-### Ride Record Schema (PostgreSQL Table: `rides`)
 ```sql
 CREATE TABLE rides (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    rider_id UUID REFERENCES users(id),
-    driver_id UUID REFERENCES users(id),
-    status VARCHAR(50) DEFAULT 'requested', -- requested, accepted, active, completed, cancelled
-    pickup_coords POINT NOT NULL,
-    dropoff_coords POINT NOT NULL,
-    fare_cents INTEGER NOT NULL,
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-    completed_at TIMESTAMP WITH TIME ZONE
+  id SERIAL PRIMARY KEY,
+  user_id INT REFERENCES users(id),
+  driver_id INT REFERENCES users(id),
+  status ENUM('requested', 'in_progress', 'completed', 'canceled') NOT NULL,
+  start_location POINT,
+  end_location POINT,
+  created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
-
-CREATE INDEX idx_rides_status ON rides(status);
 ```
 
----
+## Scalability and Challenges
 
-## API Design
+### Scalability
 
-### 1. Request a Ride
-- **Endpoint:** `POST /api/v1/rides/request`
-- **Request Body:**
-```json
-{
-  "pickupLat": 37.7749,
-  "pickupLng": -122.4194,
-  "dropoffLat": 37.7858,
-  "dropoffLng": -122.4008,
-  "vehicleType": "standard"
-}
-```
-- **Response:**
-```json
-{
-  "rideId": "50fa1bca-e940-42f0-91bf-a81d11e51b14",
-  "status": "searching",
-  "estimatedFare": 1550,
-  "etaMinutes": 6
-}
-```
+1. **Horizontal Scaling:** Scale the Node.js backend using load balancers and multiple service instances to distribute traffic.
+2. **Database Scaling:** Employ read replicas for PostgreSQL to handle increased read operations.
+3. **Caching Strategy:** Use Redis to cache frequently requested data, reducing database load.
 
----
+### Challenges
 
-## Scalability & Performance
+- **High Traffic Management:** During peak times, ensure the system can handle a surge in ride requests and real-time updates.
+- **Real-Time Tracking:** Implementing efficient real-time GPS tracking requires low-latency communication between clients and the backend.
+- **Payment Integration:** Securely handling transactions and protecting sensitive data against fraud requires robust encryption and compliance with financial regulations.
 
-### 1. GPS Ping Throttle & Buffering
-Sending driver GPS updates continuously can overwhelm servers. Driver clients compress coordinates, batch them, and send updates every 4 seconds. Gateways write these coordinates directly to a Kafka location stream, decoupling ingestion from matching operations.
-
-### 2. Localized Geo-Hashing
-Instead of scanning all drivers, driver searches are bucketed using Uber's H3 Hexagonal Hierarchical Index. This ensures search operations have an $O(1)$ lookup complexity, returning nearby driver ids in under **5ms**.
+This architecture prioritizes performance, reliability, and scalability, leveraging the strengths of each component in the tech stack to deliver a responsive and user-friendly ride-sharing experience.

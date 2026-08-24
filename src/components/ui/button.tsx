@@ -19,9 +19,10 @@ const buttonVariants = cva(
         ghost:
           "hover:bg-[var(--surface-hover)] hover:text-[var(--foreground)]",
         link: "text-[var(--primary)] underline-offset-4 hover:underline",
-        glow: "bg-[var(--primary)] text-[var(--primary-foreground)] hover:bg-[var(--primary-hover)] shadow-[0_0_20px_rgba(99,102,241,0.3)] hover:shadow-[0_0_30px_rgba(99,102,241,0.5)]",
+        glow: "bg-[var(--primary)] text-[var(--primary-foreground)] hover:bg-[var(--primary-hover)] shadow-[var(--shadow-glow)] hover:shadow-[var(--shadow-glow-lg)]",
         gradient:
-          "bg-gradient-to-r from-[#6366f1] to-[#8b5cf6] text-white hover:from-[#818cf8] hover:to-[#a78bfa] shadow-md hover:shadow-lg",
+          "text-[var(--primary-foreground)] bg-[image:var(--gradient-primary)] shadow-[var(--shadow-glow)] hover:shadow-[var(--shadow-glow-lg)] hover:-translate-y-0.5",
+        ink: "bg-[var(--foreground)] text-[var(--background)] hover:opacity-90 shadow-md hover:shadow-lg",
       },
       size: {
         default: "h-10 px-5 py-2",

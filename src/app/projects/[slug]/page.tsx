@@ -4,8 +4,12 @@ import { notFound } from "next/navigation";
 import { MdxContent } from "@/components/mdx-content";
 import Link from "next/link";
 import { Metadata } from "next";
-import { ArrowLeft, BookOpen, Layers, Sparkles } from "lucide-react";
+import { Layers } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { BookmarkButton } from "@/components/ui/bookmark-button";
+import { ReadingProgress } from "@/components/ui/reading-progress";
+import { JsonLd } from "@/components/json-ld";
+import { articleJsonLd } from "@/lib/seo";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -43,11 +47,19 @@ export default async function ProjectDetailPage({ params }: Props) {
 
   return (
     <div className="min-h-screen">
+      <ReadingProgress />
+      <JsonLd
+        data={articleJsonLd({
+          title: `${project.title} Architecture`,
+          description: project.description,
+          path: `/projects/${project.slug}`,
+          section: project.category,
+        })}
+      />
       {/* Hero */}
       <section className="relative py-16 sm:py-24 overflow-hidden border-b border-[var(--border)]">
-        <div className="absolute inset-0 bg-gradient-to-b from-[var(--background-secondary)] to-[var(--background)]" />
-        <div className="absolute inset-0 grid-pattern opacity-30" />
-        <div className="absolute top-1/3 -left-20 w-72 h-72 bg-[#22c55e]/10 rounded-full blur-[100px]" />
+        <div className="absolute inset-0 grid-pattern" />
+        <div className="absolute top-1/3 -left-20 w-72 h-72 bg-[var(--primary)]/10 rounded-full blur-[100px]" />
 
         <div className="relative container-tight">
           {/* Breadcrumbs */}
@@ -88,6 +100,12 @@ export default async function ProjectDetailPage({ params }: Props) {
                 </span>
               ))}
             </div>
+            <div className="pt-2">
+              <BookmarkButton
+                variant="labeled"
+                item={{ type: "project", slug: project.slug, title: project.title, url: `/projects/${project.slug}`, category: project.category }}
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -95,8 +113,8 @@ export default async function ProjectDetailPage({ params }: Props) {
       {/* Main Content */}
       <section className="section-padding">
         <div className="container-tight max-w-3xl">
-          <div className="mb-8 p-4 rounded-xl border border-[#22c55e]/20 bg-[#22c55e]/5 flex items-start gap-3">
-            <Layers className="w-5 h-5 text-[#22c55e] mt-0.5 flex-shrink-0" />
+          <div className="mb-8 p-4 rounded-xl border border-[var(--primary)]/20 bg-[var(--primary)]/5 flex items-start gap-3">
+            <Layers className="w-5 h-5 text-[var(--primary)] mt-0.5 flex-shrink-0" />
             <div>
               <h4 className="text-sm font-bold text-[var(--foreground)]">System Architecture Guide</h4>
               <p className="text-xs text-[var(--foreground-muted)] mt-1 leading-relaxed">

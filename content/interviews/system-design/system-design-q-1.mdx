@@ -1,13 +1,62 @@
 ---
-title: "How would you design a URL Shortener like Bitly? (Variant 1)"
+title: "How would you design a URL shortener like Bitly?"
 category: "system-design"
 difficulty: "hard"
 company: "Google"
-tags: ["system-design","interview-prep","topic-0"]
+tags: ["system-design", "interview-prep"]
 ---
+To design a URL shortener like Bitly, the main goal is to map a long URL to a shorter, unique identifier. This involves creating a system that efficiently handles URL creation, storage, access, and redirection. Here’s a high-level overview of the design:
 
-Detailed answer for: **How would you design a URL Shortener like Bitly? (Variant 1)**
+1. **User Interface**: Provide a simple web interface where users can submit long URLs and receive a short URL.
 
-### Key Details
-- Focus on practical trade-offs.
-- Illustrate with architectural diagrams where applicable.
+2. **Unique Identifier Generation**: Use a base-62 encoding system to generate a unique key for each long URL. This supports alphanumeric characters (a-z, A-Z, 0-9), allowing for a large number of combinations.
+
+3. **Database**: Store mappings of short URLs to long URLs in a database. A key-value store like Redis or a relational database like PostgreSQL can be used.
+
+4. **Redirection Service**: When a user accesses a short URL, the service will look up the long URL in the database and redirect the user.
+
+5. **Scalability Considerations**: Implement load balancers to handle traffic and consider using a distributed database system for horizontal scaling.
+
+### Key Points
+
+- **Encoding Scheme**: Base-62 is a common choice as it provides a good balance between URL length and uniqueness, with 62^6 combinations for a 6-character short URL.
+
+- **Database Choice**: For fast read-write operations, a NoSQL database like MongoDB or a key-value store such as DynamoDB is suitable. These options provide scalability and high availability.
+
+- **Handling Collisions**: Ensure that the generated short URL is unique. Implement checks to prevent collisions, possibly using a hash function and checking for existing keys.
+
+- **Redirection**: HTTP 301 or 302 status codes should be used for URL redirection. 301 is for permanent redirection, while 302 is for temporary.
+
+- **Analytics and Monitoring**: Track usage statistics like the number of clicks and geographic data. Tools like Google Analytics can be integrated for this purpose.
+
+- **Expiration and Deletion**: Implement a feature for URL expiration and deletion to manage storage effectively.
+
+```python
+# Example of a base-62 encoding function in Python
+import string
+
+BASE = 62
+CHARS = string.ascii_letters + string.digits
+
+# Convert a number to a base-62 string
+def encode(num):
+    if num == 0:
+        return CHARS[0]
+    arr = []
+    while num:
+        num, rem = divmod(num, BASE)
+        arr.append(CHARS[rem])
+    arr.reverse()
+    return ''.join(arr)
+```
+
+### Common Follow-ups
+
+- **How would you ensure the system can handle billions of URLs?**
+  - Discuss sharding the database, using distributed systems like Amazon S3 for storage, and employing caching mechanisms like Redis.
+
+- **How would you handle security concerns?**
+  - Address issues like URL validation to prevent malicious links, use HTTPS for secure data transmission, and implement rate limiting to prevent abuse.
+
+- **What strategies would you use for database backup and recovery?**
+  - Explain the use of database replication, regular backups, and disaster recovery plans to ensure data integrity and availability.

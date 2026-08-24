@@ -1,13 +1,52 @@
 ---
-title: "What is the OWASP Top 10 vulnerabilities list? (Variant 1)"
+title: "What is the OWASP Top 10 and how do you mitigate its risks?"
 category: "cybersecurity"
 difficulty: "hard"
 company: "Google"
-tags: ["cybersecurity","interview-prep","topic-0"]
+tags: ["cybersecurity", "interview-prep"]
 ---
+The OWASP Top 10 is a standard awareness document for developers and web application security. It represents a broad consensus about the most critical security risks to web applications and is updated approximately every three to four years. The latest version, as of 2021, includes risks like Broken Access Control, Cryptographic Failures, and Injection, among others.
 
-Detailed answer for: **What is the OWASP Top 10 vulnerabilities list? (Variant 1)**
+### Key points
 
-### Key Details
-- Focus on practical trade-offs.
-- Illustrate with architectural diagrams where applicable.
+1. **Broken Access Control**: This occurs when users can act outside of their intended permissions. Mitigation involves implementing proper authentication and authorization checks, ensuring least privilege, and using frameworks that provide secure defaults.
+
+2. **Cryptographic Failures**: These issues arise when sensitive data is not properly protected. Use modern cryptographic algorithms and protocols like AES-256 for encryption and RSA for key exchange. Avoid deprecated algorithms like MD5 and SHA1.
+
+3. **Injection**: This risk includes SQL, NoSQL, OS, and LDAP injection vulnerabilities. Mitigation includes using parameterized queries, stored procedures, and ORM libraries that handle data safely.
+
+   ```sql
+   -- Example of parameterized query to prevent SQL Injection
+   String query = "SELECT * FROM users WHERE username = ?";
+   PreparedStatement pstmt = connection.prepareStatement(query);
+   pstmt.setString(1, username);
+   ResultSet rs = pstmt.executeQuery();
+   ```
+
+4. **Insecure Design**: This involves failing to design security into the architecture. Follow secure design principles, threat modeling, and use security patterns to mitigate this.
+
+5. **Security Misconfiguration**: This happens when security settings are defined, implemented, and maintained improperly. Automated tools can help detect misconfigurations. Regular audits and using security-focused configuration guides are essential.
+
+6. **Vulnerable and Outdated Components**: Ensure all components are up-to-date. Use tools like Dependabot and npm audit to identify vulnerable dependencies.
+
+7. **Identification and Authentication Failures**: Properly implement authentication mechanisms using multi-factor authentication (MFA) where possible. Use libraries and frameworks like OAuth2 and OpenID Connect.
+
+8. **Software and Data Integrity Failures**: Use digital signatures to verify software integrity and set up CI/CD pipelines with security checks.
+
+9. **Security Logging and Monitoring Failures**: Implement logging and monitoring to detect and respond to attacks. Use tools like ELK Stack for centralized logging and monitoring.
+
+10. **Server-Side Request Forgery (SSRF)**: Validate and sanitize all user inputs that affect server-side requests, and use whitelists to constrain outbound network traffic.
+
+### Common follow-ups
+
+- **How do you stay updated on the latest OWASP guidelines?**
+  - A strong candidate might mention subscribing to OWASP newsletters, participating in local OWASP chapters, and regularly reviewing the OWASP website for updates.
+
+- **Can you describe a time when you identified and mitigated a vulnerability from the OWASP Top 10?**
+  - Candidates should be prepared to discuss specific incidents from their experience where they've encountered and addressed such vulnerabilities.
+
+- **What tools do you recommend for automated security testing?**
+  - Potential answers might include tools like OWASP ZAP, Burp Suite, and Snyk.
+
+- **How do you approach security in agile development environments?**
+  - Responses should touch on integrating security practices into the Agile workflow, such as using security user stories, conducting regular security sprints, and automating security checks in CI/CD pipelines.

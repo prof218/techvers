@@ -1,15 +1,109 @@
 ---
 title: "Food Delivery App Architecture"
 category: "Delivery"
-description: "Production architecture breakdown of Food Delivery App."
-techStack: ["Flutter","Node.js","PostgreSQL","Redis"]
+description: "A case study on designing a scalable food delivery app using Flutter, Node.js, PostgreSQL, and Redis."
+techStack: ["Flutter", "Node.js", "PostgreSQL", "Redis"]
 difficulty: "intermediate"
 ---
+## Core Requirements
 
-# Food Delivery App Production Architecture
+### Functional Requirements
 
-Case study overview of the Food Delivery App system architecture.
+1. **User Registration and Authentication**: Users must be able to sign up and log in using email or social media accounts.
+2. **Restaurant Listings**: Users should view and search for restaurants by location, cuisine, or ratings.
+3. **Menu and Order Management**: Users can view menus, select items, and place orders.
+4. **Real-time Order Tracking**: Users should track their orders in real time once placed.
+5. **Payment Processing**: Secure payment options should be available for users.
+6. **Delivery Management**: Efficient assignment of delivery drivers, tracking delivery status, and updating in real time.
 
-## Scaling
-- Vertical database replication.
-- Horizontal application server clusters.
+### Non-Functional Requirements
+
+1. **Scalability**: The system should handle high traffic during peak times.
+2. **Performance**: Fast response times for all user interactions.
+3. **Reliability**: High availability and minimal downtime.
+4. **Security**: Protect user data and transactions.
+
+## High-Level Architecture
+
+The architecture consists of a client application built with Flutter, a backend server using Node.js, a PostgreSQL database for persistent storage, and Redis for caching.
+
+### Components and Data Flow
+
+1. **Flutter Client**: 
+   - Runs on both iOS and Android devices.
+   - Provides the user interface for interacting with the app.
+   - Communicates with the backend via REST APIs.
+
+2. **Node.js Backend**:
+   - Handles business logic and processes requests from the Flutter app.
+   - Uses Express.js to define API endpoints.
+   - Implements authentication, order processing, and real-time updates using WebSockets.
+
+3. **PostgreSQL Database**:
+   - Stores user information, restaurant data, menus, orders, and transactions.
+   - Supports advanced querying for search and analytics.
+
+4. **Redis Cache**:
+   - Caches frequently accessed data, such as restaurant lists and user sessions, to reduce database load.
+   - Manages real-time updates for order tracking using Redis Pub/Sub.
+
+### Data Flow
+
+- **User Actions**: Initiate requests from the Flutter client to the Node.js backend.
+- **Backend Processing**: Node.js processes requests, interacts with PostgreSQL for persistent data, and Redis for cached data.
+- **Database Operations**: SQL queries in PostgreSQL handle complex transactions and maintain data integrity.
+- **Real-Time Updates**: Redis Pub/Sub pushes updates to the client for real-time order tracking.
+
+## Key Design Decisions and Trade-offs
+
+1. **Tech Stack**: 
+   - **Flutter** was chosen for its cross-platform capabilities, reducing development time and cost.
+   - **Node.js** was selected for its non-blocking, event-driven architecture, which is ideal for handling multiple concurrent connections.
+   - **PostgreSQL** offers robust support for complex transactions and data integrity, essential for order management.
+   - **Redis** enhances performance with caching and supports real-time features with Pub/Sub.
+
+2. **Microservices vs. Monolithic**: A monolithic architecture was chosen initially for simplicity and faster deployment. As the app scales, a transition to microservices can be considered.
+
+3. **Real-Time Updates**: Using Redis for Pub/Sub rather than WebSockets directly on Node.js reduces server load and improves scalability.
+
+4. **Caching Strategy**: Redis caching is used to store session information and frequent queries to decrease load times and improve user experience.
+
+## Data Model Highlights
+
+- **User Table**: Stores user credentials, profile information, and preferences.
+- **Restaurant Table**: Contains restaurant details, including location, cuisine type, and ratings.
+- **Menu Table**: Lists menu items associated with restaurants.
+- **Order Table**: Tracks user orders, status, and timestamps.
+
+```sql
+CREATE TABLE users (
+    user_id SERIAL PRIMARY KEY,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password_hash TEXT NOT NULL,
+    profile JSONB
+);
+
+CREATE TABLE restaurants (
+    restaurant_id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    location POINT,
+    cuisine VARCHAR(100),
+    rating DECIMAL(2, 1)
+);
+```
+
+## Scalability Considerations
+
+- **Database Scaling**: Use read replicas and partitioning in PostgreSQL to handle increased load. Consider sharding if necessary.
+- **Load Balancing**: Implement load balancing on the Node.js server to distribute incoming requests efficiently.
+- **Horizontal Scaling**: Add more Node.js instances to handle increased API traffic.
+- **Redis Clustering**: Scale Redis by adding clusters to manage more cache and Pub/Sub operations.
+
+## Main Challenges
+
+1. **Data Consistency**: Ensuring data consistency between PostgreSQL and Redis, especially when updating order statuses.
+2. **Real-Time Performance**: Maintaining low latency for real-time tracking features.
+3. **Payment Security**: Integrating secure and compliant payment gateways to handle transactions.
+4. **Scalability**: Anticipating traffic spikes and scaling infrastructure without service degradation or downtime.
+
+Designing a food delivery app involves balancing user experience with technical constraints. The chosen tech stack provides a solid foundation for building a responsive and scalable application, while offering flexibility for future growth and feature additions. The architecture outlined addresses the core requirements and anticipates potential challenges, ensuring a robust foundation for the app's success.

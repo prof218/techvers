@@ -1,13 +1,55 @@
 ---
-title: "What is git rebase vs git merge? (Variant 1)"
+title: "What is the difference between git rebase and git merge?"
 category: "devops"
 difficulty: "hard"
 company: "Google"
-tags: ["devops","interview-prep","topic-0"]
+tags: ["devops", "interview-prep"]
 ---
+Git provides two primary ways to integrate changes from one branch into another: `git rebase` and `git merge`. Both commands aim to combine the work from different branches, but they do so in distinct ways.
 
-Detailed answer for: **What is git rebase vs git merge? (Variant 1)**
+`git merge` combines the histories of two branches by creating a new commit, called a merge commit, which has more than one parent. This preserves the history of all branches involved.
 
-### Key Details
-- Focus on practical trade-offs.
-- Illustrate with architectural diagrams where applicable.
+`git rebase`, on the other hand, moves or "rebases" the commits from one branch onto another by rewriting the project history. It reapplies commits from the current branch onto another base commit, leading to a linear project history.
+
+### Key points
+
+- **Preservation of History**: `git merge` preserves the complete history and all branches, resulting in a non-linear history. This is useful for maintaining context and tracking the origin of each branch.
+
+- **Linear History**: `git rebase` creates a linear history by moving the commits to a new base, effectively eliminating unnecessary merge commits. This can make the `git log` easier to read but alters the commit history.
+
+- **Conflict Resolution**: Both `git merge` and `git rebase` may result in conflicts that need manual resolution. With `merge`, conflicts are resolved in a single merge commit. With `rebase`, conflicts are resolved at each commit being rewritten.
+
+- **Use Cases**:
+  - Use `git merge` when you want to keep the history of all branches intact. This is common in collaborative environments where preserving the context is important.
+  - Use `git rebase` for keeping a clean, linear history, particularly when you are working on a feature branch and want to maintain a clear project history.
+
+### Example
+
+Here's an example showing the difference between `git merge` and `git rebase`:
+
+```bash
+# Assume you are on branch `feature`
+git checkout feature
+
+# Merging `main` into `feature`
+git merge main
+# This results in a merge commit
+
+# Rebasing `feature` onto `main`
+git rebase main
+# This moves the feature branch commits onto the tip of main, creating a linear history
+```
+
+### Common follow-ups
+
+- **When would you prefer `rebase` over `merge`?**
+  A candidate might discuss scenarios such as before merging a feature branch into the main branch to keep the commit history clean and linear.
+
+- **What are the potential pitfalls of using `rebase`?**
+  Responses could include the dangers of rewriting history on shared branches, which can lead to complications if others are working on the same branch.
+
+- **How do you handle conflicts during a rebase?**
+  The candidate might explain the process of resolving conflicts per commit and using commands like `git rebase --continue` or `git rebase --abort`.
+
+- **Can you explain the `--squash` option in context with `merge`?**
+  This would test understanding of squashing all changes from a branch into a single commit before merging, creating a cleaner history without a merge commit.

@@ -1,13 +1,68 @@
 ---
-title: "Explain CSS specificity and inheritance. (Variant 2)"
+title: "Explain CSS specificity and inheritance."
 category: "frontend"
 difficulty: "easy"
 company: "Meta"
-tags: ["frontend","interview-prep","topic-1"]
+tags: ["frontend", "interview-prep"]
 ---
+CSS specificity and inheritance are core concepts in Cascading Style Sheets that determine how styles are applied to HTML elements. Specificity is a measure of how specific a CSS selector is, while inheritance is a mechanism by which some CSS properties are passed down from parent elements to their children.
 
-Detailed answer for: **Explain CSS specificity and inheritance. (Variant 2)**
+### Key Points
 
-### Key Details
-- Focus on practical trade-offs.
-- Illustrate with architectural diagrams where applicable.
+#### CSS Specificity
+
+Specificity is calculated based on the types of selectors used within a CSS rule. It determines which styles are applied when multiple rules could apply to an element. The specificity is calculated using a four-part value (a, b, c, d):
+
+- **a**: Inline styles (e.g., `style=""`) have the highest specificity.
+- **b**: ID selectors (e.g., `#id`) contribute to this part of specificity.
+- **c**: Class selectors (e.g., `.class`), attribute selectors (e.g., `[type="text"]`), and pseudo-classes (e.g., `:hover`) contribute here.
+- **d**: Type selectors (e.g., `div`) and pseudo-elements (e.g., `::before`) contribute to this part.
+
+For example, the specificity of the selector `#content .article h2` would be calculated as (0, 1, 1, 1). When comparing specificity, each part is compared in sequence, starting from `a`.
+
+```css
+<style>
+  /* Specificity (0, 0, 1, 1) */
+  div p {
+    color: red;
+  }
+
+  /* Specificity (0, 1, 0, 0) */
+  #content {
+    color: blue;
+  }
+
+  /* Specificity (1, 0, 0, 0) */
+  style="color: green;"
+</style>
+
+<div id="content">
+  <p>Example Text</p>
+</div>
+```
+
+In this example, the inline style would win, and the text color would be green.
+
+#### CSS Inheritance
+
+Inheritance in CSS allows some properties to be passed from parent elements to child elements. Commonly inherited properties include `font-family`, `color`, and `line-height`. However, not all properties are inherited. For example, `margin` and `padding` are not.
+
+Inheritance can be controlled using the `inherit`, `initial`, `unset`, and `revert` keywords:
+
+- **inherit**: Forces a property to inherit the value from its parent, regardless of the default behavior.
+- **initial**: Applies the default value defined in CSS specifications.
+- **unset**: Resets the property to its natural value, which means it behaves like `inherit` if the property is naturally inherited, otherwise behaves like `initial`.
+- **revert**: Rolls back the style to the value it would have if there were no styles specified by the author.
+
+### Common Follow-ups
+
+1. **How does specificity relate to the `!important` declaration?**
+   - The `!important` declaration increases the specificity of a rule, making it more powerful than any other conflicting rules, regardless of their specificity. However, `!important` rules can be overridden by more specific `!important` rules.
+
+2. **Can you explain a scenario where specificity might cause unexpected behavior in a large project?**
+   - In large projects, multiple CSS files and libraries may be combined, leading to specificity conflicts. For instance, a third-party library might include styles with higher specificity than custom styles, causing unintended styling issues.
+
+3. **What strategies can you use to manage specificity in a complex CSS project?**
+   - Use CSS methodologies like BEM (Block Element Modifier) or OOCSS (Object-Oriented CSS) to maintain consistent specificity. Additionally, avoid using IDs for styling to prevent high specificity conflicts and make use of CSS preprocessors like SASS or LESS to organize and manage styles effectively.
+
+Understanding specificity and inheritance is crucial for effectively managing and debugging CSS styles in any web development project.

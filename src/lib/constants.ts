@@ -9,6 +9,14 @@ export const siteConfig = {
   url: "https://techverse.dev",
   ogImage: "/og-default.png",
   creator: "TechVerse Team",
+  // TODO(owner): replace with your real public contact address before launch.
+  contactEmail: "hello@techverse.dev",
+  // TODO(owner): replace with your real profiles (or set to "" to hide the icon).
+  links: {
+    github: "https://github.com/techverse",
+    twitter: "https://twitter.com/techverse",
+    linkedin: "https://linkedin.com/company/techverse",
+  },
   keywords: [
     "technology learning",
     "IT career paths",
@@ -78,7 +86,7 @@ export const mainNavigation: NavItem[] = [
   {
     title: "Interviews",
     href: "/interviews",
-    description: "500+ interview questions with detailed answers",
+    description: "Interview questions with detailed, worked answers",
     children: [
       { title: "Frontend", href: "/interviews/frontend", icon: "🎨" },
       { title: "Backend", href: "/interviews/backend", icon: "⚙️" },
@@ -88,11 +96,6 @@ export const mainNavigation: NavItem[] = [
       { title: "Cybersecurity", href: "/interviews/cybersecurity", icon: "🔒" },
       { title: "System Design", href: "/interviews/system-design", icon: "🏗️" },
     ],
-  },
-  {
-    title: "News",
-    href: "/news",
-    description: "Latest tech trends and industry updates",
   },
 ];
 

@@ -5,6 +5,7 @@ import { motion } from "motion/react";
 import Link from "next/link";
 import { ArrowRight, Database, Globe, Layers, Search } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { BookmarkButton } from "@/components/ui/bookmark-button";
 
 interface Project {
   title: string;
@@ -55,10 +56,11 @@ export default function ProjectsHubClient({ allProjects }: PageClientProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.04, duration: 0.4 }}
+            className="relative group h-full"
           >
             <Link
               href={`/projects/${project.slug}`}
-              className="group block p-6 rounded-2xl border border-[var(--border)] bg-[var(--surface)] hover:bg-[var(--surface-hover)] transition-all duration-300 card-hover h-full"
+              className="block p-6 rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow-sm)] card-hover h-full"
             >
               {/* Category */}
               <Badge variant="secondary" className="text-xs mb-3">{project.category}</Badge>
@@ -100,6 +102,11 @@ export default function ProjectsHubClient({ allProjects }: PageClientProps) {
                 <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
               </div>
             </Link>
+            <div className="absolute top-5 right-5">
+              <BookmarkButton
+                item={{ type: "project", slug: project.slug, title: project.title, url: `/projects/${project.slug}`, category: project.category }}
+              />
+            </div>
           </motion.div>
         ))}
       </div>

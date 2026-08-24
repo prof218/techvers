@@ -1,34 +1,94 @@
 ---
 title: "Next.js"
 category: "frontend"
-description: "The React framework for production. Next.js provides server-side rendering, static site generation, API routes, and a powerful developer experience."
+description: "Next.js is a React framework that enables server-side rendering and static site generation for faster, SEO-friendly web applications."
 icon: "▲"
 difficulty: "intermediate"
-tags: ["React", "SSR", "SSG", "Full-Stack", "Vercel"]
-features: ["App Router", "Server Components", "API Routes", "Static Generation", "Edge Runtime", "Image Optimization", "Middleware"]
-website: "https://nextjs.org"
-github: "https://github.com/vercel/next.js"
+tags: ["React", "SSR", "SSG", "Web Development", "JavaScript"]
+features: ["Server-side rendering (SSR)", "Static site generation (SSG)", "API routes", "Automatic code splitting", "CSS and Sass support", "Built-in image optimization"]
 ---
+## What is Next.js?
 
-# Next.js
+Next.js is a framework built on top of React that provides infrastructure and simple development experience for producing server-side rendered (SSR) and statically generated (SSG) web applications. It simplifies the process of building complex web apps by offering features like automatic code splitting, optimized performance, and a straightforward API for routing.
 
-Next.js is the leading full-stack React framework, created by Vercel. It provides the best developer experience for building modern web applications with features like server-side rendering, static generation, and API routes out of the box.
+### The Problem Next.js Solves
 
-## Key Features
+Traditional React applications are rendered on the client side, which can lead to slower initial load times and poor SEO performance. Next.js addresses these issues by allowing developers to render React components on the server side, thus speeding up the page load and improving SEO. It also provides a way to generate static HTML at build time, which can further enhance performance and reduce server load.
 
-### App Router (v13+)
-The App Router introduces React Server Components, nested layouts, streaming, and a new file-based routing system.
+### A Minimal Code Example
 
-### Server Components
-Render components on the server by default, reducing JavaScript bundle size and improving performance.
+Below is a minimal example of a Next.js page that demonstrates server-side rendering:
 
-### Data Fetching
-Fetch data directly in Server Components with native `fetch` and automatic caching.
+```jsx
+// pages/index.js
+import React from 'react';
 
-## Architecture
+const Home = ({ data }) => (
+  <div>
+    <h1>Welcome to Next.js!</h1>
+    <pre>{JSON.stringify(data, null, 2)}</pre>
+  </div>
+);
 
-Next.js supports multiple rendering strategies:
-- **SSR** — Server-Side Rendering for dynamic content
-- **SSG** — Static Site Generation for maximum performance
-- **ISR** — Incremental Static Regeneration for stale-while-revalidate
-- **Edge** — Edge Runtime for globally distributed compute
+export async function getServerSideProps() {
+  const res = await fetch('https://api.example.com/data');
+  const data = await res.json();
+  return { props: { data } };
+}
+
+export default Home;
+```
+
+In this example, `getServerSideProps` is a function that Next.js calls on each request. It fetches data from an external API and passes it as `props` to the `Home` component.
+
+### Core Concepts
+
+1. **Pages and Routing**: Each file in the `pages` directory becomes a route in your application. This file-based routing system makes it easy to manage and organize your routes.
+
+2. **Data Fetching**: Next.js supports data fetching methods like `getServerSideProps` for SSR, `getStaticProps` for SSG, and `getStaticPaths` for generating static pages based on dynamic routes.
+
+3. **API Routes**: You can create API endpoints in your Next.js app by adding files to the `pages/api` directory. These endpoints can handle requests using Node.js and are useful for handling form submissions or creating custom APIs.
+
+4. **CSS Support**: Next.js has built-in support for CSS and Sass, allowing you to import styles directly into your components. You can also utilize CSS Modules for component-scoped styling.
+
+5. **Image Optimization**: The `next/image` component provides automatic image optimization, resizing, and lazy loading, which helps improve performance.
+
+### When to Use Next.js vs Alternatives
+
+- **Next.js** is ideal for applications that require dynamic content and need better performance and SEO, such as blogs, e-commerce sites, and dashboards.
+- **Create React App** is more suitable for single-page applications that don't have complex routing or server-side rendering needs.
+- **Gatsby** might be a better choice if you are building a static site with a lot of pages and need advanced plugin support for different CMSs.
+
+### Getting Started with Next.js
+
+To start a new Next.js project, you need Node.js installed on your machine. As of now, Next.js requires at least Node.js 14.0.0.
+
+1. **Initialize a New Project**:
+
+   Run the following command in your terminal:
+
+   ```bash
+   npx create-next-app@latest my-next-app
+   cd my-next-app
+   npm run dev
+   ```
+
+   This creates a new Next.js project in the `my-next-app` directory and starts the development server.
+
+2. **Project Structure**:
+
+   - `pages/`: Contains your React components and determines the routes of your application.
+   - `public/`: Hosts static assets like images and fonts.
+   - `styles/`: Contains global and component-specific styles.
+
+3. **Run the Application**:
+
+   After setting up, you can start your development server using:
+
+   ```bash
+   npm run dev
+   ```
+
+   Visit `http://localhost:3000` in your browser to see your Next.js app in action.
+
+By understanding these fundamental concepts and features, you can effectively utilize Next.js to build fast and SEO-friendly web applications. Explore the official [Next.js documentation](https://nextjs.org/docs) for more in-depth topics and advanced usage scenarios.

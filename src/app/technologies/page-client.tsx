@@ -1,101 +1,83 @@
 "use client";
 
-import React, { useRef } from "react";
-import { motion, useInView } from "motion/react";
+import React from "react";
 import Link from "next/link";
-import { ArrowRight, Search, Sparkles } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { technologyCategories } from "@/lib/constants";
+import { technologies } from "#site/content";
+import { CategoryIcon } from "@/components/ui/category-icon";
+import { TiltCard } from "@/components/ui/tilt-card";
+import { Reveal } from "@/components/ui/reveal";
+
+const countByCategory = technologies.reduce<Record<string, number>>((acc, t) => {
+  acc[t.category] = (acc[t.category] || 0) + 1;
+  return acc;
+}, {});
 
 export function TechnologiesPageClient() {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
-
   return (
     <div className="min-h-screen">
       {/* Hero */}
-      <section className="relative py-20 sm:py-28 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-[var(--background-secondary)] to-[var(--background)]" />
-        <div className="absolute inset-0 grid-pattern opacity-40" />
-
-        {/* Orbs */}
-        <div className="absolute top-1/4 -left-20 w-72 h-72 bg-[#6366f1]/10 rounded-full blur-[100px]" />
-        <div className="absolute bottom-0 right-0 w-72 h-72 bg-[#8b5cf6]/10 rounded-full blur-[100px]" />
-
-        <div className="relative container-wide text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[var(--primary)]/30 bg-[var(--primary)]/5 text-sm text-[var(--primary)] mb-6">
-              <Sparkles className="w-3.5 h-3.5" />
-              100+ Technologies
-            </div>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight">
-              <span className="text-[var(--foreground)]">Technology </span>
-              <span className="gradient-text">Hub</span>
-            </h1>
-            <p className="mt-4 text-lg text-[var(--foreground-muted)] max-w-2xl mx-auto">
-              Explore comprehensive guides across 10 essential categories.
-              From frontend frameworks to AI systems — everything you need to master modern tech.
+      <section className="relative overflow-hidden border-b border-[var(--border)]">
+        <div className="absolute inset-0 -z-10 grid-pattern" />
+        <div className="absolute -top-24 right-0 w-[28rem] h-[28rem] rounded-full bg-[var(--primary)]/8 blur-[120px] -z-10" />
+        <div className="container-tight py-16 sm:py-24 text-center">
+          <Reveal>
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--primary)] mb-4">
+              Technology Hub
             </p>
-          </motion.div>
+            <h1 className="font-display text-5xl sm:text-6xl text-[var(--foreground)] text-balance leading-[1.05]">
+              Go deep on the tools you build with
+            </h1>
+            <p className="mt-5 text-lg text-[var(--foreground-muted)] max-w-2xl mx-auto text-pretty">
+              Practical, code-first guides across ten disciplines — from frontend frameworks
+              to AI systems. Pick a category and start learning.
+            </p>
+          </Reveal>
         </div>
       </section>
 
-      {/* Categories Grid */}
-      <section ref={ref} className="section-padding">
+      {/* Categories */}
+      <section className="section-padding">
         <div className="container-wide">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
-            {technologyCategories.map((category, index) => (
-              <motion.div
-                key={category.slug}
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: index * 0.05, duration: 0.4 }}
-              >
-                <Link
-                  href={`/technologies/${category.slug}`}
-                  className="group block p-6 rounded-2xl border border-[var(--border)] bg-[var(--surface)] hover:bg-[var(--surface-hover)] transition-all duration-300 card-hover h-full relative overflow-hidden"
-                >
-                  {/* Gradient hover */}
-                  <div
-                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                    style={{
-                      background: `linear-gradient(135deg, ${category.color}08, ${category.color}18)`,
-                    }}
-                  />
-
-                  <div className="relative">
-                    <div className="flex items-center justify-between mb-4">
-                      <span className="text-3xl">{category.icon}</span>
-                      <span
-                        className="text-xs font-medium px-2.5 py-1 rounded-full"
-                        style={{
-                          backgroundColor: `${category.color}15`,
-                          color: category.color,
-                        }}
-                      >
-                        {category.count} topics
-                      </span>
-                    </div>
-
-                    <h2 className="text-lg font-bold text-[var(--foreground)] group-hover:text-[var(--primary)] transition-colors">
-                      {category.name}
-                    </h2>
-
-                    <p className="text-sm text-[var(--foreground-muted)] mt-2 leading-relaxed">
-                      {category.description}
-                    </p>
-
-                    <div className="mt-4 flex items-center gap-1.5 text-sm text-[var(--primary)] font-medium">
-                      Explore category
-                      <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                    </div>
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+            {technologyCategories.map((category, index) => {
+              const count = countByCategory[category.slug] || 0;
+              return (
+                <Reveal key={category.slug} delay={(index % 5) * 0.06}>
+                  <Link href={`/technologies/${category.slug}`} className="block group h-full">
+                    <TiltCard className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-[var(--shadow-sm)] hover:shadow-[var(--shadow-lg)] hover:border-[var(--border-hover)] overflow-hidden">
+                      <div
+                        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                        style={{ background: `radial-gradient(120% 120% at 0% 0%, ${category.color}14, transparent 60%)` }}
+                      />
+                      <div className="tilt-layer relative">
+                        <div className="flex items-center justify-between mb-4">
+                          <span
+                            className="w-12 h-12 rounded-xl flex items-center justify-center"
+                            style={{ backgroundColor: `${category.color}18`, color: category.color }}
+                          >
+                            <CategoryIcon slug={category.slug} className="w-6 h-6" />
+                          </span>
+                          {count > 0 && (
+                            <span className="text-xs font-medium text-[var(--foreground-subtle)]">
+                              {count} {count === 1 ? "guide" : "guides"}
+                            </span>
+                          )}
+                        </div>
+                        <h2 className="text-lg font-semibold text-[var(--foreground)] group-hover:text-[var(--primary)] transition-colors">
+                          {category.name}
+                        </h2>
+                        <p className="text-sm text-[var(--foreground-muted)] mt-2 leading-relaxed line-clamp-2">
+                          {category.description}
+                        </p>
+                        <ArrowUpRight className="w-4 h-4 mt-4 text-[var(--foreground-subtle)] group-hover:text-[var(--primary)] transition-colors" />
+                      </div>
+                    </TiltCard>
+                  </Link>
+                </Reveal>
+              );
+            })}
           </div>
         </div>
       </section>

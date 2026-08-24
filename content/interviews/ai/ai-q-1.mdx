@@ -1,13 +1,48 @@
 ---
-title: "What is tokenization and how do LLMs parse prompts? (Variant 1)"
+title: "What is tokenization and how do LLMs parse prompts?"
 category: "ai"
 difficulty: "hard"
 company: "Google"
-tags: ["ai","interview-prep","topic-0"]
+tags: ["ai", "interview-prep"]
 ---
+Tokenization is the process of breaking down text into smaller units called tokens. These tokens can be words, subwords, or characters, depending on the tokenization strategy used. In the context of Large Language Models (LLMs) like GPT-4 or BERT, tokenization is a crucial preprocessing step that transforms raw input text into a format that the model can understand and process.
 
-Detailed answer for: **What is tokenization and how do LLMs parse prompts? (Variant 1)**
+### Key points
 
-### Key Details
-- Focus on practical trade-offs.
-- Illustrate with architectural diagrams where applicable.
+- **Purpose of Tokenization**: The primary objective of tokenization is to convert a sequence of characters into a sequence of tokens that the model can handle. This enables the model to map words or subwords to their corresponding embedding vectors in the model's vocabulary.
+
+- **Tokenization Techniques**: 
+  - **WordPiece**: Used by BERT, this method tokenizes text into subword units, enabling handling of rare words by breaking them into common subword components.
+  - **Byte Pair Encoding (BPE)**: Employed by OpenAI's GPT models, BPE starts with individual characters and iteratively merges the most frequent pairs, resulting in a mixture of characters and subwords.
+  - **SentencePiece**: Often used by models like T5, it treats text as an unsegmented stream and can output both subword and character tokens.
+
+- **Parsing Prompts in LLMs**: When an LLM receives a prompt, it first tokenizes the input. Each token is then converted into an embedding vector. These embeddings are processed through the model's layers, where each layer applies transformations and learns patterns in the data. The output from the final layer is used to generate a response or prediction.
+
+- **Handling Unseen Tokens**: Tokens not present in a model's vocabulary are typically handled by breaking them into smaller known units or mapped to a special token like `[UNK]` for 'unknown'.
+
+- **Example**:
+  ```python
+  from transformers import GPT2Tokenizer
+
+  tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
+  text = "Hello, how are you?"
+  tokens = tokenizer.tokenize(text)
+  token_ids = tokenizer.convert_tokens_to_ids(tokens)
+  print(tokens)      # ['Hello', ',', 'Ġhow', 'Ġare', 'Ġyou', '?']
+  print(token_ids)   # [15496, 11, 703, 389, 345, 30]
+  ```
+  This snippet shows how GPT-2's tokenizer splits the input text into tokens and converts them into token IDs.
+
+### Common follow-ups
+
+- **Why are subword tokenization methods like BPE important for LLMs?**
+  Subword tokenization methods allow models to handle out-of-vocabulary words efficiently by breaking them into known subword units, preserving more semantic information than character-level tokenization.
+
+- **How does tokenization affect model performance and efficiency?**
+  The choice of tokenization strategy influences the model's vocabulary size, training time, and ability to generalize to unseen text. A well-chosen tokenization strategy balances vocabulary size and token sequence length, optimizing both memory usage and computational efficiency.
+
+- **Can you explain how embeddings are generated from tokens?**
+  Each token is mapped to a unique index in the model's vocabulary. This index is used to retrieve the token's corresponding embedding vector from an embedding matrix, which is learned during model training and updated to reflect the token's contextual meaning.
+
+- **What challenges are associated with tokenization in multilingual models?**
+  Multilingual models need to handle diverse languages with different scripts and morphological complexities. Tokenization strategies must accommodate these variations to maintain performance across languages.
