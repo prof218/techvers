@@ -10,6 +10,7 @@ import { BookmarkButton } from "@/components/ui/bookmark-button";
 import { ReadingProgress } from "@/components/ui/reading-progress";
 import { JsonLd } from "@/components/json-ld";
 import { articleJsonLd } from "@/lib/seo";
+import { siteConfig } from "@/lib/constants";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -26,8 +27,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const project = projects.find((p) => p.slug === resolvedParams.slug);
   if (!project) return {};
   return {
-    title: `${project.title} — System Architecture & Design | TechVerse`,
+    title: `${project.title} — System Architecture & Design`,
     description: project.description,
+    alternates: { canonical: `${siteConfig.url}/projects/${project.slug}` },
   };
 }
 

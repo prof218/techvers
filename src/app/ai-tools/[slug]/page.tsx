@@ -11,6 +11,7 @@ import { BookmarkButton } from "@/components/ui/bookmark-button";
 import { ReadingProgress } from "@/components/ui/reading-progress";
 import { JsonLd } from "@/components/json-ld";
 import { articleJsonLd } from "@/lib/seo";
+import { siteConfig } from "@/lib/constants";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -27,8 +28,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const tool = aiTools.find((t) => t.slug === resolvedParams.slug);
   if (!tool) return {};
   return {
-    title: `${tool.title} — AI Tool Review & Pricing | TechVerse`,
+    title: `${tool.title} — AI Tool Review & Pricing`,
     description: tool.description,
+    alternates: { canonical: `${siteConfig.url}/ai-tools/${tool.slug}` },
   };
 }
 

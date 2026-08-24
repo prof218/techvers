@@ -1,40 +1,38 @@
 import React from "react";
 import { aiTools } from "#site/content";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import { Sparkles } from "lucide-react";
+import { siteConfig } from "@/lib/constants";
 import AIToolsHubClient from "./page-client";
 
 export const metadata: Metadata = {
-  title: "AI Tool Discovery Hub — Compare 100+ AI Tools | TechVerse",
+  title: "AI Tools Directory — Reviews, Pricing & Alternatives",
   description:
-    "Discover, search, and compare 100+ top artificial intelligence tools for coding, writing, design, video editing, automation, research, and productivity.",
+    "Honest reviews of the best AI tools for coding, writing, design, video, automation, research, and productivity — with real pricing, pros, cons, and active alternatives.",
+  alternates: { canonical: `${siteConfig.url}/ai-tools` },
 };
 
 export default function AIToolsPage() {
   return (
     <div className="min-h-screen">
-      {/* Hero */}
-      <section className="relative py-20 sm:py-28 overflow-hidden border-b border-[var(--border)]">
-        <div className="absolute inset-0 bg-gradient-to-b from-[var(--background-secondary)] to-[var(--background)]" />
-        <div className="absolute inset-0 grid-pattern opacity-40" />
-        <div className="absolute top-1/3 -right-20 w-72 h-72 bg-[#06b6d4]/10 rounded-full blur-[100px]" />
-
-        <div className="relative container-wide text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[var(--accent)]/30 bg-[var(--accent)]/5 text-sm text-[var(--accent)] mb-6">
-            <Sparkles className="w-3.5 h-3.5" />
-            {aiTools.length} AI Tools Catalogued
+      <section className="relative overflow-hidden border-b border-[var(--border)]">
+        <div className="absolute inset-0 -z-10 grid-pattern" />
+        <div className="absolute -top-20 -right-16 w-[26rem] h-[26rem] rounded-full bg-[var(--accent)]/10 blur-[120px] -z-10" />
+        <div className="container-tight py-16 sm:py-24 text-center">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[var(--border)] bg-[var(--surface)] text-sm text-[var(--foreground-muted)] shadow-[var(--shadow-sm)] mb-5">
+            <Sparkles className="w-3.5 h-3.5 text-[var(--accent)]" />
+            {aiTools.length} tools reviewed
           </div>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight">
-            <span className="text-[var(--foreground)]">AI Tool </span>
-            <span className="gradient-text-accent">Discovery</span>
+          <h1 className="font-display text-5xl sm:text-6xl text-[var(--foreground)] text-balance leading-[1.05]">
+            The AI tools worth your time
           </h1>
-          <p className="mt-4 text-lg text-[var(--foreground-muted)] max-w-2xl mx-auto leading-relaxed">
-            Discover, review, and compare the best artificial intelligence tools to optimize your development, design, and automation workflows.
+          <p className="mt-5 text-lg text-[var(--foreground-muted)] max-w-2xl mx-auto leading-relaxed text-pretty">
+            Hands-on reviews with real pricing, genuine pros and cons, and currently-active
+            alternatives — across coding, writing, design, video, automation, and more.
           </p>
         </div>
       </section>
 
-      {/* Directory Section */}
       <section className="section-padding">
         <div className="container-wide">
           <AIToolsHubClient allTools={aiTools} />

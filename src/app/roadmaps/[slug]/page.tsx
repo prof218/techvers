@@ -11,6 +11,7 @@ import { ReadingProgress } from "@/components/ui/reading-progress";
 import { RoadmapProgress } from "@/components/ui/roadmap-progress";
 import { JsonLd } from "@/components/json-ld";
 import { articleJsonLd } from "@/lib/seo";
+import { siteConfig } from "@/lib/constants";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -27,8 +28,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const roadmap = roadmaps.find((r) => r.slug === resolvedParams.slug);
   if (!roadmap) return {};
   return {
-    title: `${roadmap.title} — Step-by-Step Learning Path | TechVerse`,
+    title: `${roadmap.title} — Step-by-Step Learning Path`,
     description: roadmap.description,
+    alternates: { canonical: `${siteConfig.url}/roadmaps/${roadmap.slug}` },
   };
 }
 

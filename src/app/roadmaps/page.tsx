@@ -2,12 +2,14 @@ import React from "react";
 import { roadmaps } from "#site/content";
 import { Metadata } from "next";
 import { Map } from "lucide-react";
+import { siteConfig } from "@/lib/constants";
 import RoadmapsHubClient from "./page-client";
 
 export const metadata: Metadata = {
-  title: "Interactive Learning Roadmaps — Developer Paths | TechVerse",
+  title: "Learning Roadmaps — Step-by-Step Developer Paths",
   description:
-    "Explore step-by-step visual learning roadmaps for frontend, backend, full stack, DevOps, AI, cloud engineering, cybersecurity, and data science.",
+    "Ordered, stage-by-stage learning roadmaps for frontend, backend, full stack, DevOps, AI, cloud, and data — check off each step and track your progress.",
+  alternates: { canonical: `${siteConfig.url}/roadmaps` },
 };
 
 export default function RoadmapsPage() {

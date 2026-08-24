@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { ArrowRight, ExternalLink, BookOpen, Star, Check, Globe, Code2 } from "lucide-react";
 import { technologies } from "#site/content";
-import { technologyCategories } from "@/lib/constants";
+import { technologyCategories, siteConfig } from "@/lib/constants";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { BookmarkButton } from "@/components/ui/bookmark-button";
@@ -30,6 +30,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${tech.title} — Guide, Features & How to Get Started`,
     description: tech.description,
+    alternates: { canonical: `${siteConfig.url}/technologies/${category}/${tech.slug}` },
   };
 }
 

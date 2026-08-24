@@ -3,7 +3,7 @@ import { interviews } from "#site/content";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Metadata } from "next";
-import { interviewCategories } from "@/lib/constants";
+import { interviewCategories, siteConfig } from "@/lib/constants";
 import { ArrowLeft, MessageSquare } from "lucide-react";
 import { CategoryIcon } from "@/components/ui/category-icon";
 import InterviewsPageClient from "./page-client";
@@ -23,8 +23,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const catInfo = interviewCategories.find((c) => c.slug === resolvedParams.category);
   if (!catInfo) return {};
   return {
-    title: `${catInfo.name} Interview Questions & Answers | TechVerse`,
+    title: `${catInfo.name} Interview Questions & Answers`,
     description: `Prepare for your next technical interview with top ${catInfo.name} questions, detailed explanations, code snippets, and system design breakdowns.`,
+    alternates: { canonical: `${siteConfig.url}/interviews/${resolvedParams.category}` },
   };
 }
 

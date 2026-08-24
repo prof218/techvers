@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { ArrowLeft } from "lucide-react";
 import { technologies } from "#site/content";
-import { technologyCategories } from "@/lib/constants";
+import { technologyCategories, siteConfig } from "@/lib/constants";
 import { CategoryIcon } from "@/components/ui/category-icon";
 import { CategoryGrid } from "./category-grid";
 
@@ -23,6 +23,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${info.name} Technologies`,
     description: `${info.description}. Explore in-depth ${info.name.toLowerCase()} guides on TechVerse.`,
+    alternates: { canonical: `${siteConfig.url}/technologies/${category}` },
   };
 }
 

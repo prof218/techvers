@@ -2,12 +2,14 @@ import React from "react";
 import { projects } from "#site/content";
 import { Metadata } from "next";
 import { Layers } from "lucide-react";
+import { siteConfig } from "@/lib/constants";
 import ProjectsHubClient from "./page-client";
 
 export const metadata: Metadata = {
-  title: "Project Architecture Library — Case Studies | TechVerse",
+  title: "Project Case Studies — System Architecture Breakdowns",
   description:
-    "Explore detailed production-grade system architectures, database designs, API structures, and scaling strategies from popular software products.",
+    "Production-grade system architecture case studies — components, data flow, database design, and scaling strategies from products you know. Great for system-design practice.",
+  alternates: { canonical: `${siteConfig.url}/projects` },
 };
 
 export default function ProjectsPage() {

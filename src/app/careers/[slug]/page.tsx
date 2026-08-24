@@ -5,7 +5,7 @@ import { Metadata } from "next";
 import { ArrowLeft, DollarSign, TrendingUp, Briefcase, Award, Target, BookOpen, ChevronRight, HelpCircle } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { careerPaths } from "@/lib/constants";
+import { careerPaths, siteConfig } from "@/lib/constants";
 import { CategoryIcon } from "@/components/ui/category-icon";
 import { BookmarkButton } from "@/components/ui/bookmark-button";
 import { JsonLd } from "@/components/json-ld";
@@ -26,8 +26,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const career = careerPaths.find((c) => c.slug === resolvedParams.slug);
   if (!career) return {};
   return {
-    title: `${career.title} Career Path — Salary, Skills & Roadmaps | TechVerse`,
-    description: `Complete guide to becoming a ${career.title}. Explore average salary ranges, growth rate, required skills, recommended certifications, and structured roadmaps.`,
+    title: `${career.title} Career Path — Salary, Skills & Roadmap`,
+    description: `Complete guide to becoming a ${career.title}. Explore average salary ranges, growth rate, required skills, recommended certifications, and a structured roadmap.`,
+    alternates: { canonical: `${siteConfig.url}/careers/${career.slug}` },
   };
 }
 

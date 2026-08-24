@@ -1,13 +1,19 @@
-"use client";
-
 import React from "react";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { TrendingUp, BookOpen, Award, Target } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { careerPaths } from "@/lib/constants";
+import { careerPaths, siteConfig } from "@/lib/constants";
 import { CategoryIcon } from "@/components/ui/category-icon";
 import { BookmarkButton } from "@/components/ui/bookmark-button";
 import { Reveal } from "@/components/ui/reveal";
+
+export const metadata: Metadata = {
+  title: "Tech Career Paths — Salaries, Skills & Roadmaps",
+  description:
+    "Explore in-demand tech careers with realistic salary ranges, the skills each role needs, and a roadmap to get there.",
+  alternates: { canonical: `${siteConfig.url}/careers` },
+};
 
 export default function CareersPage() {
   return (
