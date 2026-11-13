@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { BookmarkButton } from "@/components/ui/bookmark-button";
 import { ReadingProgress } from "@/components/ui/reading-progress";
 import { JsonLd } from "@/components/json-ld";
-import { articleJsonLd } from "@/lib/seo";
+import { articleJsonLd, breadcrumbJsonLd } from "@/lib/seo";
 import { siteConfig } from "@/lib/constants";
 
 interface Props {
@@ -57,6 +57,13 @@ export default async function ProjectDetailPage({ params }: Props) {
           path: `/projects/${project.slug}`,
           section: project.category,
         })}
+      />
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", path: "" },
+          { name: "Projects", path: "/projects" },
+          { name: project.title, path: `/projects/${project.slug}` },
+        ])}
       />
       {/* Hero */}
       <section className="relative py-16 sm:py-24 overflow-hidden border-b border-[var(--border)]">

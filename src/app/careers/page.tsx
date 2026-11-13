@@ -27,7 +27,7 @@ export default function CareersPage() {
             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--primary)] mb-4">
               Career Center
             </p>
-            <h1 className="font-display text-5xl sm:text-6xl text-[var(--foreground)] text-balance leading-[1.05]">
+            <h1 className="font-display text-4xl sm:text-6xl text-[var(--foreground)] text-balance leading-[1.05]">
               Find the role that fits you
             </h1>
             <p className="mt-5 text-lg text-[var(--foreground-muted)] max-w-2xl mx-auto text-pretty">

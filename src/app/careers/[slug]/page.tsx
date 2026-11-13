@@ -9,7 +9,7 @@ import { careerPaths, siteConfig } from "@/lib/constants";
 import { CategoryIcon } from "@/components/ui/category-icon";
 import { BookmarkButton } from "@/components/ui/bookmark-button";
 import { JsonLd } from "@/components/json-ld";
-import { articleJsonLd } from "@/lib/seo";
+import { articleJsonLd, breadcrumbJsonLd } from "@/lib/seo";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -210,6 +210,13 @@ export default async function CareerDetailPage({ params }: Props) {
           path: `/careers/${career.slug}`,
           section: "Careers",
         })}
+      />
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", path: "" },
+          { name: "Careers", path: "/careers" },
+          { name: career.title, path: `/careers/${career.slug}` },
+        ])}
       />
       {/* Hero */}
       <section className="relative py-16 sm:py-24 overflow-hidden border-b border-[var(--border)]">

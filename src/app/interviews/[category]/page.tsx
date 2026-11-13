@@ -6,6 +6,8 @@ import { Metadata } from "next";
 import { interviewCategories, siteConfig } from "@/lib/constants";
 import { ArrowLeft, MessageSquare } from "lucide-react";
 import { CategoryIcon } from "@/components/ui/category-icon";
+import { JsonLd } from "@/components/json-ld";
+import { breadcrumbJsonLd } from "@/lib/seo";
 import InterviewsPageClient from "./page-client";
 
 interface Props {
@@ -43,6 +45,13 @@ export default async function InterviewCategoryPage({ params }: Props) {
 
   return (
     <div className="min-h-screen">
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", path: "" },
+          { name: "Interviews", path: "/interviews" },
+          { name: catInfo.name, path: `/interviews/${category}` },
+        ])}
+      />
       {/* Hero */}
       <section className="relative py-16 sm:py-24 overflow-hidden border-b border-[var(--border)]">
         <div className="absolute inset-0 bg-gradient-to-b from-[var(--background-secondary)] to-[var(--background)]" />

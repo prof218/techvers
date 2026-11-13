@@ -302,6 +302,13 @@ body {
 /* --- Containers --- */
 .container-tight { max-width: 1120px; margin: 0 auto; padding: 0 1.5rem; }
 .container-wide { max-width: 1360px; margin: 0 auto; padding: 0 1.5rem; }
+@media (max-width: 640px) {
+  .container-tight, .container-wide { padding: 0 1rem; }
+}
+
+/* Prevent accidental horizontal scroll on small screens without breaking
+   position: sticky (which overflow-x on body/html would). */
+#main-content { overflow-x: clip; }
 
 /* --- Section spacing --- */
 .section-padding { padding-top: 7rem; padding-bottom: 7rem; }

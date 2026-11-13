@@ -673,6 +673,214 @@ const promptEngineering: InteractiveRoadmap = {
   ],
 };
 
+const cpp: InteractiveRoadmap = {
+  slug: "cpp",
+  title: "C++ Roadmap",
+  description: "Learn C++ — memory, pointers, OOP, the STL, and modern C++ for systems, games, and high-performance code.",
+  level: "advanced",
+  estimatedTime: "4–6 months",
+  category: "Backend",
+  milestones: [
+    { id: "cpp-basics", title: "Fundamentals", topics: [
+      { id: "cpp-syntax", title: "Syntax & Types", summary: "Variables, control flow, functions.", resources: [{ label: "cppreference", url: "https://en.cppreference.com/w/" }] },
+      { id: "cpp-pointers", title: "Pointers & Memory", summary: "The heart of C++ — and its sharp edges." },
+      { id: "cpp-refs", title: "References & Const", summary: "Pass efficiently and safely." },
+    ]},
+    { id: "cpp-oop", title: "OOP & RAII", topics: [
+      { id: "cpp-classes", title: "Classes & Objects", summary: "Encapsulation and constructors." },
+      { id: "cpp-raii", title: "RAII & Smart Pointers", summary: "Automatic, safe resource management." },
+      { id: "cpp-inheritance", title: "Inheritance & Polymorphism", summary: "Virtual functions and interfaces." },
+    ]},
+    { id: "cpp-modern", title: "The STL & Modern C++", topics: [
+      { id: "cpp-stl", title: "STL Containers & Algorithms", summary: "vector, map, and the algorithm library." },
+      { id: "cpp-templates", title: "Templates", summary: "Generic, zero-cost abstractions." },
+      { id: "cpp-modern-feat", title: "Modern Features (C++17/20)", summary: "auto, lambdas, move semantics.", optional: true },
+    ]},
+  ],
+};
+
+const php: InteractiveRoadmap = {
+  slug: "php",
+  title: "PHP Roadmap",
+  description: "Learn PHP for the web — syntax, OOP, Composer, and building apps with modern frameworks like Laravel.",
+  level: "beginner",
+  estimatedTime: "3–5 months",
+  category: "Backend",
+  milestones: [
+    { id: "php-basics", title: "Fundamentals", topics: [
+      { id: "php-syntax", title: "Syntax & Types", summary: "Variables, arrays, control flow.", resources: [{ label: "PHP docs", url: "https://www.php.net/docs.php" }] },
+      { id: "php-functions", title: "Functions", summary: "Define and reuse logic." },
+      { id: "php-forms", title: "Forms & Requests", summary: "Handle user input safely." },
+    ]},
+    { id: "php-oop", title: "OOP & Tooling", topics: [
+      { id: "php-classes", title: "OOP", summary: "Classes, interfaces, traits." },
+      { id: "php-composer", title: "Composer", summary: "Dependency management." },
+      { id: "php-pdo", title: "Databases (PDO)", summary: "Query databases securely.", resources: [{ label: "SQL Roadmap", url: "/roadmaps/sql" }] },
+    ]},
+    { id: "php-frameworks", title: "Frameworks", topics: [
+      { id: "php-laravel", title: "Laravel", summary: "The most popular PHP framework." },
+      { id: "php-mvc", title: "MVC & Routing", summary: "Structure a real application." },
+      { id: "php-api", title: "Building APIs", summary: "Serve JSON to clients." },
+    ]},
+  ],
+};
+
+const springBoot: InteractiveRoadmap = {
+  slug: "spring-boot",
+  title: "Spring Boot Roadmap",
+  description: "Build production Java backends with Spring Boot — dependency injection, REST APIs, data access, and security.",
+  level: "intermediate",
+  estimatedTime: "3–5 months",
+  category: "Backend",
+  milestones: [
+    { id: "sb-basics", title: "Foundations", topics: [
+      { id: "sb-java", title: "Java", summary: "Spring runs on Java.", resources: [{ label: "Java Roadmap", url: "/roadmaps/java" }] },
+      { id: "sb-di", title: "Dependency Injection", summary: "The core of Spring." },
+      { id: "sb-boot", title: "Spring Boot Basics", summary: "Auto-configuration and starters." },
+    ]},
+    { id: "sb-web", title: "Web & Data", topics: [
+      { id: "sb-rest", title: "REST Controllers", summary: "Build HTTP APIs." },
+      { id: "sb-jpa", title: "Spring Data JPA", summary: "Persist data with repositories." },
+      { id: "sb-validation", title: "Validation & Errors", summary: "Robust request handling." },
+    ]},
+    { id: "sb-production", title: "Production", topics: [
+      { id: "sb-security", title: "Spring Security", summary: "Authentication and authorization." },
+      { id: "sb-testing", title: "Testing", summary: "Unit and integration tests." },
+      { id: "sb-actuator", title: "Observability", summary: "Actuator, metrics, and health.", optional: true },
+    ]},
+  ],
+};
+
+const reactNative: InteractiveRoadmap = {
+  slug: "react-native",
+  title: "React Native Roadmap",
+  description: "Build native mobile apps with React Native — one React codebase for iOS and Android.",
+  level: "intermediate",
+  estimatedTime: "4–6 months",
+  category: "Mobile",
+  milestones: [
+    { id: "rn-foundations", title: "Foundations", topics: [
+      { id: "rn-react", title: "React", summary: "React Native is React.", resources: [{ label: "React Roadmap", url: "/roadmaps/react" }] },
+      { id: "rn-components", title: "Core Components", summary: "View, Text, Image, ScrollView." },
+      { id: "rn-styling", title: "Styling", summary: "Flexbox and StyleSheet." },
+    ]},
+    { id: "rn-building", title: "Building Apps", topics: [
+      { id: "rn-navigation", title: "Navigation", summary: "React Navigation between screens." },
+      { id: "rn-state", title: "State & Data", summary: "Hooks, context, and data fetching." },
+      { id: "rn-native", title: "Native APIs", summary: "Camera, storage, and device features." },
+    ]},
+    { id: "rn-ship", title: "Ship It", topics: [
+      { id: "rn-expo", title: "Expo", summary: "The fastest way to build and ship." },
+      { id: "rn-perf", title: "Performance", summary: "Smooth lists and animations.", optional: true },
+      { id: "rn-publish", title: "Publishing", summary: "Release to both app stores." },
+    ]},
+  ],
+};
+
+const terraform: InteractiveRoadmap = {
+  slug: "terraform",
+  title: "Terraform Roadmap",
+  description: "Manage infrastructure as code with Terraform — providers, state, modules, and safe, repeatable deployments.",
+  level: "intermediate",
+  estimatedTime: "1–2 months",
+  category: "DevOps",
+  milestones: [
+    { id: "tf-basics", title: "Fundamentals", topics: [
+      { id: "tf-why", title: "Why IaC", summary: "Version and reproduce infrastructure.", resources: [{ label: "Terraform docs", url: "https://developer.hashicorp.com/terraform/docs" }] },
+      { id: "tf-hcl", title: "HCL & Resources", summary: "Declare infrastructure." },
+      { id: "tf-providers", title: "Providers", summary: "AWS, Azure, GCP, and more." },
+    ]},
+    { id: "tf-core", title: "Core Workflow", topics: [
+      { id: "tf-plan", title: "plan & apply", summary: "Preview and deploy changes." },
+      { id: "tf-state", title: "State Management", summary: "Remote state and locking." },
+      { id: "tf-variables", title: "Variables & Outputs", summary: "Parameterize your config." },
+    ]},
+    { id: "tf-scale", title: "At Scale", topics: [
+      { id: "tf-modules", title: "Modules", summary: "Reusable infrastructure components." },
+      { id: "tf-workspaces", title: "Workspaces & Environments", summary: "Dev, staging, prod." },
+      { id: "tf-cicd", title: "CI/CD", summary: "Automate infra changes.", optional: true },
+    ]},
+  ],
+};
+
+const designSystem: InteractiveRoadmap = {
+  slug: "design-system",
+  title: "Design System Roadmap",
+  description: "Build and maintain a design system — tokens, components, documentation, and governance that scale design.",
+  level: "intermediate",
+  estimatedTime: "ongoing",
+  category: "Design",
+  milestones: [
+    { id: "dsys-foundations", title: "Foundations", topics: [
+      { id: "dsys-tokens", title: "Design Tokens", summary: "Color, type, spacing as a single source of truth.", resources: [{ label: "Design guides", url: "/technologies/design" }] },
+      { id: "dsys-principles", title: "Principles", summary: "Consistency, accessibility, scalability." },
+      { id: "dsys-foundations-type", title: "Typography & Color", summary: "The visual language." },
+    ]},
+    { id: "dsys-components", title: "Components", topics: [
+      { id: "dsys-anatomy", title: "Component Anatomy", summary: "States, variants, and props." },
+      { id: "dsys-library", title: "Component Library", summary: "Build it in code (React, etc.)." },
+      { id: "dsys-a11y", title: "Accessibility", summary: "Usable by everyone." },
+    ]},
+    { id: "dsys-scale", title: "Scaling", topics: [
+      { id: "dsys-docs", title: "Documentation", summary: "Make it easy to adopt." },
+      { id: "dsys-versioning", title: "Versioning & Releases", summary: "Ship changes safely." },
+      { id: "dsys-governance", title: "Governance", summary: "Keep it healthy over time.", optional: true },
+    ]},
+  ],
+};
+
+const apiDesign: InteractiveRoadmap = {
+  slug: "api-design",
+  title: "API Design Roadmap",
+  description: "Design clean, reliable APIs — REST principles, versioning, auth, errors, and documentation developers love.",
+  level: "intermediate",
+  estimatedTime: "1–2 months",
+  category: "Backend",
+  milestones: [
+    { id: "api-foundations", title: "Foundations", topics: [
+      { id: "api-http", title: "HTTP Fundamentals", summary: "Methods, status codes, headers." },
+      { id: "api-rest", title: "REST Principles", summary: "Resources, statelessness, and naming." },
+      { id: "api-formats", title: "Request/Response Design", summary: "Clean, consistent JSON." },
+    ]},
+    { id: "api-robust", title: "Robustness", topics: [
+      { id: "api-versioning", title: "Versioning", summary: "Evolve without breaking clients." },
+      { id: "api-errors", title: "Error Handling", summary: "Clear, actionable error responses." },
+      { id: "api-pagination", title: "Pagination & Filtering", summary: "Handle large collections." },
+    ]},
+    { id: "api-secure", title: "Secure & Document", topics: [
+      { id: "api-auth", title: "Authentication", summary: "API keys, OAuth, and JWT." },
+      { id: "api-rate", title: "Rate Limiting", summary: "Protect your API." },
+      { id: "api-docs", title: "Documentation (OpenAPI)", summary: "Make it a joy to integrate.", resources: [{ label: "GraphQL Roadmap", url: "/roadmaps/graphql" }] },
+    ]},
+  ],
+};
+
+const computerScience: InteractiveRoadmap = {
+  slug: "computer-science",
+  title: "Computer Science Roadmap",
+  description: "The CS fundamentals every strong engineer knows — data structures, algorithms, systems, and theory.",
+  level: "intermediate",
+  estimatedTime: "ongoing",
+  category: "Architecture",
+  milestones: [
+    { id: "cs-dsa", title: "Data Structures & Algorithms", topics: [
+      { id: "cs-structures", title: "Core Data Structures", summary: "Arrays, lists, trees, graphs, hash tables." },
+      { id: "cs-algorithms", title: "Algorithms", summary: "Sorting, searching, recursion, DP." },
+      { id: "cs-complexity", title: "Big-O Complexity", summary: "Reason about time and space." },
+    ]},
+    { id: "cs-systems", title: "Systems", topics: [
+      { id: "cs-os", title: "Operating Systems", summary: "Processes, memory, concurrency." },
+      { id: "cs-networks", title: "Computer Networks", summary: "How the internet works." },
+      { id: "cs-db", title: "Databases", summary: "Storage, indexing, transactions.", resources: [{ label: "SQL Roadmap", url: "/roadmaps/sql" }] },
+    ]},
+    { id: "cs-theory", title: "Theory & Practice", topics: [
+      { id: "cs-paradigms", title: "Programming Paradigms", summary: "OOP, functional, and more." },
+      { id: "cs-compilers", title: "How Code Runs", summary: "Compilation, interpretation, memory.", optional: true },
+      { id: "cs-practice", title: "Practice (LeetCode)", summary: "Sharpen problem-solving." },
+    ]},
+  ],
+};
+
 export const skillRoadmaps: InteractiveRoadmap[] = [
   javascript,
   typescript,
@@ -692,4 +900,12 @@ export const skillRoadmaps: InteractiveRoadmap[] = [
   linux,
   aws,
   promptEngineering,
+  cpp,
+  php,
+  springBoot,
+  reactNative,
+  terraform,
+  designSystem,
+  apiDesign,
+  computerScience,
 ];

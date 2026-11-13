@@ -8,7 +8,7 @@ import Link from "next/link";
 
 const typingWords = [
   "an AI Engineer",
-  "a Full-Stack Developer",
+  "a Full-Stack Dev",
   "a Data Scientist",
   "a DevOps Engineer",
   "job-ready",
@@ -74,7 +74,7 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.05 }}
-          className="mt-3 font-display text-5xl sm:text-6xl lg:text-7xl leading-[1.05] text-balance text-[var(--foreground)]"
+          className="mt-3 font-display text-4xl sm:text-6xl lg:text-7xl leading-[1.08] sm:leading-[1.05] text-balance text-[var(--foreground)]"
         >
           Learn to become
           <br />

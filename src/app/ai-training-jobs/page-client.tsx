@@ -114,10 +114,10 @@ export default function JobsBoardClient({
               className="w-full h-11 pl-11 pr-4 rounded-full bg-[var(--surface)] border border-[var(--border)] text-sm text-[var(--foreground)] placeholder:text-[var(--foreground-subtle)] focus:outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--ring)]/20"
             />
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 w-full sm:w-auto">
             <Button
               variant="outline"
-              className="lg:hidden rounded-full gap-2"
+              className="lg:hidden rounded-full gap-2 shrink-0"
               onClick={() => setDrawerOpen(true)}
             >
               <SlidersHorizontal className="w-4 h-4" />
@@ -133,7 +133,7 @@ export default function JobsBoardClient({
               id="job-sort"
               value={filters.sort}
               onChange={(e) => update({ sort: e.target.value as JobFilters["sort"], page: 1 })}
-              className="h-11 rounded-full bg-[var(--surface)] border border-[var(--border)] px-4 pr-8 text-sm text-[var(--foreground)] focus:outline-none focus:border-[var(--primary)] cursor-pointer"
+              className="h-11 flex-1 sm:flex-none min-w-0 rounded-full bg-[var(--surface)] border border-[var(--border)] px-4 pr-8 text-sm text-[var(--foreground)] focus:outline-none focus:border-[var(--primary)] cursor-pointer"
             >
               {sortOptions.map((s) => (
                 <option key={s.value} value={s.value}>{s.label}</option>

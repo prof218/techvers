@@ -64,7 +64,7 @@ export default function BlogPage() {
             <BookOpen className="w-3.5 h-3.5 text-[var(--primary)]" />
             {posts.length} articles
           </div>
-          <h1 className="font-display text-5xl sm:text-6xl text-[var(--foreground)] text-balance leading-[1.05]">
+          <h1 className="font-display text-4xl sm:text-6xl text-[var(--foreground)] text-balance leading-[1.05]">
             Learn AI. Get hired.
           </h1>
           <p className="mt-5 text-lg text-[var(--foreground-muted)] max-w-2xl mx-auto leading-relaxed text-pretty">
