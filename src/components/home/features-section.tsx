@@ -57,13 +57,13 @@ export function FeaturesSection() {
       <div className="container-wide">
         <Reveal className="max-w-2xl mb-14">
           <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--primary)] mb-3">
-            Everything in one place
+            What&apos;s inside
           </p>
           <h2 className="font-display text-4xl sm:text-5xl text-[var(--foreground)] text-balance">
-            More than a knowledge base
+            Everything you need to level up
           </h2>
           <p className="mt-4 text-lg text-[var(--foreground-muted)] text-pretty">
-            Six connected ways to learn — each one written to be genuinely useful, not padded.
+            Six connected ways to learn and get hired — each one built to be genuinely useful, not padded.
           </p>
         </Reveal>
 

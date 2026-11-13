@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { BookmarkButton } from "@/components/ui/bookmark-button";
 import { ReadingProgress } from "@/components/ui/reading-progress";
 import { JsonLd } from "@/components/json-ld";
-import { articleJsonLd } from "@/lib/seo";
+import { articleJsonLd, breadcrumbJsonLd } from "@/lib/seo";
 import { siteConfig } from "@/lib/constants";
 
 interface Props {
@@ -52,6 +52,13 @@ export default async function AIToolPage({ params }: Props) {
           path: `/ai-tools/${tool.slug}`,
           section: tool.category,
         })}
+      />
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", path: "" },
+          { name: "AI Tools", path: "/ai-tools" },
+          { name: tool.title, path: `/ai-tools/${tool.slug}` },
+        ])}
       />
       {/* Hero */}
       <section className="relative py-16 sm:py-24 overflow-hidden border-b border-[var(--border)]">

@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { BookmarkButton } from "@/components/ui/bookmark-button";
 import { ReadingProgress } from "@/components/ui/reading-progress";
 import { JsonLd } from "@/components/json-ld";
-import { articleJsonLd } from "@/lib/seo";
+import { articleJsonLd, breadcrumbJsonLd } from "@/lib/seo";
 import { MdxContent } from "@/components/mdx-content";
 
 interface Props {
@@ -59,6 +59,14 @@ export default async function TechDetailPage({ params }: Props) {
           path: `/technologies/${category}/${tech.slug}`,
           section: categoryInfo?.name || category,
         })}
+      />
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", path: "" },
+          { name: "Technologies", path: "/technologies" },
+          { name: categoryInfo?.name || category, path: `/technologies/${category}` },
+          { name: tech.title, path: `/technologies/${category}/${tech.slug}` },
+        ])}
       />
       {/* Hero */}
       <section className="relative py-16 sm:py-24 overflow-hidden border-b border-[var(--border)]">

@@ -1,8 +1,12 @@
 import type { MetadataRoute } from "next";
 import { siteConfig, careerPaths } from "@/lib/constants";
-import { technologies, aiTools, roadmaps, projects } from "#site/content";
+import { technologies, aiTools, roadmaps, projects, blog } from "#site/content";
+import { getOpenJobs } from "@/lib/jobs-loader";
+import { interactiveRoadmaps } from "@/data/roadmaps";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export const revalidate = 300;
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = siteConfig.url;
   const now = new Date();
 
@@ -26,7 +30,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     entry("/roadmaps", 0.8),
     entry("/projects", 0.8),
     entry("/interviews", 0.8),
+    entry("/ai-training-jobs", 0.9, "daily"),
+    entry("/blog", 0.8, "daily"),
   ];
+
+  // Blog posts (Velite-driven — stays in sync with content)
+  const blogPages = blog.map((p) => entry(`/blog/${p.slug}`, 0.7, "weekly"));
+
+  // Individual job detail pages — only OPEN listings (never index closed/expired as active).
+  const jobPages = (await getOpenJobs()).map((j) =>
+    entry(`/ai-training-jobs/${j.slug}`, 0.6, "daily")
+  );
 
   // Informational / legal pages (required for trust + AdSense)
   const infoPages = [
@@ -51,7 +65,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     entry(`/technologies/${t.category}/${t.slug}`, 0.6)
   );
   const aiToolPages = aiTools.map((t) => entry(`/ai-tools/${t.slug}`, 0.6));
-  const roadmapPages = roadmaps.map((r) => entry(`/roadmaps/${r.slug}`, 0.6));
+  const roadmapSlugs = new Set<string>([
+    ...roadmaps.map((r) => r.slug),
+    ...interactiveRoadmaps.map((r) => r.slug),
+  ]);
+  const roadmapPages = [...roadmapSlugs].map((slug) => entry(`/roadmaps/${slug}`, 0.6));
   const projectPages = projects.map((p) => entry(`/projects/${p.slug}`, 0.6));
   const careerPages = careerPaths.map((c) => entry(`/careers/${c.slug}`, 0.6));
 
@@ -65,5 +83,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...roadmapPages,
     ...projectPages,
     ...careerPages,
+    ...jobPages,
+    ...blogPages,
   ];
 }

@@ -82,6 +82,44 @@ export function articleJsonLd({
   };
 }
 
+/** BreadcrumbList structured data for rich breadcrumb results. */
+export function breadcrumbJsonLd(items: { name: string; path: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: item.name,
+      item: `${siteConfig.url}${item.path}`,
+    })),
+  };
+}
+
+/** Course structured data — roadmaps are courses, eligible for course rich results. */
+export function courseJsonLd({
+  title,
+  description,
+  path,
+}: {
+  title: string;
+  description: string;
+  path: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    name: title,
+    description,
+    url: `${siteConfig.url}${path}`,
+    provider: {
+      "@type": "Organization",
+      name: siteConfig.name,
+      sameAs: siteConfig.url,
+    },
+  };
+}
+
 export function generateStructuredData(type: string, data: Record<string, unknown>) {
   return {
     __html: JSON.stringify({

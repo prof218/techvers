@@ -79,6 +79,24 @@ const interviews = defineCollection({
   }),
 });
 
+const blog = defineCollection({
+  name: "Post",
+  pattern: "blog/**/*.mdx",
+  schema: s.object({
+    title: s.string().max(120),
+    slug: s.path().transform((p) => p.split("/").pop() || p),
+    description: s.string().max(300),
+    date: s.isodate(),
+    author: s.string().default("TechVerse Team"),
+    category: s.string(),
+    tags: s.array(s.string()).default([]),
+    featured: s.boolean().default(false),
+    cover: s.string().optional(),
+    metadata: s.metadata(),
+    content: s.mdx(),
+  }),
+});
+
 const news = defineCollection({
   name: "News",
   pattern: "news/**/*.mdx",
@@ -102,5 +120,5 @@ export default defineConfig({
     name: "[name]-[hash:6].[ext]",
     clean: true,
   },
-  collections: { technologies, aiTools, roadmaps, projects, interviews, news },
+  collections: { technologies, aiTools, roadmaps, projects, interviews, news, blog },
 });

@@ -7,11 +7,11 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 const typingWords = [
-  "React & Next.js",
-  "AI & Machine Learning",
-  "Cloud & DevOps",
-  "System Design",
-  "Cybersecurity",
+  "an AI Engineer",
+  "a Full-Stack Developer",
+  "a Data Scientist",
+  "a DevOps Engineer",
+  "job-ready",
 ];
 
 const marquee = [
@@ -66,7 +66,7 @@ export function HeroSection() {
           className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[var(--border)] bg-[var(--surface)] text-sm text-[var(--foreground-muted)] shadow-[var(--shadow-sm)] mt-4"
         >
           <Sparkles className="w-3.5 h-3.5 text-[var(--primary)]" />
-          A calmer way to learn the tech that matters
+          Learn → Build → Get hired
         </motion.div>
 
         {/* Headline */}
@@ -76,7 +76,7 @@ export function HeroSection() {
           transition={{ duration: 0.6, delay: 0.05 }}
           className="mt-3 font-display text-5xl sm:text-6xl lg:text-7xl leading-[1.05] text-balance text-[var(--foreground)]"
         >
-          Master the craft of
+          Learn to become
           <br />
           <span className="gradient-text italic">{displayText}</span>
           <span className="text-[var(--primary)] font-sans not-italic animate-pulse">|</span>
@@ -89,8 +89,8 @@ export function HeroSection() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mt-6 text-lg sm:text-xl text-[var(--foreground-muted)] max-w-2xl mx-auto leading-relaxed text-pretty"
         >
-          In-depth technology guides, honest AI-tool reviews, structured roadmaps, and
-          real interview prep — written for developers who want to go deep, not skim.
+          Interactive roadmaps, in-depth guides, and real interview prep — then apply to
+          curated AI training jobs. Everything you need to go from learning to hired.
         </motion.p>
 
         {/* Search */}
@@ -107,7 +107,7 @@ export function HeroSection() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && openSearch(query)}
-              placeholder="Search 80+ guides, tools, roadmaps…"
+              placeholder="Search roadmaps, guides, jobs…"
               aria-label="Search TechVerse"
               className="flex-1 h-full bg-transparent text-[var(--foreground)] placeholder:text-[var(--foreground-subtle)] focus:outline-none"
             />
@@ -124,14 +124,14 @@ export function HeroSection() {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mt-7 flex flex-wrap items-center justify-center gap-3"
         >
-          <Button variant="ink" size="lg" asChild className="group rounded-full">
-            <Link href="/technologies">
-              Browse Technologies
+          <Button variant="gradient" size="lg" asChild className="group rounded-full">
+            <Link href="/roadmaps">
+              Start a roadmap
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
           </Button>
           <Button variant="outline" size="lg" asChild className="rounded-full">
-            <Link href="/roadmaps">View Roadmaps</Link>
+            <Link href="/ai-training-jobs">Browse AI jobs</Link>
           </Button>
         </motion.div>
 
@@ -142,7 +142,7 @@ export function HeroSection() {
           transition={{ duration: 0.6, delay: 0.55 }}
           className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-[var(--foreground-subtle)]"
         >
-          {["Free to explore", "No sign-up required", "Updated regularly"].map((t) => (
+          {["Free to learn", "No sign-up required", "Real, source-verified jobs"].map((t) => (
             <span key={t} className="flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 rounded-full bg-[var(--success)]" />
               {t}

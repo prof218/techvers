@@ -3,7 +3,7 @@
 import { useEffect, useState, useCallback } from "react";
 
 export interface SavedItem {
-  type: "technology" | "ai-tool" | "roadmap" | "project" | "interview" | "career";
+  type: "technology" | "ai-tool" | "roadmap" | "project" | "interview" | "career" | "job" | "blog";
   slug: string;
   title: string;
   url: string;

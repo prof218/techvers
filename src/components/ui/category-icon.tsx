@@ -20,6 +20,7 @@ import {
   Layers,
   Cpu,
   Compass,
+  Scale,
 } from "lucide-react";
 
 type IconType = React.ComponentType<{ className?: string }>;
@@ -44,6 +45,8 @@ export const categoryIcons: Record<string, IconType> = {
   automation: Workflow,
   research: Microscope,
   productivity: Gauge,
+  // jobs
+  legal: Scale,
   // interviews
   "system-design": Network,
   // careers

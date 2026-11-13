@@ -17,12 +17,14 @@ interface Roadmap {
 
 interface PageClientProps {
   allRoadmaps: Roadmap[];
+  interactiveSlugs?: string[];
 }
 
 const levels = ["all", "beginner", "intermediate", "advanced"] as const;
 const levelColors = { beginner: "#22c55e", intermediate: "#f59e0b", advanced: "#ef4444" };
 
-export default function RoadmapsHubClient({ allRoadmaps }: PageClientProps) {
+export default function RoadmapsHubClient({ allRoadmaps, interactiveSlugs = [] }: PageClientProps) {
+  const interactive = new Set(interactiveSlugs);
   const [activeLevel, setActiveLevel] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -83,10 +85,13 @@ export default function RoadmapsHubClient({ allRoadmaps }: PageClientProps) {
               className="block p-6 rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-[var(--shadow-sm)] card-hover h-full"
             >
               {/* Header */}
-              <div className="flex items-center justify-between mb-3 pr-11">
+              <div className="flex items-center gap-2 mb-3 pr-11">
                 <Badge variant="secondary" className="text-xs">{roadmap.category}</Badge>
+                {interactive.has(roadmap.slug) && (
+                  <Badge variant="gradient" className="text-[10px]">Interactive</Badge>
+                )}
                 <Badge
-                  className="text-[10px] capitalize"
+                  className="ml-auto text-[10px] capitalize"
                   style={{
                     backgroundColor: `${levelColors[roadmap.level as keyof typeof levelColors]}15`,
                     color: levelColors[roadmap.level as keyof typeof levelColors],

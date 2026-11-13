@@ -5,7 +5,7 @@
 export const siteConfig = {
   name: "TechVerse",
   description:
-    "The ultimate IT learning and discovery platform. Explore technologies, career paths, AI tools, roadmaps, and interview prep — all in one premium experience.",
+    "The learn-to-hired platform for AI engineers and freshers. Master tech with interactive roadmaps, in-depth guides, and real interview prep — then apply to curated AI training jobs.",
   url: "https://techverse-flax.vercel.app",
   ogImage: "/og-default.png",
   creator: "TechVerse Team",
@@ -17,13 +17,14 @@ export const siteConfig = {
     linkedin: "https://linkedin.com/company/techverse",
   },
   keywords: [
-    "technology learning",
-    "IT career paths",
-    "AI tools directory",
-    "software engineering roadmaps",
-    "interview preparation",
-    "tech trends",
-    "developer resources",
+    "AI engineer roadmap",
+    "learn AI and machine learning",
+    "AI training jobs",
+    "tech learning platform for freshers",
+    "interactive developer roadmaps",
+    "software engineering interview prep",
+    "get hired in AI",
+    "job placement for developers",
   ],
 };
 
@@ -68,6 +69,11 @@ export const mainNavigation: NavItem[] = [
     ],
   },
   {
+    title: "AI Jobs",
+    href: "/ai-training-jobs",
+    description: "AI training, evaluation & annotation jobs from top marketplaces",
+  },
+  {
     title: "Careers",
     href: "/careers",
     description: "Explore career paths with roadmaps and salary data",
@@ -81,6 +87,11 @@ export const mainNavigation: NavItem[] = [
     title: "Projects",
     href: "/projects",
     description: "Real-world project architecture case studies",
+  },
+  {
+    title: "Blog",
+    href: "/blog",
+    description: "Guides on AI careers, learning, and landing training jobs",
   },
   {
     title: "Interviews",
