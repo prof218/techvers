@@ -132,7 +132,7 @@ export function Footer() {
         </div>
 
         {/* Newsletter */}
-        <div className="mt-16 p-6 rounded-2xl gradient-border bg-gradient-to-r from-[var(--surface)] to-[var(--surface-hover)]">
+        <div className="mt-16 p-6 rounded-2xl bg-gradient-to-r from-[var(--surface)] to-[var(--surface-hover)]">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
               <h3 className="text-base font-semibold text-[var(--foreground)]">
