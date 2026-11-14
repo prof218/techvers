@@ -59,6 +59,10 @@ export function Header() {
             : "border-transparent bg-[color-mix(in_srgb,var(--background)_75%,transparent)] backdrop-blur-md"
         )}
       >
+        {/* Gradient accent line (signature touch when scrolled) */}
+        {isScrolled && (
+          <div className="pointer-events-none absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[var(--primary)]/45 to-transparent" />
+        )}
         <div className="container-wide">
           <div className="flex items-center justify-between h-16 lg:h-20">
             {/* Logo */}

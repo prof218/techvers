@@ -179,7 +179,7 @@ export function CommandPalette() {
             placeholder="Type a command or search term..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="flex-1 h-full bg-transparent text-sm text-[var(--foreground)] placeholder:text-[var(--foreground-subtle)] focus:outline-none"
+            className="flex-1 min-w-0 h-full bg-transparent text-sm text-[var(--foreground)] placeholder:text-[var(--foreground-subtle)] focus:outline-none"
           />
           <kbd className="hidden sm:inline-flex h-5 items-center rounded border border-[var(--border)] bg-[var(--background)] px-1.5 font-mono text-[9px] text-[var(--foreground-subtle)]">
             ESC

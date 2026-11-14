@@ -68,11 +68,13 @@ export function Footer() {
   };
 
   return (
-    <footer className="relative border-t border-[var(--border)] bg-[var(--background-secondary)]">
-      {/* Gradient decoration */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-[var(--primary)] to-transparent opacity-60" />
+    <footer className="relative overflow-hidden border-t border-[var(--border)] bg-[var(--background-secondary)]">
+      {/* Decorations */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-[var(--primary)] to-transparent opacity-70" />
+      <div className="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 w-[34rem] max-w-full h-48 bg-[var(--primary)]/8 blur-[90px]" />
+      <div className="pointer-events-none absolute inset-0 grid-pattern opacity-[0.12]" />
 
-      <div className="container-wide section-padding">
+      <div className="relative container-wide section-padding">
         {/* Top section */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-8">
           {/* Brand column */}
@@ -148,11 +150,11 @@ export function Footer() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email"
                 aria-label="Email address"
-                className="flex-1 sm:w-64 h-10 px-4 rounded-lg bg-[var(--background)] border border-[var(--border)] text-sm text-[var(--foreground)] placeholder:text-[var(--foreground-subtle)] focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
+                className="flex-1 min-w-0 sm:w-64 h-10 px-4 rounded-lg bg-[var(--background)] border border-[var(--border)] text-sm text-[var(--foreground)] placeholder:text-[var(--foreground-subtle)] focus:outline-none focus:ring-2 focus:ring-[var(--ring)]"
               />
               <button
                 type="submit"
-                className="h-10 px-5 rounded-lg bg-[var(--foreground)] text-[var(--background)] text-sm font-medium hover:opacity-90 transition-all duration-200 shadow-md hover:shadow-lg whitespace-nowrap cursor-pointer"
+                className="h-10 px-5 rounded-lg bg-[var(--foreground)] text-[var(--background)] text-sm font-medium hover:opacity-90 transition-all duration-200 shadow-md hover:shadow-lg whitespace-nowrap shrink-0 cursor-pointer"
               >
                 Subscribe
               </button>
@@ -161,12 +163,21 @@ export function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-12 pt-8 border-t border-[var(--border)] flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="mt-12 pt-8 border-t border-[var(--border)] flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
           <p className="text-xs text-[var(--foreground-subtle)]">
             © {new Date().getFullYear()} TechVerse. All rights reserved.
           </p>
-          <p className="text-xs text-[var(--foreground-subtle)] flex items-center gap-1">
-            Built with <Heart className="w-3 h-3 text-red-500 fill-red-500" /> using Next.js, Tailwind & TypeScript
+          <p className="text-xs text-[var(--foreground-subtle)] inline-flex flex-wrap items-center justify-center gap-1.5">
+            Crafted with <Heart className="w-3 h-3 text-red-500 fill-red-500" /> by
+            {/* TODO(owner): add your company website, e.g. href="https://krutivainfotech.com" */}
+            <a
+              href={siteConfig.company.url || undefined}
+              target={siteConfig.company.url ? "_blank" : undefined}
+              rel={siteConfig.company.url ? "noopener noreferrer" : undefined}
+              className="font-bold gradient-text hover:opacity-80 transition-opacity"
+            >
+              {siteConfig.company.name}
+            </a>
           </p>
         </div>
       </div>

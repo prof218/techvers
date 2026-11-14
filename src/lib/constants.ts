@@ -10,6 +10,11 @@ export const siteConfig = {
   ogImage: "/og-default.png",
   creator: "TechVerse Team",
   contactEmail: "contact@techverse.com",
+  // The company that built & maintains this site (shown in the footer).
+  company: {
+    name: "Krutiva Infotech",
+    url: "https://www.krutiva.com/",
+  },
   // TODO(owner): replace with your real profiles (or set to "" to hide the icon).
   links: {
     github: "https://github.com/techverse",
