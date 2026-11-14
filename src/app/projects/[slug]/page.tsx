@@ -66,7 +66,7 @@ export default async function ProjectDetailPage({ params }: Props) {
         ])}
       />
       {/* Hero */}
-      <section className="relative py-8 sm:py-10 overflow-hidden border-b border-[var(--border)]">
+      <section className="relative py-10 sm:py-12 overflow-hidden border-b border-[var(--border)]">
         <div className="absolute inset-0 grid-pattern" />
         <div className="absolute top-1/3 -left-20 w-72 h-72 bg-[var(--primary)]/10 rounded-full blur-[100px]" />
 
@@ -92,7 +92,7 @@ export default async function ProjectDetailPage({ params }: Props) {
                 {project.difficulty}
               </Badge>
             </div>
-            <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-[var(--foreground)]">
+            <h1 className="font-display text-4xl sm:text-5xl text-balance leading-[1.1] text-[var(--foreground)]">
               {project.title}
             </h1>
             <p className="text-lg text-[var(--foreground-muted)] max-w-2xl leading-relaxed">

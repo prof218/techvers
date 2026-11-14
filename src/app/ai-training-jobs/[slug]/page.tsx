@@ -163,7 +163,7 @@ export default async function JobDetailPage({ params }: Props) {
       />
 
       {/* Hero */}
-      <section className="relative py-8 sm:py-10 overflow-hidden border-b border-[var(--border)]">
+      <section className="relative py-10 sm:py-12 overflow-hidden border-b border-[var(--border)]">
         <div className="absolute inset-0 grid-pattern" />
         <div className="absolute top-1/4 -left-20 w-72 h-72 bg-[var(--primary)]/10 rounded-full blur-[100px]" />
         <div className="relative container-tight">
@@ -185,7 +185,7 @@ export default async function JobDetailPage({ params }: Props) {
             {!isOpen && <Badge variant="destructive">{statusLabel(job.status)}</Badge>}
           </div>
 
-          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[var(--foreground)] max-w-3xl">
+          <h1 className="font-display text-3xl sm:text-4xl text-balance leading-[1.1] text-[var(--foreground)] max-w-3xl">
             {job.title}
           </h1>
 

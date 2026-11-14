@@ -95,7 +95,7 @@ export default async function RoadmapDetailPage({ params }: Props) {
         ])}
       />
       {/* Hero */}
-      <section className="relative py-8 sm:py-10 overflow-hidden border-b border-[var(--border)]">
+      <section className="relative py-10 sm:py-12 overflow-hidden border-b border-[var(--border)]">
         <div className="absolute inset-0 grid-pattern" />
         <div className="absolute bottom-0 right-0 w-72 h-72 bg-[var(--primary)]/10 rounded-full blur-[100px]" />
 
@@ -122,7 +122,7 @@ export default async function RoadmapDetailPage({ params }: Props) {
               </Badge>
               {interactive && <Badge variant="gradient">Interactive</Badge>}
             </div>
-            <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-[var(--foreground)]">
+            <h1 className="font-display text-4xl sm:text-5xl text-balance leading-[1.1] text-[var(--foreground)]">
               {meta.title}
             </h1>
             <p className="text-lg text-[var(--foreground-muted)] max-w-2xl leading-relaxed">

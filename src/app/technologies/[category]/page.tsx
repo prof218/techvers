@@ -75,7 +75,7 @@ export default async function CategoryPage({ params }: Props) {
               <CategoryIcon slug={categoryInfo.slug} className="w-7 h-7" />
             </span>
             <div>
-              <h1 className="text-4xl sm:text-5xl font-bold text-[var(--foreground)]">
+              <h1 className="font-display text-4xl sm:text-5xl text-balance leading-[1.1] text-[var(--foreground)]">
                 {categoryInfo.name}
               </h1>
               <p className="mt-2 text-lg text-[var(--foreground-muted)]">

@@ -59,7 +59,7 @@ export default function BlogPage() {
       <section className="relative overflow-hidden border-b border-[var(--border)]">
         <div className="absolute inset-0 -z-10 grid-pattern" />
         <div className="absolute -top-20 -right-16 w-[26rem] h-[26rem] rounded-full bg-[var(--primary)]/10 blur-[120px] -z-10" />
-        <div className="container-tight py-8 sm:py-10 text-center">
+        <div className="container-tight py-10 sm:py-12 text-center">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[var(--border)] bg-[var(--surface)] text-sm text-[var(--foreground-muted)] shadow-[var(--shadow-sm)] mb-4">
             <BookOpen className="w-3.5 h-3.5 text-[var(--primary)]" />
             {posts.length} articles

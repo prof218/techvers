@@ -53,7 +53,7 @@ export default async function InterviewCategoryPage({ params }: Props) {
         ])}
       />
       {/* Hero */}
-      <section className="relative py-8 sm:py-10 overflow-hidden border-b border-[var(--border)]">
+      <section className="relative py-10 sm:py-12 overflow-hidden border-b border-[var(--border)]">
         <div className="absolute inset-0 bg-gradient-to-b from-[var(--background-secondary)] to-[var(--background)]" />
         <div className="absolute inset-0 grid-pattern opacity-30" />
         <div className="absolute top-1/4 right-0 w-72 h-72 bg-[#f59e0b]/10 rounded-full blur-[100px]" />
@@ -71,7 +71,7 @@ export default async function InterviewCategoryPage({ params }: Props) {
             <MessageSquare className="w-3.5 h-3.5" />
             {categoryQuestions.length} Questions
           </div>
-          <h1 className="flex items-center justify-center gap-3 text-4xl sm:text-5xl font-extrabold tracking-tight text-[var(--foreground)]">
+          <h1 className="flex items-center justify-center gap-3 font-display text-4xl sm:text-5xl text-balance leading-[1.1] text-[var(--foreground)]">
             <CategoryIcon slug={catInfo.slug} className="w-8 h-8 text-[var(--primary)]" />
             {catInfo.name} Questions
           </h1>

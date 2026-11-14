@@ -69,7 +69,7 @@ export default async function TechDetailPage({ params }: Props) {
         ])}
       />
       {/* Hero */}
-      <section className="relative py-8 sm:py-10 overflow-hidden border-b border-[var(--border)]">
+      <section className="relative py-10 sm:py-12 overflow-hidden border-b border-[var(--border)]">
         <div className="absolute inset-0 grid-pattern" />
 
         <div className="relative container-tight">
@@ -95,7 +95,7 @@ export default async function TechDetailPage({ params }: Props) {
             </div>
             <div className="flex-1">
               <div className="flex items-center gap-3 mb-2 flex-wrap">
-                <h1 className="text-3xl sm:text-4xl font-bold text-[var(--foreground)]">
+                <h1 className="font-display text-3xl sm:text-4xl text-balance leading-[1.1] text-[var(--foreground)]">
                   {tech.title}
                 </h1>
                 <Badge

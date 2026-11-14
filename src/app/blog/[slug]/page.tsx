@@ -88,7 +88,7 @@ export default async function BlogPostPage({ params }: Props) {
       />
 
       {/* Hero */}
-      <section className="relative py-8 sm:py-10 overflow-hidden border-b border-[var(--border)]">
+      <section className="relative py-10 sm:py-12 overflow-hidden border-b border-[var(--border)]">
         <div className="absolute inset-0 grid-pattern" />
         <div className="absolute top-1/4 -left-20 w-72 h-72 bg-[var(--primary)]/10 rounded-full blur-[100px]" />
         <div className="relative container-tight max-w-3xl">
@@ -99,7 +99,7 @@ export default async function BlogPostPage({ params }: Props) {
           </nav>
 
           <Badge variant="secondary" className="mb-4">{post.category}</Badge>
-          <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-[var(--foreground)] leading-tight text-balance">
+          <h1 className="font-display text-4xl sm:text-5xl text-balance leading-[1.1] text-[var(--foreground)]">
             {post.title}
           </h1>
           <p className="mt-4 text-lg text-[var(--foreground-muted)] leading-relaxed">{post.description}</p>
