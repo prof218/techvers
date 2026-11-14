@@ -6,7 +6,7 @@ export const siteConfig = {
   name: "Techoverxe",
   description:
     "The learn-to-hired platform for AI engineers and freshers. Master tech with interactive roadmaps, in-depth guides, and real interview prep — then apply to curated AI training jobs.",
-  url: "https://techverse-flax.vercel.app",
+  url: "https://techoverxe.com",
   ogImage: "/og-default.png",
   creator: "Techoverxe Team",
   contactEmail: "contact@techoverxe.com",
