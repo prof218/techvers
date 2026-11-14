@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { useSearchParams } from "next/navigation";
 import { motion } from "motion/react";
 import Link from "next/link";
 import { Search, Star, LayoutGrid } from "lucide-react";
@@ -25,13 +26,22 @@ interface PageClientProps {
 }
 
 export default function AIToolsHubClient({ allTools }: PageClientProps) {
+  const searchParams = useSearchParams();
   const [activeCategory, setActiveCategory] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState("");
+  const filtersRef = useRef<HTMLDivElement>(null);
 
+  // Sync active category with URL search params (reacts to header dropdown navigation)
   useEffect(() => {
-    const cat = new URLSearchParams(window.location.search).get("category");
-    if (cat && aiToolCategories.some((c) => c.slug === cat)) setActiveCategory(cat);
-  }, []);
+    const cat = searchParams.get("category");
+    if (cat && aiToolCategories.some((c) => c.slug === cat)) {
+      setActiveCategory(cat);
+      // Scroll the filter/tabs section into view
+      setTimeout(() => {
+        filtersRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 100);
+    }
+  }, [searchParams]);
 
   const filteredTools = allTools.filter((tool) => {
     const matchesCategory = activeCategory === "all" || tool.category === activeCategory;
@@ -52,7 +62,7 @@ export default function AIToolsHubClient({ allTools }: PageClientProps) {
   return (
     <div>
       {/* Search & filters */}
-      <div className="mb-8 space-y-5">
+      <div ref={filtersRef} className="mb-8 space-y-5 scroll-mt-24">
         <div className="relative max-w-md">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--foreground-subtle)]" />
           <input

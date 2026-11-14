@@ -4,6 +4,7 @@ import { Header } from "@/components/layout/header";
 import { CommandPalette } from "@/components/layout/command-palette";
 import { Footer } from "@/components/layout/footer";
 import { BackToTop } from "@/components/ui/back-to-top";
+import { ScrollToTop } from "@/components/scroll-to-top";
 import { JsonLd } from "@/components/json-ld";
 import { siteConfig } from "@/lib/constants";
 import "./globals.css";
@@ -118,6 +119,7 @@ export default function RootLayout({
           }}
         />
         <Header />
+        <ScrollToTop />
         <CommandPalette />
         <main id="main-content" className="flex-1 pt-16 lg:pt-20">
           {children}

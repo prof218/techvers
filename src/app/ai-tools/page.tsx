@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { aiTools } from "#site/content";
 import type { Metadata } from "next";
 import { Sparkles } from "lucide-react";
@@ -35,7 +35,9 @@ export default function AIToolsPage() {
 
       <section className="section-padding">
         <div className="container-wide">
-          <AIToolsHubClient allTools={aiTools} />
+          <Suspense>
+            <AIToolsHubClient allTools={aiTools} />
+          </Suspense>
         </div>
       </section>
     </div>
