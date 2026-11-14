@@ -1,0 +1,81 @@
+---
+title: "The 4-Step System Design Interview Framework That Works"
+description: "A battle-tested 4-step framework to ace your next system design interview, from scoping requirements to handling edge cases and scaling bottlenecks."
+date: 2026-11-11
+author: "Techoverxe Team"
+category: "System Design"
+tags: ["System Design", "Interviews", "Architecture", "Scaling", "Backend"]
+featured: false
+---
+
+System design interviews are notoriously open-ended. When an interviewer asks you to *"Design Twitter"* or *"Design a distributed URL shortener"*, they aren't looking for a single memorized architecture diagram. They are evaluating how you think: your ability to clarify ambiguous problems, navigate trade-offs, and systematically break down complex systems.
+
+Candidates who fail usually jump straight to whiteboard boxes and technologies ("We will use Kafka and Redis!") without understanding the scale. Candidates who pass follow a disciplined framework.
+
+Here is the exact **4-step system design framework** used by senior and staff engineers at top tech companies.
+
+## Step 1: Understand the Problem and Scope (5–8 minutes)
+
+Never draw a box until you have scoped the requirements. Ask clarifying questions across two dimensions:
+
+### Functional Requirements
+What does the system actually do for the end user?
+- What are the core user flows? (e.g., Can users post tweets? Follow users? Search?)
+- Which features are out of scope for this 45-minute discussion?
+
+### Non-Functional Requirements & Scale
+What are the system constraints?
+- **Throughput:** How many Daily Active Users (DAU)? What is the read-to-write ratio? (e.g., Twitter is 100:1 read-heavy).
+- **Latency:** Are we aiming for sub-100ms response times globally?
+- **Availability vs Consistency:** Can we tolerate eventual consistency (AP), or do transactions require strict ACID guarantees (CP)?
+
+<Callout type="info">
+**Back-of-the-envelope calculation example:**
+- 500 million Daily Active Users.
+- 100 million tweets per day = ~1,150 writes/second (peak ~2,500/sec).
+- Each tweet is 250 bytes + 150 bytes metadata = 400 bytes.
+- Daily storage: 100M × 400 bytes = 40 GB/day → ~15 TB/year.
+</Callout>
+
+## Step 2: High-Level Design (10–12 minutes)
+
+Outline the end-to-end architecture with standard components. Keep it minimal initially:
+
+1. **Clients:** Web, Mobile, Desktop.
+2. **API Gateway / Load Balancer:** SSL termination, rate limiting, and request routing.
+3. **Core Application Services:** Decoupled stateless microservices (e.g., User Service, Tweet Service, Timeline Service).
+4. **Data Layer:** Primary relational database (PostgreSQL/MySQL) for user profiles; NoSQL document store (MongoDB/Cassandra) for feed storage.
+
+Sketch the primary data flow:
+`Client -> Load Balancer -> API Service -> Database / Cache`
+
+Explain the API signatures clearly:
+`POST /v1/tweets` with `{ userId, content, mediaUrls }`
+`GET /v1/feed?cursor=xyz&limit=20`
+
+## Step 3: Deep Dive into Critical Components (15–20 minutes)
+
+This is where you showcase senior engineering chops. Pick the 1-2 hardest technical bottlenecks of the system.
+
+For a feed/timeline system, the core challenge is **fanout**:
+- **Fanout-on-write (Push):** When a user posts, push the tweet into the timeline caches of all followers. Fast reads (O(1)), but disastrous when celebrities like Elon Musk with 180M followers post.
+- **Fanout-on-read (Pull):** Generate timeline on-the-fly when a follower opens the app. Slow reads (O(N)), but zero write amplification.
+- **Hybrid Approach:** Push for standard users with under 5,000 followers; Pull for high-follower celebrity accounts, merging both streams dynamically at read time.
+
+Discuss database indexing strategies:
+- B-Tree indexes on `user_id` and composite indexes on `(user_id, created_at DESC)` for chronological feed queries.
+
+## Step 4: Bottlenecks, Edge Cases & Fault Tolerance (5–8 minutes)
+
+Conclude by stress-testing your design:
+
+- **Single Points of Failure (SPOF):** Ensure database replicas with automated failover and multi-region backups.
+- **Caching Layer:** Implement Redis cluster with LRU eviction and circuit breakers to prevent cache stampedes.
+- **Rate Limiting:** Protect APIs using token bucket algorithms to avoid abuse and DDoS attacks.
+- **Observability:** Centralized logs, metrics (p95, p99 latency), and distributed tracing (OpenTelemetry).
+
+<Callout type="success">
+**Key interview takeaway:** There are no correct answers in system design, only trade-offs. Always state *why* you chose technology X over Y and what you sacrificed in exchange.
+</Callout>
+
+For structured practice, check out our complete <Link href="/roadmaps/system-design">System Design Roadmap</Link> and deep-dive <Link href="/roadmaps/api-design">API Design Roadmap</Link>.

@@ -1,0 +1,152 @@
+---
+title: "10 Docker Best Practices for Production in 2026"
+description: "Make your Docker containers smaller, faster, and more secure with multi-stage builds, non-root users, and minimal base images."
+date: 2026-11-09
+author: "Techoverxe Team"
+category: "DevOps"
+tags: ["Docker", "DevOps", "Containers", "Security", "CI/CD"]
+featured: false
+---
+
+Containerization with Docker is standard across software engineering. However, writing a `Dockerfile` that merely "works on my machine" is very different from authoring one suitable for production environments. 
+
+Bloated container images consume excessive storage, slow down CI/CD pipelines, increase cold-start latency, and introduce dozens of preventable CVE security vulnerabilities.
+
+Here are **10 essential Docker best practices** every developer and DevOps engineer should enforce in 2026.
+
+## 1. Use Multi-Stage Builds
+
+Multi-stage builds allow you to use full-featured SDKs, compilers, and dependencies during the build stage, while copying only the compiled artifacts into a lightweight, stripped runtime image.
+
+```dockerfile
+# Stage 1: Build stage
+FROM node:20-alpine AS builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+COPY . .
+RUN npm run build
+
+# Stage 2: Minimal production runtime
+FROM node:20-alpine AS runner
+WORKDIR /app
+ENV NODE_ENV=production
+COPY --from=builder /app/package*.json ./
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/dist ./dist
+
+USER node
+EXPOSE 3000
+CMD ["node", "dist/server.js"]
+```
+
+This simple technique frequently cuts image sizes down from **1.2 GB to under 80 MB**.
+
+## 2. Never Run as Root
+
+By default, Docker executes processes inside containers as `root` (UID 0). If an attacker finds a remote code execution vulnerability inside your web app, container breakout exploits could grant them root privilege on the underlying host node.
+
+Always create and switch to an unprivileged user:
+
+```dockerfile
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+USER appuser
+```
+
+Many official images (like `node`, `python`, and `nginx`) already include pre-configured non-root users you can leverage directly.
+
+## 3. Leverage Docker Layer Caching
+
+Docker builds images layer by layer, caching each intermediate layer. If a command changes, all subsequent layers are invalidated and re-executed.
+
+Always copy dependency manifests (`package.json`, `requirements.txt`, `go.mod`, `pom.xml`) and install packages **before** copying your application source code:
+
+```dockerfile
+# Good: Dependencies are cached until package.json changes
+COPY package*.json ./
+RUN npm ci
+
+# Source code changes often, but won't trigger re-installation
+COPY . .
+```
+
+## 4. Use Minimal Base Images (Alpine, Distroless)
+
+Standard Ubuntu or Debian base images bundle hundreds of unnecessary utilities (e.g., `curl`, `bash`, compilers) that increase attack surface area.
+
+- Use **Alpine Linux** (`alpine`) for minimal footprint (~5MB base).
+- Use Google's **Distroless** images (`gcr.io/distroless/static`) which contain zero package managers or shells.
+
+## 5. Implement a Comprehensive `.dockerignore`
+
+Just as you use `.gitignore`, keep build noise out of your Docker build context:
+
+```text
+node_modules
+.git
+.env*
+*.log
+dist
+.vscode
+README.md
+```
+
+This prevents accidental leaking of secret keys, reduces network transfer time to remote Docker daemons, and stops cache invalidation caused by non-code file changes.
+
+## 6. Pin Exact Package and Image Versions
+
+Never use the `:latest` tag in production Dockerfiles. A build that succeeded yesterday might fail tomorrow because `:latest` updated to a breaking major version.
+
+```dockerfile
+# Bad
+FROM python:latest
+
+# Good: Deterministic, reproducible builds
+FROM python:3.12.3-slim-bookworm
+```
+
+## 7. Use Proper Signal Handling (Tini / Dumb-init)
+
+In Linux, PID 1 has special responsibilities for reaping zombie child processes and forwarding shutdown signals (`SIGTERM`, `SIGINT`). Node.js and Python do not handle PID 1 semantics correctly by default, causing containers to hang during graceful stop commands.
+
+Use `tini` as an entrypoint wrapper:
+
+```dockerfile
+RUN apk add --no-cache tini
+ENTRYPOINT ["/sbin/tini", "--"]
+CMD ["node", "server.js"]
+```
+
+## 8. Add Health Checks
+
+Kubernetes and Docker Compose rely on container health checks to determine whether to route traffic to an instance or restart a stalled process:
+
+```dockerfile
+HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
+  CMD wget --no-verbose --tries=1 --spider http://localhost:3000/api/health || exit 1
+```
+
+## 9. Keep Secrets Out of Image Layers
+
+Never bake API tokens, passwords, or credentials into `ENV` directives or `COPY` instructions. Even if deleted in a later step, historical image layers preserve the files.
+
+Instead, inject secrets at runtime using environment variables, Kubernetes Secrets, or Docker BuildKit mount secrets:
+
+```dockerfile
+# syntax=docker/dockerfile:1.4
+RUN --mount=type=secret,id=npmrc,target=/root/.npmrc npm install
+```
+
+## 10. Scan Images in Your CI/CD Pipeline
+
+Automate vulnerability scanning on every pull request using modern tools like **Trivy**, **Snyk**, or **Docker Scout**:
+
+```bash
+docker scout cves myapp:v1.0.0
+```
+
+Enforce build failure if critical CVEs with known fixes are detected.
+
+---
+
+Level up your cloud infrastructure knowledge with our <Link href="/roadmaps/docker">Docker Roadmap</Link> and <Link href="/roadmaps/devops-engineer">DevOps Engineer Roadmap</Link>.

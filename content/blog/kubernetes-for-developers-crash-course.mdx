@@ -1,0 +1,144 @@
+---
+title: "Kubernetes for Developers: The Core Concepts You Actually Need"
+description: "Demystifying Kubernetes for application developers: Pods, Deployments, Services, Ingress, and ConfigMaps explained without unnecessary jargon."
+date: 2026-10-20
+author: "Techoverxe Team"
+category: "DevOps"
+tags: ["Kubernetes", "DevOps", "Cloud", "Containers", "Infrastructure"]
+featured: false
+---
+
+Kubernetes (K8s) has a reputation for being terrifyingly complex. With hundreds of acronyms, CRDs, controllers, and thousands of lines of YAML, it is easy for developers to feel overwhelmed and wish they were just deploying a single Docker container to a VPS.
+
+The truth is, as an application software engineer, **you do not need to know 90% of Kubernetes internals** (like CNI plugins, etcd consensus, or kubelet reconciliation loops). You only need to master the **5 core abstractions** that manage your running code.
+
+Here is the developer's guide to Kubernetes.
+
+## 1. Pod: The Smallest Deployable Unit
+
+A **Pod** is not a container; it is a wrapper around one (or sometimes more) tightly-coupled containers that share the same network namespace (IP address) and storage volumes.
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: api-server
+spec:
+  containers:
+    - name: node-app
+      image: myregistry/node-app:1.2.0
+      ports:
+        - containerPort: 3000
+```
+
+<Callout type="warning">
+**Crucial rule:** In production, you almost **never deploy naked Pods**. If a Pod crashes or the host node dies, a naked Pod is lost forever. Always manage Pods through a **Deployment**.
+</Callout>
+
+## 2. Deployment: Self-Healing and Zero-Downtime Rollouts
+
+A **Deployment** manages the lifecycle of your Pods. You specify how many identical copies (replicas) of your app should run, how to roll out updates without downtime (RollingUpdate), and how to rollback if the new version fails health checks.
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-api
+spec:
+  replicas: 3 # Kubernetes guarantees 3 healthy instances are running
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: web-api
+  template:
+    metadata:
+      labels:
+        app: web-api
+    spec:
+      containers:
+        - name: web-api
+          image: myregistry/web-api:v2.1.0
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+```
+
+If one Pod crashes or runs out of memory (OOMKilled), the Deployment controller immediately notices the discrepancy and schedules a new replacement Pod on an available cluster node.
+
+## 3. Service: Stable Networking and Internal Load Balancing
+
+Pods are ephemeral; their IP addresses change every time they are restarted or rescheduled. A **Service** provides a permanent internal IP address and DNS name (e.g., `web-api.default.svc.cluster.local`) that load balances traffic across all healthy Pods matching a label selector:
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-api-service
+spec:
+  type: ClusterIP # Internal only
+  selector:
+    app: web-api # Routes traffic to any pod with this label
+  ports:
+    - protocol: TCP
+      port: 80 # Service port
+      targetPort: 3000 # Container port
+```
+
+Now other microservices in the cluster can simply make HTTP requests to `http://web-api-service` without caring which individual Pod handles the request.
+
+## 4. ConfigMaps and Secrets: Decoupled Configuration
+
+Never hardcode configuration or credentials into your container images:
+
+- **ConfigMap:** Non-sensitive environment variables and configuration files (`DATABASE_HOST`, `LOG_LEVEL`, `FEATURE_FLAGS`).
+- **Secret:** Base64-encoded sensitive tokens, passwords, and private keys.
+
+Inject them into your Pods as environment variables:
+
+```yaml
+env:
+  - name: DB_HOST
+    valueFrom:
+      configMapKeyRef:
+        name: app-config
+        key: db_host
+  - name: API_SECRET_KEY
+    valueFrom:
+      secretKeyRef:
+        name: app-secrets
+        key: secret_key
+```
+
+## 5. Ingress: Routing External Internet Traffic
+
+While Services handle internal cluster communication, an **Ingress** acts as the external gatekeeper (HTTP/HTTPS reverse proxy like NGINX, Traefik, or AWS ALB). It routes external domain traffic to the appropriate internal Services based on hostnames and URL paths:
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: main-ingress
+spec:
+  rules:
+    - host: api.techoverxe.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: web-api-service
+                port:
+                  number: 80
+```
+
+---
+
+Take your container and cloud orchestration knowledge further with our <Link href="/roadmaps/kubernetes">Kubernetes Roadmap</Link> and <Link href="/roadmaps/devops-engineer">DevOps Engineer Roadmap</Link>.
