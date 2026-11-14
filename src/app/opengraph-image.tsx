@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "TechVerse — the developer's learning platform";
+export const alt = "Techoverxe — the developer's learning platform";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -38,7 +38,7 @@ export default function OpengraphImage() {
           >
             T
           </div>
-          <div style={{ fontSize: 36, fontWeight: 700 }}>TechVerse</div>
+          <div style={{ fontSize: 36, fontWeight: 700 }}>Techoverxe</div>
         </div>
 
         <div style={{ display: "flex", fontSize: 82, fontWeight: 700, marginTop: 44, lineHeight: 1.05, maxWidth: 940 }}>

@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     "Practical, original guides on becoming an AI engineer, landing AI training and evaluation jobs, building a standout portfolio, and growing a career in AI — written for learners and freshers.",
   alternates: { canonical: `${siteConfig.url}${PATH}` },
   openGraph: {
-    title: "TechVerse Blog — AI Careers & Learning",
+    title: "Techoverxe Blog — AI Careers & Learning",
     description:
       "Original guides on AI careers, model evaluation, data annotation, portfolios, and landing remote AI jobs.",
     url: `${siteConfig.url}${PATH}`,
@@ -40,7 +40,7 @@ export default function BlogPage() {
               "@type": "Blog",
               "@id": `${siteConfig.url}${PATH}#blog`,
               url: `${siteConfig.url}${PATH}`,
-              name: "TechVerse Blog",
+              name: "Techoverxe Blog",
               description: metadata.description as string,
               isPartOf: { "@id": `${siteConfig.url}#site` },
             },

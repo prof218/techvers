@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!info) return {};
   return {
     title: `${info.name} Technologies`,
-    description: `${info.description}. Explore in-depth ${info.name.toLowerCase()} guides on TechVerse.`,
+    description: `${info.description}. Explore in-depth ${info.name.toLowerCase()} guides on Techoverxe.`,
     alternates: { canonical: `${siteConfig.url}/technologies/${category}` },
   };
 }

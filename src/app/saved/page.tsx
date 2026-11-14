@@ -4,7 +4,7 @@ import { SavedClient } from "./saved-client";
 
 export const metadata: Metadata = {
   title: "Saved",
-  description: "Your bookmarked guides, AI tools, and roadmaps on TechVerse.",
+  description: "Your bookmarked guides, AI tools, and roadmaps on Techoverxe.",
   robots: { index: false },
 };
 

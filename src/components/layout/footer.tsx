@@ -61,7 +61,7 @@ export function Footer() {
     if (!email) return;
     const subject = encodeURIComponent("Newsletter subscription");
     const body = encodeURIComponent(
-      `Please add ${email} to the TechVerse newsletter.`
+      `Please add ${email} to the Techoverxe newsletter.`
     );
     // No backend yet: route the signup to the site owner's inbox.
     window.location.href = `mailto:${siteConfig.contactEmail}?subject=${subject}&body=${body}`;
@@ -79,10 +79,10 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-8">
           {/* Brand column */}
           <div className="lg:col-span-2 space-y-4">
-            <Link href="/" className="inline-flex items-center" aria-label="TechVerse home">
+            <Link href="/" className="inline-flex items-center" aria-label="Techoverxe home">
               <Image
-                src="/tv-logo2.png"
-                alt="TechVerse — Learn, Explore, Grow"
+                src="/techoverxe-logo.png"
+                alt="Techoverxe — Learn, Explore, Grow"
                 width={252}
                 height={84}
                 className="h-14 lg:h-16 w-auto"
@@ -165,7 +165,7 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="mt-12 pt-8 border-t border-[var(--border)] flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
           <p className="text-xs text-[var(--foreground-subtle)]">
-            © {new Date().getFullYear()} TechVerse. All rights reserved.
+            © {new Date().getFullYear()} Techoverxe. All rights reserved.
           </p>
           <p className="text-xs text-[var(--foreground-subtle)] inline-flex flex-wrap items-center justify-center gap-1.5">
             Crafted with <Heart className="w-3 h-3 text-red-500 fill-red-500" /> by

@@ -1,5 +1,5 @@
 /* ============================================================
-   TechVerse — Interactive ROLE roadmaps (roadmap.sh-style)
+   Techoverxe — Interactive ROLE roadmaps (roadmap.sh-style)
    Slugs matching existing MDX roadmaps upgrade them to the
    interactive view; the rest are interactive-only and appear
    via the merged roadmaps listing.

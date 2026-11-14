@@ -1,5 +1,5 @@
 /* ============================================================
-   TechVerse — Interactive SKILL roadmaps (roadmap.sh-style)
+   Techoverxe — Interactive SKILL roadmaps (roadmap.sh-style)
    Original node content; resources favor internal guides and
    canonical documentation. See src/lib/roadmaps.ts for the model.
    ============================================================ */

@@ -1,15 +1,15 @@
 /* ============================================
-   TechVerse — Constants & Navigation Structure
+   Techoverxe — Constants & Navigation Structure
    ============================================ */
 
 export const siteConfig = {
-  name: "TechVerse",
+  name: "Techoverxe",
   description:
     "The learn-to-hired platform for AI engineers and freshers. Master tech with interactive roadmaps, in-depth guides, and real interview prep — then apply to curated AI training jobs.",
   url: "https://techverse-flax.vercel.app",
   ogImage: "/og-default.png",
-  creator: "TechVerse Team",
-  contactEmail: "contact@techverse.com",
+  creator: "Techoverxe Team",
+  contactEmail: "contact@techoverxe.com",
   // The company that built & maintains this site (shown in the footer).
   company: {
     name: "Krutiva Infotech",

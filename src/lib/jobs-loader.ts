@@ -1,5 +1,5 @@
 /* ============================================================
-   TechVerse — AI Training Jobs: dynamic data loader
+   Techoverxe — AI Training Jobs: dynamic data loader
    ------------------------------------------------------------
    Merges code-based jobs (src/data/jobs.ts) with rows from a
    published Google Sheet (CSV), so jobs can be added/edited in

@@ -85,10 +85,10 @@ export function Header() {
         <div className="container-wide">
           <div className="flex items-center justify-between h-16 lg:h-20">
             {/* Logo */}
-            <Link href="/" className="flex items-center shrink-0" aria-label="TechVerse home">
+            <Link href="/" className="flex items-center shrink-0" aria-label="Techoverxe home">
               <Image
-                src="/tv-logo2.png"
-                alt="TechVerse — Learn, Explore, Grow"
+                src="/techoverxe-logo.png"
+                alt="Techoverxe — Learn, Explore, Grow"
                 width={240}
                 height={80}
                 priority

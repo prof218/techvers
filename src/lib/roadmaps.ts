@@ -1,5 +1,5 @@
 /* ============================================================
-   TechVerse — Interactive (roadmap.sh-style) roadmap model
+   Techoverxe — Interactive (roadmap.sh-style) roadmap model
    ------------------------------------------------------------
    Structured, node-based roadmaps rendered as an interactive
    branch timeline with clickable topic nodes, a resources

@@ -12,7 +12,7 @@ export function ContactForm() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const subject = encodeURIComponent(`TechVerse contact from ${name || "a visitor"}`);
+    const subject = encodeURIComponent(`Techoverxe contact from ${name || "a visitor"}`);
     const body = encodeURIComponent(
       `Name: ${name}\nEmail: ${email}\n\n${message}`
     );

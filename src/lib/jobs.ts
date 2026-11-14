@@ -1,5 +1,5 @@
 /* ============================================================
-   TechVerse — AI Training Jobs: types, registries & pure logic
+   Techoverxe — AI Training Jobs: types, registries & pure logic
    ------------------------------------------------------------
    A typed data layer (not Velite/MDX): job records are high-volume
    structured data with no long-form body, and need stable IDs,

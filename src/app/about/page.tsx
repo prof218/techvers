@@ -6,18 +6,18 @@ import { siteConfig } from "@/lib/constants";
 export const metadata: Metadata = {
   title: "About Us",
   description:
-    "Learn about TechVerse — a free, independent platform helping developers explore technologies, compare AI tools, follow learning roadmaps, and prepare for interviews.",
+    "Learn about Techoverxe — a free, independent platform helping developers explore technologies, compare AI tools, follow learning roadmaps, and prepare for interviews.",
   alternates: { canonical: `${siteConfig.url}/about` },
 };
 
 export default function AboutPage() {
   return (
     <ContentPage
-      title="About TechVerse"
+      title="About Techoverxe"
       subtitle="A free, independent learning hub for developers and IT professionals."
     >
       <p>
-        <strong>TechVerse</strong> is an independent knowledge platform built for people who work
+        <strong>Techoverxe</strong> is an independent knowledge platform built for people who work
         with technology — students, self-taught developers, career switchers, and working
         engineers. Our goal is simple: gather the practical information you need to learn a
         technology, choose the right tool, plan a career, and prepare for interviews, and present it
@@ -54,9 +54,9 @@ export default function AboutPage() {
         reader, it doesn&apos;t belong here.
       </p>
 
-      <h2>How TechVerse is funded</h2>
+      <h2>How Techoverxe is funded</h2>
       <p>
-        TechVerse is free to read. We cover our costs through advertising and, in some cases,
+        Techoverxe is free to read. We cover our costs through advertising and, in some cases,
         affiliate links to products we write about. Advertising never dictates our recommendations,
         and we clearly separate editorial content from ads.
       </p>

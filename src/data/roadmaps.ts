@@ -1,5 +1,5 @@
 /* ============================================================
-   TechVerse — Interactive roadmap data (roadmap.sh-style)
+   Techoverxe — Interactive roadmap data (roadmap.sh-style)
    ------------------------------------------------------------
    Flagship roadmaps authored as node graphs. Slugs match the
    existing Velite roadmaps, so these upgrade /roadmaps/[slug]

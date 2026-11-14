@@ -85,7 +85,7 @@ export async function AiJobsSection() {
 
         <Reveal className="mt-8 flex items-center justify-center gap-2 text-xs text-[var(--foreground-subtle)]">
           <ExternalLink className="w-3.5 h-3.5" />
-          Applications redirect to the original marketplace — TechVerse never collects your credentials.
+          Applications redirect to the original marketplace — Techoverxe never collects your credentials.
         </Reveal>
       </div>
     </section>

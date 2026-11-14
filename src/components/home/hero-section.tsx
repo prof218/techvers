@@ -108,7 +108,7 @@ export function HeroSection() {
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && openSearch(query)}
               placeholder="Search roadmaps, guides, jobs…"
-              aria-label="Search TechVerse"
+              aria-label="Search Techoverxe"
               className="flex-1 min-w-0 h-full bg-transparent text-[var(--foreground)] placeholder:text-[var(--foreground-subtle)] focus:outline-none"
             />
             <Button variant="gradient" className="rounded-xl h-10 shrink-0" onClick={() => openSearch(query)}>

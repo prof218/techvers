@@ -1,5 +1,5 @@
 /* ============================================================
-   TechVerse — AI Training Jobs data
+   Techoverxe — AI Training Jobs data
    ------------------------------------------------------------
    REAL, manually-curated micro1 opportunities, verified from the
    owner's micro1 referral dashboard on 2026-11-13.

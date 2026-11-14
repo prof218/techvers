@@ -42,7 +42,7 @@ export function ApplyButton({ job, className }: { job: Job; className?: string }
         <Info className="w-3.5 h-3.5 mt-px shrink-0" />
         <span>
           You&apos;ll be redirected to {marketName} to apply.
-          {isReferral && " This is a referral link — TechVerse may earn a commission at no cost to you."}
+          {isReferral && " This is a referral link — Techoverxe may earn a commission at no cost to you."}
         </span>
       </p>
     </div>

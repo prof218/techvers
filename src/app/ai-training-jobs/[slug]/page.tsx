@@ -256,7 +256,7 @@ export default async function JobDetailPage({ params }: Props) {
                     Prepare for this role
                   </h3>
                   <p className="text-sm text-[var(--foreground-muted)] mb-4">
-                    Boost your chances before you apply — practice with TechVerse interview questions and roadmaps.
+                    Boost your chances before you apply — practice with Techoverxe interview questions and roadmaps.
                   </p>
                   <div className="flex flex-wrap gap-3">
                     <Link

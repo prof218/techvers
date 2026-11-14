@@ -6,7 +6,7 @@ import { siteConfig } from "@/lib/constants";
 export const metadata: Metadata = {
   title: "Privacy Policy",
   description:
-    "How TechVerse collects, uses, and protects your information, including our use of cookies, analytics, and third-party advertising such as Google AdSense.",
+    "How Techoverxe collects, uses, and protects your information, including our use of cookies, analytics, and third-party advertising such as Google AdSense.",
   alternates: { canonical: `${siteConfig.url}/privacy` },
 };
 
@@ -45,7 +45,7 @@ export default function PrivacyPage() {
         <li>To operate, maintain, and improve the website and its content.</li>
         <li>To respond to your messages and requests.</li>
         <li>To measure aggregate usage and performance.</li>
-        <li>To display advertising that helps keep TechVerse free.</li>
+        <li>To display advertising that helps keep Techoverxe free.</li>
       </ul>
 
       <h2>Advertising and third-party cookies</h2>
@@ -94,7 +94,7 @@ export default function PrivacyPage() {
 
       <h2>Children&apos;s privacy</h2>
       <p>
-        TechVerse is intended for a general audience and is not directed to children under 13. We do
+        Techoverxe is intended for a general audience and is not directed to children under 13. We do
         not knowingly collect personal information from children under 13.
       </p>
 

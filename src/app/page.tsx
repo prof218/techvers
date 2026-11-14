@@ -12,7 +12,7 @@ import { BlogSection } from "@/components/home/blog-section";
 import { CTASection } from "@/components/home/cta-section";
 
 export const metadata: Metadata = {
-  title: { absolute: "TechVerse — Learn AI & Tech, Then Get Hired" },
+  title: { absolute: "Techoverxe — Learn AI & Tech, Then Get Hired" },
   description: siteConfig.description,
   alternates: { canonical: siteConfig.url },
 };
