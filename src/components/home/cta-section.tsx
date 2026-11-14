@@ -11,7 +11,7 @@ export function CTASection() {
     <section className="relative section-padding">
       <div className="container-wide">
         <Reveal>
-          <div className="relative rounded-[2rem] overflow-hidden bg-[var(--foreground)] px-8 py-12 sm:px-16 sm:py-16 text-center">
+          <div className="relative rounded-[2rem] overflow-hidden bg-[var(--foreground)] px-8 py-14 sm:px-16 sm:py-20 text-center">
             {/* Decorative */}
             <div className="absolute inset-0 grid-pattern opacity-[0.15]" />
             <div className="absolute -top-24 -right-16 w-72 h-72 rounded-full bg-[var(--primary)]/40 blur-[110px]" />

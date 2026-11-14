@@ -107,6 +107,7 @@ export function Header() {
                 >
                   <Link
                     href={item.href}
+                    onClick={() => setActiveMenu(null)}
                     className={cn(
                       "flex items-center gap-1 px-3.5 py-2 rounded-full text-[0.925rem] font-medium transition-colors duration-200",
                       pathname.startsWith(item.href)
@@ -127,7 +128,7 @@ export function Header() {
 
                   <AnimatePresence>
                     {item.children && activeMenu === item.title && (
-                      <MegaMenu item={item} />
+                      <MegaMenu item={item} onNavigate={() => setActiveMenu(null)} />
                     )}
                   </AnimatePresence>
                 </div>
@@ -215,7 +216,7 @@ export function Header() {
   );
 }
 
-function MegaMenu({ item }: { item: NavItem }) {
+function MegaMenu({ item, onNavigate }: { item: NavItem; onNavigate: () => void }) {
   const children = item.children || [];
   const twoCol = children.length > 5;
   return (
@@ -235,6 +236,7 @@ function MegaMenu({ item }: { item: NavItem }) {
             <Link
               key={child.href}
               href={child.href}
+              onClick={onNavigate}
               className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-[var(--surface-hover)] transition-colors group/item"
             >
               <span className="w-9 h-9 rounded-lg bg-[var(--secondary)] border border-[var(--border)] flex items-center justify-center text-[var(--primary)] flex-shrink-0 group-hover/item:bg-[var(--primary)] group-hover/item:text-[var(--primary-foreground)] group-hover/item:border-[var(--primary)] transition-colors">

@@ -310,9 +310,25 @@ body {
    position: sticky (which overflow-x on body/html would). */
 #main-content { overflow-x: clip; }
 
-/* --- Section spacing --- */
-.section-padding { padding-top: 3rem; padding-bottom: 3rem; }
-@media (max-width: 768px) { .section-padding { padding-top: 2rem; padding-bottom: 2rem; } }
+/* --- Vertical rhythm tokens ---
+   One place controls sitewide spacing. Mobile-first: smaller on phones,
+   generous editorial breathing room from the md breakpoint up. */
+:root {
+  --space-section: 3.5rem;   /* content sections — mobile/tablet */
+  --space-hero: 3rem;        /* page hero headers — mobile/tablet */
+}
+@media (min-width: 768px) {
+  :root {
+    --space-section: 5.5rem;  /* content sections — desktop */
+    --space-hero: 4.75rem;    /* page hero headers — desktop */
+  }
+}
+
+/* Content sections (features, grids, listings, home sections, …) */
+.section-padding { padding-top: var(--space-section); padding-bottom: var(--space-section); }
+
+/* Page hero headers (breadcrumb + title + subtitle block) */
+.hero-padding { padding-top: var(--space-hero); padding-bottom: var(--space-hero); }
 
 /* --- Prose tweaks for content pages --- */
 .prose :where(pre) { background: var(--background-tertiary); border: 1px solid var(--border); }

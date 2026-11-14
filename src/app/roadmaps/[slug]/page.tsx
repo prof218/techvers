@@ -95,7 +95,7 @@ export default async function RoadmapDetailPage({ params }: Props) {
         ])}
       />
       {/* Hero */}
-      <section className="relative py-10 sm:py-12 overflow-hidden border-b border-[var(--border)]">
+      <section className="relative hero-padding overflow-hidden border-b border-[var(--border)]">
         <div className="absolute inset-0 grid-pattern" />
         <div className="absolute bottom-0 right-0 w-72 h-72 bg-[var(--primary)]/10 rounded-full blur-[100px]" />
 
