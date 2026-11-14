@@ -50,4 +50,4 @@ next-env.d.ts
 # local logs
 build.log
 dev-server.log
-src/*.stackdump
+*.stackdump
