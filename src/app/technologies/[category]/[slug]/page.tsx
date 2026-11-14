@@ -69,12 +69,12 @@ export default async function TechDetailPage({ params }: Props) {
         ])}
       />
       {/* Hero */}
-      <section className="relative py-16 sm:py-24 overflow-hidden border-b border-[var(--border)]">
+      <section className="relative py-10 sm:py-14 overflow-hidden border-b border-[var(--border)]">
         <div className="absolute inset-0 grid-pattern" />
 
         <div className="relative container-tight">
           {/* Breadcrumb */}
-          <nav className="flex items-center gap-2 text-sm text-[var(--foreground-muted)] mb-8">
+          <nav className="flex flex-wrap items-center gap-2 text-sm text-[var(--foreground-muted)] mb-8">
             <Link href="/technologies" className="hover:text-[var(--primary)] transition-colors">
               Technologies
             </Link>

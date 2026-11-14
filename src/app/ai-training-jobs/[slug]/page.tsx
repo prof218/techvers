@@ -163,12 +163,12 @@ export default async function JobDetailPage({ params }: Props) {
       />
 
       {/* Hero */}
-      <section className="relative py-12 sm:py-16 overflow-hidden border-b border-[var(--border)]">
+      <section className="relative py-10 sm:py-14 overflow-hidden border-b border-[var(--border)]">
         <div className="absolute inset-0 grid-pattern" />
         <div className="absolute top-1/4 -left-20 w-72 h-72 bg-[var(--primary)]/10 rounded-full blur-[100px]" />
         <div className="relative container-tight">
           {/* Breadcrumbs */}
-          <nav className="flex flex-wrap items-center gap-2 text-sm text-[var(--foreground-muted)] mb-7">
+          <nav className="flex flex-wrap items-center gap-2 text-sm text-[var(--foreground-muted)] mb-8">
             <Link href="/ai-training-jobs" className="hover:text-[var(--primary)] transition-colors">
               AI Training Jobs
             </Link>

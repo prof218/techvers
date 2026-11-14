@@ -88,11 +88,11 @@ export default async function BlogPostPage({ params }: Props) {
       />
 
       {/* Hero */}
-      <section className="relative py-14 sm:py-20 overflow-hidden border-b border-[var(--border)]">
+      <section className="relative py-10 sm:py-14 overflow-hidden border-b border-[var(--border)]">
         <div className="absolute inset-0 grid-pattern" />
         <div className="absolute top-1/4 -left-20 w-72 h-72 bg-[var(--primary)]/10 rounded-full blur-[100px]" />
         <div className="relative container-tight max-w-3xl">
-          <nav className="flex flex-wrap items-center gap-2 text-sm text-[var(--foreground-muted)] mb-7">
+          <nav className="flex flex-wrap items-center gap-2 text-sm text-[var(--foreground-muted)] mb-8">
             <Link href="/blog" className="hover:text-[var(--primary)] transition-colors">Blog</Link>
             <span>/</span>
             <span className="text-[var(--foreground-subtle)]">{post.category}</span>

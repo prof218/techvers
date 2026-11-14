@@ -219,14 +219,14 @@ export default async function CareerDetailPage({ params }: Props) {
         ])}
       />
       {/* Hero */}
-      <section className="relative py-16 sm:py-24 overflow-hidden border-b border-[var(--border)]">
+      <section className="relative py-10 sm:py-14 overflow-hidden border-b border-[var(--border)]">
         <div className="absolute inset-0 bg-gradient-to-b from-[var(--background-secondary)] to-[var(--background)]" />
         <div className="absolute inset-0 grid-pattern opacity-30" />
         <div className="absolute top-1/4 right-0 w-72 h-72 bg-[#22c55e]/10 rounded-full blur-[100px]" />
 
         <div className="relative container-tight">
           {/* Breadcrumbs */}
-          <nav className="flex items-center gap-2 text-sm text-[var(--foreground-muted)] mb-8">
+          <nav className="flex flex-wrap items-center gap-2 text-sm text-[var(--foreground-muted)] mb-8">
             <Link href="/careers" className="hover:text-[var(--primary)] transition-colors">Careers</Link>
             <span>/</span>
             <span className="text-[var(--foreground)]">{career.title}</span>

@@ -66,13 +66,13 @@ export default async function ProjectDetailPage({ params }: Props) {
         ])}
       />
       {/* Hero */}
-      <section className="relative py-16 sm:py-24 overflow-hidden border-b border-[var(--border)]">
+      <section className="relative py-10 sm:py-14 overflow-hidden border-b border-[var(--border)]">
         <div className="absolute inset-0 grid-pattern" />
         <div className="absolute top-1/3 -left-20 w-72 h-72 bg-[var(--primary)]/10 rounded-full blur-[100px]" />
 
         <div className="relative container-tight">
           {/* Breadcrumbs */}
-          <nav className="flex items-center gap-2 text-sm text-[var(--foreground-muted)] mb-8">
+          <nav className="flex flex-wrap items-center gap-2 text-sm text-[var(--foreground-muted)] mb-8">
             <Link href="/projects" className="hover:text-[var(--primary)] transition-colors">Projects</Link>
             <span>/</span>
             <span className="text-[var(--foreground)]">{project.title}</span>
