@@ -21,7 +21,7 @@ export function TechnologiesPageClient() {
       <section className="relative overflow-hidden border-b border-[var(--border)]">
         <div className="absolute inset-0 -z-10 grid-pattern" />
         <div className="absolute -top-24 right-0 w-[28rem] h-[28rem] rounded-full bg-[var(--primary)]/8 blur-[120px] -z-10" />
-        <div className="container-tight py-16 sm:py-24 text-center">
+        <div className="container-tight hero-padding text-center">
           <Reveal>
             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--primary)] mb-4">
               Technology Hub

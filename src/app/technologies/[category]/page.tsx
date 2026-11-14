@@ -50,7 +50,7 @@ export default async function CategoryPage({ params }: Props) {
   return (
     <div className="min-h-screen">
       {/* Hero */}
-      <section className="relative py-20 sm:py-28 overflow-hidden">
+      <section className="relative hero-padding overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-[var(--background-secondary)] to-[var(--background)]" />
         <div className="absolute inset-0 grid-pattern opacity-40" />
         <div
