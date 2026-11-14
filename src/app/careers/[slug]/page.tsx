@@ -219,7 +219,7 @@ export default async function CareerDetailPage({ params }: Props) {
         ])}
       />
       {/* Hero */}
-      <section className="relative py-10 sm:py-14 overflow-hidden border-b border-[var(--border)]">
+      <section className="relative py-8 sm:py-10 overflow-hidden border-b border-[var(--border)]">
         <div className="absolute inset-0 bg-gradient-to-b from-[var(--background-secondary)] to-[var(--background)]" />
         <div className="absolute inset-0 grid-pattern opacity-30" />
         <div className="absolute top-1/4 right-0 w-72 h-72 bg-[#22c55e]/10 rounded-full blur-[100px]" />

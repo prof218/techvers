@@ -23,7 +23,7 @@ export async function StatsSection() {
   ];
 
   return (
-    <section className="relative py-14 border-b border-[var(--border)]">
+    <section className="relative py-10 border-b border-[var(--border)]">
       <div className="container-wide">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-x-6 gap-y-10">
           {stats.map((stat, index) => (

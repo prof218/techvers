@@ -311,8 +311,8 @@ body {
 #main-content { overflow-x: clip; }
 
 /* --- Section spacing --- */
-.section-padding { padding-top: 4.5rem; padding-bottom: 4.5rem; }
-@media (max-width: 768px) { .section-padding { padding-top: 3rem; padding-bottom: 3rem; } }
+.section-padding { padding-top: 3rem; padding-bottom: 3rem; }
+@media (max-width: 768px) { .section-padding { padding-top: 2rem; padding-bottom: 2rem; } }
 
 /* --- Prose tweaks for content pages --- */
 .prose :where(pre) { background: var(--background-tertiary); border: 1px solid var(--border); }

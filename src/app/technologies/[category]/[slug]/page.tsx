@@ -69,7 +69,7 @@ export default async function TechDetailPage({ params }: Props) {
         ])}
       />
       {/* Hero */}
-      <section className="relative py-10 sm:py-14 overflow-hidden border-b border-[var(--border)]">
+      <section className="relative py-8 sm:py-10 overflow-hidden border-b border-[var(--border)]">
         <div className="absolute inset-0 grid-pattern" />
 
         <div className="relative container-tight">

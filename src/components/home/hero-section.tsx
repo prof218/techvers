@@ -57,7 +57,7 @@ export function HeroSection() {
         <div className="absolute top-1/3 -right-24 w-[30rem] h-[30rem] rounded-full bg-[var(--accent)]/10 blur-[130px]" />
       </div>
 
-      <div className="container-tight pt-6 pb-16 sm:pt-10 sm:pb-24 text-center">
+      <div className="container-tight pt-6 pb-10 sm:pt-8 sm:pb-14 text-center">
         {/* Eyebrow */}
         <motion.div
           initial={{ opacity: 0, y: 12 }}
