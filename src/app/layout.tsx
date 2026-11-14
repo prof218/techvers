@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Fraunces } from "next/font/google";
 import { Header } from "@/components/layout/header";
 import { CommandPalette } from "@/components/layout/command-palette";
@@ -27,25 +27,30 @@ const fraunces = Fraunces({
 
 export const metadata: Metadata = {
   title: {
-    default: `${siteConfig.name} — The Ultimate IT Learning Platform`,
+    default: `${siteConfig.name} — Learn AI Engineering & Get Hired`,
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
   keywords: siteConfig.keywords,
+  applicationName: siteConfig.name,
   authors: [{ name: siteConfig.creator }],
   creator: siteConfig.creator,
+  publisher: siteConfig.name,
   metadataBase: new URL(siteConfig.url),
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
     url: siteConfig.url,
-    title: siteConfig.name,
+    title: `${siteConfig.name} — Learn AI Engineering & Get Hired`,
     description: siteConfig.description,
     siteName: siteConfig.name,
   },
   twitter: {
     card: "summary_large_image",
-    title: siteConfig.name,
+    title: `${siteConfig.name} — Learn AI Engineering & Get Hired`,
     description: siteConfig.description,
   },
   robots: {
@@ -59,6 +64,12 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#fbfaf7",
 };
 
 export default function RootLayout({
@@ -83,7 +94,13 @@ export default function RootLayout({
                 name: siteConfig.name,
                 url: siteConfig.url,
                 description: siteConfig.description,
-                logo: `${siteConfig.url}/icon.svg`,
+                logo: {
+                  "@type": "ImageObject",
+                  url: `${siteConfig.url}/icon.png`,
+                  width: 512,
+                  height: 512,
+                },
+                sameAs: Object.values(siteConfig.links).filter(Boolean),
               },
               {
                 "@type": "WebSite",
@@ -91,6 +108,7 @@ export default function RootLayout({
                 url: siteConfig.url,
                 name: siteConfig.name,
                 description: siteConfig.description,
+                inLanguage: "en",
                 publisher: { "@id": `${siteConfig.url}#org` },
               },
             ],
