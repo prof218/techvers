@@ -10,7 +10,7 @@ export interface SavedItem {
   category?: string;
 }
 
-const KEY = "techverse:bookmarks";
+const KEY = "techoverxe:bookmarks";
 
 /** SSR-safe localStorage state. Returns [value, setValue, loaded]. */
 export function useLocalStorage<T>(key: string, initial: T) {
@@ -48,7 +48,7 @@ export function useLocalStorage<T>(key: string, initial: T) {
 
 /** Track which interview questions the user has marked as "known" (practice mode). */
 export function useKnown() {
-  const [ids, setIds, loaded] = useLocalStorage<string[]>("techverse:known", []);
+  const [ids, setIds, loaded] = useLocalStorage<string[]>("techoverxe:known", []);
   const isKnown = useCallback((slug: string) => ids.includes(slug), [ids]);
   const toggle = useCallback(
     (slug: string) =>

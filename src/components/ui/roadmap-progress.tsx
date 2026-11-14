@@ -12,7 +12,7 @@ import { useLocalStorage } from "@/lib/bookmarks";
 export function RoadmapProgress({ slug }: { slug: string }) {
   const [stages, setStages] = useState<string[]>([]);
   const [done, setDone, loaded] = useLocalStorage<Record<number, boolean>>(
-    `techverse:roadmap:${slug}`,
+    `techoverxe:roadmap:${slug}`,
     {}
   );
 

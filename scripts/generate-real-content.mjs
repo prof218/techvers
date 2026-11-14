@@ -1,5 +1,5 @@
 /**
- * TechVerse — real content generator (build-time, one-off).
+ * Techoverxe — real content generator (build-time, one-off).
  *
  * Replaces placeholder MDX stubs with genuine, useful, human-sounding content
  * using the OpenAI API. Frontmatter is assembled deterministically by THIS script

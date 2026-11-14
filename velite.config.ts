@@ -87,7 +87,7 @@ const blog = defineCollection({
     slug: s.path().transform((p) => p.split("/").pop() || p),
     description: s.string().max(300),
     date: s.isodate(),
-    author: s.string().default("TechVerse Team"),
+    author: s.string().default("Techoverxe Team"),
     category: s.string(),
     tags: s.array(s.string()).default([]),
     featured: s.boolean().default(false),

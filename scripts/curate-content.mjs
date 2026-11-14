@@ -1,5 +1,5 @@
 /**
- * TechVerse — content curation.
+ * Techoverxe — content curation.
  *
  * Keeps ONLY the real, generated pages (tracked in scripts/.content-manifest.json)
  * and removes every other stub .mdx under content/. Fully git-recoverable.

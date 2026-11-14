@@ -17,9 +17,9 @@ export const siteConfig = {
   },
   // TODO(owner): replace with your real profiles (or set to "" to hide the icon).
   links: {
-    github: "https://github.com/techverse",
-    twitter: "https://twitter.com/techverse",
-    linkedin: "https://linkedin.com/company/techverse",
+    github: "https://github.com/techoverxe",
+    twitter: "https://twitter.com/techoverxe",
+    linkedin: "https://linkedin.com/company/techoverxe",
   },
   keywords: [
     "AI engineer roadmap",
