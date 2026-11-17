@@ -35,7 +35,7 @@ const footerSections = [
       { label: "Backend Guides", href: "/technologies/backend" },
       { label: "System Design Q&A", href: "/interviews/system-design" },
       { label: "Project Case Studies", href: "/projects" },
-      { label: "Full Stack Roadmap", href: "/roadmaps/full-stack-developer" },
+      { label: "Full Stack Roadmap", href: "/roadmaps/fullstack-developer" },
     ],
   },
   {
