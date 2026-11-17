@@ -1,10 +1,12 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import { Geist, Geist_Mono, Fraunces } from "next/font/google";
 import { Header } from "@/components/layout/header";
 import { CommandPalette } from "@/components/layout/command-palette";
 import { Footer } from "@/components/layout/footer";
 import { BackToTop } from "@/components/ui/back-to-top";
 import { ScrollToTop } from "@/components/scroll-to-top";
+import { CookieConsent } from "@/components/ui/cookie-consent";
 import { JsonLd } from "@/components/json-ld";
 import { siteConfig } from "@/lib/constants";
 import "./globals.css";
@@ -43,6 +45,11 @@ export const metadata: Metadata = {
   },
   verification: {
     google: "q6drbUpoTgcTNpgE3AgapaYtRIZ4caM9JzbKLKcbvfg",
+  },
+  other: {
+    ...(siteConfig.adsenseClientId
+      ? { "google-adsense-account": siteConfig.adsenseClientId }
+      : {}),
   },
   openGraph: {
     type: "website",
@@ -126,6 +133,16 @@ export default function RootLayout({
         </main>
         <Footer />
         <BackToTop />
+        <CookieConsent />
+        {siteConfig.adsenseClientId && (
+          <Script
+            id="google-adsense"
+            async
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${siteConfig.adsenseClientId}`}
+            crossOrigin="anonymous"
+            strategy="afterInteractive"
+          />
+        )}
       </body>
     </html>
   );

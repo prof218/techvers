@@ -46,8 +46,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const infoPages = [
     entry("/about", 0.5, "monthly"),
     entry("/contact", 0.5, "monthly"),
-    entry("/privacy", 0.3, "monthly"),
-    entry("/terms", 0.3, "monthly"),
+    entry("/privacy", 0.4, "monthly"),
+    entry("/terms", 0.4, "monthly"),
+    entry("/disclaimer", 0.4, "monthly"),
   ];
 
   // Category landing pages

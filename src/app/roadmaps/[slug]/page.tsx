@@ -12,7 +12,7 @@ import { RoadmapProgress } from "@/components/ui/roadmap-progress";
 import { RoadmapFlow } from "@/components/roadmaps/roadmap-flow";
 import { getInteractiveRoadmap, interactiveRoadmaps } from "@/data/roadmaps";
 import { JsonLd } from "@/components/json-ld";
-import { articleJsonLd, breadcrumbJsonLd, courseJsonLd } from "@/lib/seo";
+import { articleJsonLd, breadcrumbJsonLd, courseJsonLd, generateSEOMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/constants";
 
 interface Props {
@@ -49,11 +49,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const meta = getMeta(slug);
   if (!meta) return {};
-  return {
+  return generateSEOMetadata({
     title: `${meta.title} — Step-by-Step Learning Path`,
     description: meta.description,
-    alternates: { canonical: `${siteConfig.url}/roadmaps/${meta.slug}` },
-  };
+    path: `/roadmaps/${meta.slug}`,
+    tags: [meta.category, meta.level, "developer roadmap"],
+    type: "article",
+  });
 }
 
 const levelColors = {

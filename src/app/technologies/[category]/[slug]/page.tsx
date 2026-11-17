@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { BookmarkButton } from "@/components/ui/bookmark-button";
 import { ReadingProgress } from "@/components/ui/reading-progress";
 import { JsonLd } from "@/components/json-ld";
-import { articleJsonLd, breadcrumbJsonLd } from "@/lib/seo";
+import { articleJsonLd, breadcrumbJsonLd, generateSEOMetadata } from "@/lib/seo";
 import { MdxContent } from "@/components/mdx-content";
 
 interface Props {
@@ -27,11 +27,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { category, slug } = await params;
   const tech = technologies.find((t) => t.category === category && t.slug === slug);
   if (!tech) return {};
-  return {
+  return generateSEOMetadata({
     title: `${tech.title} — Guide, Features & How to Get Started`,
     description: tech.description,
-    alternates: { canonical: `${siteConfig.url}/technologies/${category}/${tech.slug}` },
-  };
+    path: `/technologies/${category}/${tech.slug}`,
+    tags: tech.tags,
+    type: "article",
+  });
 }
 
 export default async function TechDetailPage({ params }: Props) {

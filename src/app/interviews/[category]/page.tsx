@@ -7,7 +7,7 @@ import { interviewCategories, siteConfig } from "@/lib/constants";
 import { ArrowLeft, MessageSquare } from "lucide-react";
 import { CategoryIcon } from "@/components/ui/category-icon";
 import { JsonLd } from "@/components/json-ld";
-import { breadcrumbJsonLd } from "@/lib/seo";
+import { breadcrumbJsonLd, generateSEOMetadata } from "@/lib/seo";
 import InterviewsPageClient from "./page-client";
 
 interface Props {
@@ -24,11 +24,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const resolvedParams = await params;
   const catInfo = interviewCategories.find((c) => c.slug === resolvedParams.category);
   if (!catInfo) return {};
-  return {
+  return generateSEOMetadata({
     title: `${catInfo.name} Interview Questions & Answers`,
     description: `Prepare for your next technical interview with top ${catInfo.name} questions, detailed explanations, code snippets, and system design breakdowns.`,
-    alternates: { canonical: `${siteConfig.url}/interviews/${resolvedParams.category}` },
-  };
+    path: `/interviews/${resolvedParams.category}`,
+    tags: [catInfo.name, "interview questions", "tech interview", "coding interview"],
+  });
 }
 
 export default async function InterviewCategoryPage({ params }: Props) {

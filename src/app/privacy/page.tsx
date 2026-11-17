@@ -8,6 +8,12 @@ export const metadata: Metadata = {
   description:
     "How Techoverxe collects, uses, and protects your information, including our use of cookies, analytics, and third-party advertising such as Google AdSense.",
   alternates: { canonical: `${siteConfig.url}/privacy` },
+  openGraph: {
+    title: `Privacy Policy — ${siteConfig.name}`,
+    description: `How ${siteConfig.name} collects, uses, and protects your information, including our use of cookies, analytics, and third-party advertising such as Google AdSense.`,
+    url: `${siteConfig.url}/privacy`,
+    siteName: siteConfig.name,
+  },
 };
 
 export default function PrivacyPage() {
@@ -48,33 +54,58 @@ export default function PrivacyPage() {
         <li>To display advertising that helps keep Techoverxe free.</li>
       </ul>
 
-      <h2>Advertising and third-party cookies</h2>
+      <h2>Google AdSense & Third-Party Advertising</h2>
       <p>
-        We use third-party advertising companies, including <strong>Google</strong>, to serve ads
-        when you visit the site. These companies may use cookies and similar technologies to serve
-        ads based on your prior visits to this and other websites.
+        We use third-party advertising companies, including <strong>Google AdSense</strong>, to serve advertisements
+        when you visit {siteConfig.url}. These vendors, including Google, use cookies and web beacons to serve ads
+        based on your prior visits to this website or other websites across the Internet.
       </p>
       <ul>
         <li>
-          Google&apos;s use of advertising cookies enables it and its partners to serve ads based on your
-          visits to our site and/or other sites on the Internet.
+          <strong>Google DoubleClick / DART Cookies:</strong> Google&apos;s use of advertising cookies enables it
+          and its partners to serve targeted ads to our users based on their browsing patterns on {siteConfig.name}
+          and other sites on the web.
         </li>
         <li>
-          You may opt out of personalized advertising by visiting{" "}
-          <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer">
+          <strong>Personalized Ads Opt-Out:</strong> You may opt out of personalized advertising by visiting{" "}
+          <a href="https://adssettings.google.com/" target="_blank" rel="noopener noreferrer">
             Google Ads Settings
+          </a>
+          . Alternatively, you can opt out of third-party vendors&apos; use of cookies for personalized advertising
+          by visiting{" "}
+          <a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener noreferrer">
+            aboutads.info
+          </a>{" "}
+          or the{" "}
+          <a href="https://www.networkadvertising.org/choices/" target="_blank" rel="noopener noreferrer">
+            Network Advertising Initiative
           </a>
           .
         </li>
         <li>
-          You can also opt out of a third-party vendor&apos;s use of cookies for personalized advertising
-          at{" "}
-          <a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener noreferrer">
-            aboutads.info/choices
+          Learn more about how Google processes information when you use partner sites at{" "}
+          <a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener noreferrer">
+            Google&apos;s Advertising Privacy &amp; Terms
           </a>
           .
         </li>
       </ul>
+
+      <h2>GDPR and CCPA / CPRA Privacy Rights</h2>
+      <p>
+        Depending on your location (such as the European Economic Area, United Kingdom, or California), you are
+        entitled to specific rights regarding your personal information:
+      </p>
+      <ul>
+        <li><strong>Right to Access:</strong> You may request copies of personal data we retain about you.</li>
+        <li><strong>Right to Rectification:</strong> You may request correction of inaccurate or incomplete information.</li>
+        <li><strong>Right to Erasure (&quot;Right to be Forgotten&quot;):</strong> You may request deletion of your personal data.</li>
+        <li><strong>Right to Opt-Out:</strong> You can opt out of the sale or sharing of your personal information, including cross-context behavioral advertising.</li>
+      </ul>
+      <p>
+        To exercise any of these rights, contact us directly at{" "}
+        <a href={`mailto:${siteConfig.contactEmail}`}>{siteConfig.contactEmail}</a>.
+      </p>
 
       <h2>Analytics</h2>
       <p>

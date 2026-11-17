@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { BookmarkButton } from "@/components/ui/bookmark-button";
 import { ReadingProgress } from "@/components/ui/reading-progress";
 import { JsonLd } from "@/components/json-ld";
-import { articleJsonLd, breadcrumbJsonLd } from "@/lib/seo";
+import { articleJsonLd, breadcrumbJsonLd, generateSEOMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/constants";
 
 interface Props {
@@ -26,11 +26,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const resolvedParams = await params;
   const project = projects.find((p) => p.slug === resolvedParams.slug);
   if (!project) return {};
-  return {
+  return generateSEOMetadata({
     title: `${project.title} — System Architecture & Design`,
     description: project.description,
-    alternates: { canonical: `${siteConfig.url}/projects/${project.slug}` },
-  };
+    path: `/projects/${project.slug}`,
+    tags: project.techStack,
+    type: "article",
+  });
 }
 
 const difficultyColors = {

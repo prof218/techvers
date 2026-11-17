@@ -8,6 +8,17 @@ export const metadata: Metadata = {
   title: "Contact Us",
   description: `Get in touch with the ${siteConfig.name} team — feedback, corrections, partnerships, and questions.`,
   alternates: { canonical: `${siteConfig.url}/contact` },
+  openGraph: {
+    title: `Contact Us — ${siteConfig.name}`,
+    description: `Get in touch with the ${siteConfig.name} team — feedback, corrections, partnerships, and questions.`,
+    url: `${siteConfig.url}/contact`,
+    siteName: siteConfig.name,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `Contact Us — ${siteConfig.name}`,
+    description: `Get in touch with the ${siteConfig.name} team — feedback, corrections, partnerships, and questions.`,
+  },
 };
 
 export default function ContactPage() {

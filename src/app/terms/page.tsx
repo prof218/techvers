@@ -7,6 +7,12 @@ export const metadata: Metadata = {
   title: "Terms of Service",
   description: `The terms and conditions for using ${siteConfig.name}.`,
   alternates: { canonical: `${siteConfig.url}/terms` },
+  openGraph: {
+    title: `Terms of Service — ${siteConfig.name}`,
+    description: `The terms and conditions for using ${siteConfig.name}.`,
+    url: `${siteConfig.url}/terms`,
+    siteName: siteConfig.name,
+  },
 };
 
 export default function TermsPage() {

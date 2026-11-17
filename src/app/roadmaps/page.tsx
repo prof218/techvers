@@ -13,6 +13,17 @@ export const metadata: Metadata = {
   description:
     "Ordered, stage-by-stage learning roadmaps for frontend, backend, full stack, DevOps, AI, cloud, and data — check off each step and track your progress.",
   alternates: { canonical: `${siteConfig.url}/roadmaps` },
+  openGraph: {
+    title: `Learning Roadmaps — ${siteConfig.name}`,
+    description: "Ordered, stage-by-stage learning roadmaps for developers — check off each step and track your progress.",
+    url: `${siteConfig.url}/roadmaps`,
+    siteName: siteConfig.name,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `Learning Roadmaps — ${siteConfig.name}`,
+    description: "Ordered, stage-by-stage learning roadmaps for developers.",
+  },
 };
 
 // Merge interactive roadmaps (preferred) with MDX roadmaps that have no interactive version.

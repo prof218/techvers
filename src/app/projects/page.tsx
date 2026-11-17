@@ -10,6 +10,17 @@ export const metadata: Metadata = {
   description:
     "Production-grade system architecture case studies — components, data flow, database design, and scaling strategies from products you know. Great for system-design practice.",
   alternates: { canonical: `${siteConfig.url}/projects` },
+  openGraph: {
+    title: `Project Case Studies — ${siteConfig.name}`,
+    description: "Production-grade system architecture case studies and system-design breakdowns.",
+    url: `${siteConfig.url}/projects`,
+    siteName: siteConfig.name,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `Project Case Studies — ${siteConfig.name}`,
+    description: "Production-grade system architecture case studies and system-design breakdowns.",
+  },
 };
 
 export default function ProjectsPage() {

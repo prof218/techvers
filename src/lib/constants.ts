@@ -15,11 +15,11 @@ export const siteConfig = {
     name: "Krutiva Infotech",
     url: "https://www.krutiva.com/",
   },
-  // TODO(owner): replace with your real profiles (or set to "" to hide the icon).
+  // Social profiles (set to "" when not active to hide from footer)
   links: {
-    github: "https://github.com/techoverxe",
-    twitter: "https://twitter.com/techoverxe",
-    linkedin: "https://linkedin.com/company/techoverxe",
+    github: "",
+    twitter: "",
+    linkedin: "",
   },
   keywords: [
     "AI engineer roadmap",
@@ -31,6 +31,9 @@ export const siteConfig = {
     "get hired in AI",
     "job placement for developers",
   ],
+  // Google AdSense Publisher ID (e.g. ca-pub-XXXXXXXXXXXXXXXX)
+  // Set in .env.local as NEXT_PUBLIC_ADSENSE_CLIENT_ID="ca-pub-9894973660765964"
+  adsenseClientId: process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID || "ca-pub-9894973660765964",
 };
 
 export type NavItem = {

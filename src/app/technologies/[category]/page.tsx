@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import { ArrowLeft } from "lucide-react";
 import { technologies } from "#site/content";
 import { technologyCategories, siteConfig } from "@/lib/constants";
+import { generateSEOMetadata } from "@/lib/seo";
 import { CategoryIcon } from "@/components/ui/category-icon";
 import { CategoryGrid } from "./category-grid";
 
@@ -20,11 +21,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { category } = await params;
   const info = technologyCategories.find((c) => c.slug === category);
   if (!info) return {};
-  return {
+  return generateSEOMetadata({
     title: `${info.name} Technologies`,
-    description: `${info.description}. Explore in-depth ${info.name.toLowerCase()} guides on Techoverxe.`,
-    alternates: { canonical: `${siteConfig.url}/technologies/${category}` },
-  };
+    description: `${info.description}. Explore in-depth ${info.name.toLowerCase()} guides, roadmaps, and tools on Techoverxe.`,
+    path: `/technologies/${category}`,
+  });
 }
 
 export default async function CategoryPage({ params }: Props) {

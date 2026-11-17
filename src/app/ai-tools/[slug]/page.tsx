@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { BookmarkButton } from "@/components/ui/bookmark-button";
 import { ReadingProgress } from "@/components/ui/reading-progress";
 import { JsonLd } from "@/components/json-ld";
-import { articleJsonLd, breadcrumbJsonLd } from "@/lib/seo";
+import { articleJsonLd, breadcrumbJsonLd, generateSEOMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/constants";
 
 interface Props {
@@ -27,11 +27,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const resolvedParams = await params;
   const tool = aiTools.find((t) => t.slug === resolvedParams.slug);
   if (!tool) return {};
-  return {
+  return generateSEOMetadata({
     title: `${tool.title} — AI Tool Review & Pricing`,
     description: tool.description,
-    alternates: { canonical: `${siteConfig.url}/ai-tools/${tool.slug}` },
-  };
+    path: `/ai-tools/${tool.slug}`,
+    tags: [tool.category, ...(tool.features || [])],
+    type: "article",
+  });
 }
 
 export default async function AIToolPage({ params }: Props) {

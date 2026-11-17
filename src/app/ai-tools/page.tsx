@@ -10,6 +10,17 @@ export const metadata: Metadata = {
   description:
     "Honest reviews of the best AI tools for coding, writing, design, video, automation, research, and productivity — with real pricing, pros, cons, and active alternatives.",
   alternates: { canonical: `${siteConfig.url}/ai-tools` },
+  openGraph: {
+    title: `AI Tools Directory — ${siteConfig.name}`,
+    description: "Honest reviews of 100+ AI tools across coding, writing, design, video, and automation.",
+    url: `${siteConfig.url}/ai-tools`,
+    siteName: siteConfig.name,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `AI Tools Directory — ${siteConfig.name}`,
+    description: "Honest reviews of 100+ AI tools across coding, writing, design, video, and automation.",
+  },
 };
 
 export default function AIToolsPage() {

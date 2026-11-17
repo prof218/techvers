@@ -13,6 +13,17 @@ export const metadata: Metadata = {
   description:
     "Explore in-demand tech careers with realistic salary ranges, the skills each role needs, and a roadmap to get there.",
   alternates: { canonical: `${siteConfig.url}/careers` },
+  openGraph: {
+    title: `Tech Career Paths — ${siteConfig.name}`,
+    description: "Explore in-demand tech careers with realistic salary ranges, the skills each role needs, and a roadmap to get there.",
+    url: `${siteConfig.url}/careers`,
+    siteName: siteConfig.name,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `Tech Career Paths — ${siteConfig.name}`,
+    description: "Explore in-demand tech careers with realistic salary ranges, the skills each role needs, and a roadmap to get there.",
+  },
 };
 
 export default function CareersPage() {

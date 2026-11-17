@@ -19,10 +19,12 @@ const footerSections = [
     links: [
       { label: "Technologies", href: "/technologies" },
       { label: "AI Tools", href: "/ai-tools" },
-      { label: "Careers", href: "/careers" },
-      { label: "Roadmaps", href: "/roadmaps" },
+      { label: "AI Training Jobs", href: "/ai-training-jobs" },
+      { label: "Learning Roadmaps", href: "/roadmaps" },
+      { label: "Career Paths", href: "/careers" },
       { label: "Projects", href: "/projects" },
       { label: "Interviews", href: "/interviews" },
+      { label: "Blog & Guides", href: "/blog" },
     ],
   },
   {
@@ -30,9 +32,10 @@ const footerSections = [
     links: [
       { label: "AI Coding Tools", href: "/ai-tools?category=coding" },
       { label: "Frontend Guides", href: "/technologies/frontend" },
+      { label: "Backend Guides", href: "/technologies/backend" },
       { label: "System Design Q&A", href: "/interviews/system-design" },
       { label: "Project Case Studies", href: "/projects" },
-      { label: "Learning Roadmaps", href: "/roadmaps" },
+      { label: "Full Stack Roadmap", href: "/roadmaps/full-stack-developer" },
     ],
   },
   {
@@ -41,7 +44,8 @@ const footerSections = [
       { label: "About Us", href: "/about" },
       { label: "Privacy Policy", href: "/privacy" },
       { label: "Terms of Service", href: "/terms" },
-      { label: "Contact", href: "/contact" },
+      { label: "Disclaimer", href: "/disclaimer" },
+      { label: "Contact Us", href: "/contact" },
     ],
   },
 ];

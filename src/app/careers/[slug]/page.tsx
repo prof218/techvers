@@ -9,7 +9,7 @@ import { careerPaths, siteConfig } from "@/lib/constants";
 import { CategoryIcon } from "@/components/ui/category-icon";
 import { BookmarkButton } from "@/components/ui/bookmark-button";
 import { JsonLd } from "@/components/json-ld";
-import { articleJsonLd, breadcrumbJsonLd } from "@/lib/seo";
+import { articleJsonLd, breadcrumbJsonLd, generateSEOMetadata } from "@/lib/seo";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -25,11 +25,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const resolvedParams = await params;
   const career = careerPaths.find((c) => c.slug === resolvedParams.slug);
   if (!career) return {};
-  return {
+  return generateSEOMetadata({
     title: `${career.title} Career Path — Salary, Skills & Roadmap`,
     description: `Complete guide to becoming a ${career.title}. Explore average salary ranges, growth rate, required skills, recommended certifications, and a structured roadmap.`,
-    alternates: { canonical: `${siteConfig.url}/careers/${career.slug}` },
-  };
+    path: `/careers/${career.slug}`,
+    tags: [career.title, "tech career", "salary guide", "roadmap"],
+  });
 }
 
 // Sample detailed career data mapping

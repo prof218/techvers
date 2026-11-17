@@ -10,6 +10,17 @@ export const metadata: Metadata = {
   description:
     "Practice real technical interview questions across frontend, backend, system design, DevOps, AI, cybersecurity, and cloud — each with a detailed, worked answer.",
   alternates: { canonical: `${siteConfig.url}/interviews` },
+  openGraph: {
+    title: `Technical Interview Questions & Answers — ${siteConfig.name}`,
+    description: "Practice real technical interview questions across frontend, backend, system design, DevOps, AI, cybersecurity, and cloud.",
+    url: `${siteConfig.url}/interviews`,
+    siteName: siteConfig.name,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `Technical Interview Questions & Answers — ${siteConfig.name}`,
+    description: "Practice real technical interview questions across top engineering disciplines.",
+  },
 };
 
 export default function InterviewsPage() {

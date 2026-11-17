@@ -8,6 +8,17 @@ export const metadata: Metadata = {
   description:
     "Learn about Techoverxe — a free, independent platform helping developers explore technologies, compare AI tools, follow learning roadmaps, and prepare for interviews.",
   alternates: { canonical: `${siteConfig.url}/about` },
+  openGraph: {
+    title: `About Us — ${siteConfig.name}`,
+    description: "A free, independent learning hub for developers and IT professionals.",
+    url: `${siteConfig.url}/about`,
+    siteName: siteConfig.name,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `About Us — ${siteConfig.name}`,
+    description: "A free, independent learning hub for developers and IT professionals.",
+  },
 };
 
 export default function AboutPage() {
