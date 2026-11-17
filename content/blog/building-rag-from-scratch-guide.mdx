@@ -1,0 +1,111 @@
+---
+title: "Building a Production RAG Pipeline from Scratch: A Practical Guide"
+description: "Learn how to build a production-grade Retrieval-Augmented Generation (RAG) system with vector databases, semantic chunking, and reranking."
+date: 2026-11-12
+author: "Techoverxe Team"
+category: "AI & LLMs"
+tags: ["RAG", "LLMs", "Vector Database", "Python", "AI Engineering"]
+featured: false
+---
+
+Large Language Models (LLMs) are powerful generalists, but they suffer from two critical limitations: cutoff dates and hallucinations when asked about private or domain-specific knowledge. 
+
+**Retrieval-Augmented Generation (RAG)** solves this by fetching relevant document chunks from an external knowledge base and feeding them to the model as context. While a basic 20-line demo is easy to cobble together, building a *production-grade* RAG pipeline that consistently delivers high precision requires deliberate engineering.
+
+In this guide, we walk through the architecture of a real-world RAG pipeline, covering chunking strategies, embedding generation, vector indexing, and reranking.
+
+## The Production RAG Architecture
+
+A naive RAG implementation does simple top-k similarity search over split text. A production pipeline introduces several quality gates:
+
+1. **Document Ingestion & Cleaning:** Strip noise, boilerplate, and extract clean text.
+2. **Chunking Strategy:** Semantic or recursive character chunking with meaningful overlap.
+3. **Embedding & Indexing:** Dense vectors stored in a purpose-built vector database (e.g., pgvector, Pinecone, or Qdrant).
+4. **Hybrid Search:** Combining dense semantic search with sparse keyword search (BM25).
+5. **Reranking:** Cross-encoder models that evaluate query-document relevance before context construction.
+6. **Prompt Assembly & Generation:** Structured prompts with citations and fallback policies.
+
+## 1. Choosing the Right Chunking Strategy
+
+Chunking determines the granularity of information your retriever can surface. If chunks are too small, critical context is lost. If chunks are too large, the vector representation gets diluted, introducing irrelevant noise into the LLM context.
+
+For technical documentation and articles, **recursive chunking** with structural boundaries (headers, paragraphs, sentences) works best:
+
+```python
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+
+text_splitter = RecursiveCharacterTextSplitter(
+    chunk_size=600,
+    chunk_overlap=100,
+    separators=["\n## ", "\n### ", "\n\n", "\n", " ", ""],
+)
+
+chunks = text_splitter.split_text(raw_document)
+print(f"Generated {len(chunks)} contextual chunks")
+```
+
+<Callout type="info">
+**Rule of thumb:** Aim for chunks between 400 and 800 tokens. Preserve 10-15% overlap between adjacent chunks so ideas spanning chunk boundaries aren't severed.
+</Callout>
+
+## 2. Embeddings and Vector Storage
+
+Embeddings convert textual semantics into dense numerical vectors. Choose an embedding model benchmarked on the MTEB (Massive Text Embedding Benchmark) leaderboard:
+
+- For general English: `text-embedding-3-small` or open-source `BAAI/bge-large-en-v1.5`.
+- For multilingual domains: `text-embedding-3-large` or `intfloat/multilingual-e5-large`.
+
+Store your embeddings in a database supporting cosine similarity or inner product indexing:
+
+```python
+from langchain_community.vectorstores import Qdrant
+from langchain_openai import OpenAIEmbeddings
+
+embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
+
+vector_store = Qdrant.from_texts(
+    texts=[c.page_content for c in chunks],
+    embedding=embeddings,
+    location=":memory:",
+    collection_name="knowledge_base",
+)
+```
+
+## 3. Why You Must Add a Reranker
+
+Vector cosine similarity is fast, but it only approximates true relevance. It often retrieves chunks containing keyword overlap that answer a completely different question.
+
+A **cross-encoder reranker** (like Cohere Rerank or `bge-reranker-large`) scores candidate documents jointly with the query:
+
+```python
+from sentence_transformers import CrossEncoder
+
+reranker = CrossEncoder("BAAI/bge-reranker-large")
+
+# Retrieve initial top 25 candidates
+initial_candidates = vector_store.similarity_search(query, k=25)
+
+# Score query + candidate pairs
+pairs = [[query, doc.page_content] for doc in initial_candidates]
+scores = reranker.predict(pairs)
+
+# Take top 5 highest-confidence documents
+ranked_docs = [
+    doc for _, doc in sorted(zip(scores, initial_candidates), reverse=True)
+][:5]
+```
+
+<Callout type="success">
+Adding a reranking step typically boosts retrieval precision (Hit Rate & MRR) by **15% to 35%** in real-world benchmarks without modifying your underlying vectors.
+</Callout>
+
+## 4. Evaluation: Measuring RAG Quality
+
+You cannot improve what you do not measure. In production, evaluate two distinct axes:
+
+1. **Retrieval Quality:** Context Relevance and Context Recall (are you retrieving the right chunks?).
+2. **Generation Quality:** Faithfulness and Answer Relevance (is the model hallucinating, and does it address the user prompt?).
+
+Tools like **Ragas** and **TruLens** automate these metrics using LLM-as-a-judge approaches combined with ground-truth test datasets.
+
+If you are building your AI skills, explore our <Link href="/roadmaps/ai-engineer">AI Engineer Roadmap</Link> and hands-on <Link href="/technologies/ai/langchain">LangChain Guide</Link> for end-to-end architectures.

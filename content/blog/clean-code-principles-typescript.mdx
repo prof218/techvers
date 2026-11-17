@@ -1,0 +1,128 @@
+---
+title: "Clean Code in TypeScript: 8 Habits of Senior Engineers"
+description: "Elevate your TypeScript from messy types to expressive, maintainable architecture with discriminated unions, branding, and immutability."
+date: 2026-10-24
+author: "Techoverxe Team"
+category: "Engineering"
+tags: ["TypeScript", "Clean Code", "Best Practices", "JavaScript", "Software Engineering"]
+featured: false
+---
+
+TypeScript is one of the most beloved languages in modern software engineering. But too often, codebases end up with `any` types littered across files, non-null assertions (`!`) masking potential runtime crashes, and redundant type definitions that make refactoring painful.
+
+Writing **Clean TypeScript** is about letting the type system model your domain so accurately that invalid program states become unrepresentable at compile time.
+
+Here are **8 concrete habits** that separate junior TypeScript code from production-grade senior code.
+
+## 1. Eliminate `any` with `unknown` and Type Narrowing
+
+The `any` keyword disables the TypeScript compiler, giving you a false sense of security while allowing runtime `TypeError: undefined is not a function` crashes.
+
+If you don't know the shape of incoming data (e.g., from an API or webhook), use `unknown` and narrow it with Zod or type guards:
+
+```typescript
+// Bad: Completely untyped
+function parsePayload(input: any) {
+  return input.user.email.toLowerCase(); // Will crash if user is undefined!
+}
+
+// Good: Strictly validated with Zod
+import { z } from "zod";
+
+const UserSchema = z.object({
+  user: z.object({
+    email: z.string().email(),
+  }),
+});
+
+function parsePayload(input: unknown) {
+  const result = UserSchema.safeParse(input);
+  if (!result.success) {
+    throw new Error("Invalid payload schema");
+  }
+  return result.data.user.email.toLowerCase();
+}
+```
+
+## 2. Model Impossible States with Discriminated Unions
+
+Avoid flags like `isLoading`, `isError`, and `data` living as loose optionals on a single object. That allows contradictory states where `isLoading === true` and `isError === true` simultaneously.
+
+Model states with a shared discriminator:
+
+```typescript
+// Bad: Can have data AND error at the same time
+interface AsyncState<T> {
+  isLoading: boolean;
+  error?: Error;
+  data?: T;
+}
+
+// Good: Discriminated union guarantees exactly one valid state
+type AsyncState<T> =
+  | { status: "idle" }
+  | { status: "loading" }
+  | { status: "success"; data: T }
+  | { status: "error"; error: Error };
+
+function renderUI(state: AsyncState<User>) {
+  switch (state.status) {
+    case "loading": return <Spinner />;
+    case "error": return <Alert message={state.error.message} />;
+    case "success": return <UserProfile user={state.data} />;
+    case "idle": return null;
+  }
+}
+```
+
+## 3. Use Branded Types for Domain IDs
+
+In large backends, passing a `userId` into a function expecting an `orderId` is a common bug because both are just `string`.
+
+Use **Branded Types** (Nominal Typing) to catch these mismatches at compile time:
+
+```typescript
+type Brand<K, T> = K & { readonly __brand: T };
+
+type UserId = Brand<string, "UserId">;
+type OrderId = Brand<string, "OrderId">;
+
+function shipOrder(orderId: OrderId, userId: UserId) {
+  // Logic
+}
+
+const myUser = "usr_123" as UserId;
+const myOrder = "ord_456" as OrderId;
+
+// Error: Argument of type 'UserId' is not assignable to 'OrderId'
+shipOrder(myUser, myOrder); 
+```
+
+## 4. Leverage `const` Assertions for Immutable Configs
+
+When defining lookup tables, routes, or configurations, use `as const` to freeze values and derive narrow literal union types automatically:
+
+```typescript
+export const ROLES = ["admin", "editor", "viewer"] as const;
+
+// Automatically produces: "admin" | "editor" | "viewer"
+export type Role = (typeof ROLES)[number];
+```
+
+## 5. Favor Composition and Small Interfaces
+
+Keep interfaces focused on what a component or service actually needs (Interface Segregation Principle). Instead of accepting a full 50-field `DatabaseUserRecord`, accept only the slice required:
+
+```typescript
+// Rather than:
+function sendWelcomeEmail(user: DatabaseUserRecord) { ... }
+
+// Prefer:
+function sendWelcomeEmail(recipient: { name: string; email: string }) { ... }
+```
+
+Now you can test `sendWelcomeEmail` with a simple object without mocking 45 irrelevant database columns.
+
+---
+
+Level up your developer craftsmanship with our <Link href="/roadmaps/typescript">TypeScript Roadmap</Link> and <Link href="/roadmaps/javascript">JavaScript Roadmap</Link>.
