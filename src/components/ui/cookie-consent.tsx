@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { Cookie, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export function CookieConsent() {
   const [isVisible, setIsVisible] = useState(false);
@@ -39,7 +40,7 @@ export function CookieConsent() {
   return (
     <aside
       aria-label="Cookie consent banner"
-      className="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-6 sm:max-w-md z-50 p-5 rounded-2xl border border-[var(--border)] bg-[var(--surface)]/95 backdrop-blur-md shadow-[var(--shadow-xl)] animate-in fade-in slide-in-from-bottom-5 duration-300"
+      className="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-6 sm:max-w-md z-50 p-5 rounded-2xl border border-[var(--border)] bg-[var(--surface)]/98 backdrop-blur-md shadow-[var(--shadow-xl)] animate-in fade-in slide-in-from-bottom-5 duration-300"
     >
       <div className="flex items-start gap-3">
         <div className="w-8 h-8 rounded-lg bg-[var(--primary)]/10 text-[var(--primary)] flex items-center justify-center shrink-0 mt-0.5">
@@ -55,26 +56,28 @@ export function CookieConsent() {
             .
           </p>
           <div className="mt-3.5 flex items-center gap-2">
-            <button
+            <Button
+              size="sm"
+              variant="default"
               onClick={handleAccept}
-              type="button"
-              className="px-3.5 py-1.5 rounded-lg bg-[var(--primary)] text-white text-xs font-medium hover:bg-[var(--primary-dark)] transition-colors cursor-pointer shadow-sm"
+              className="text-xs h-8 px-3.5 font-medium shadow-sm hover:shadow"
             >
               Accept All
-            </button>
-            <button
+            </Button>
+            <Button
+              size="sm"
+              variant="outline"
               onClick={handleDecline}
-              type="button"
-              className="px-3 py-1.5 rounded-lg border border-[var(--border)] text-[var(--foreground-muted)] text-xs font-medium hover:bg-[var(--surface-hover)] transition-colors cursor-pointer"
+              className="text-xs h-8 px-3.5 font-medium border-[var(--border)] text-[var(--foreground-muted)] hover:text-[var(--foreground)]"
             >
               Essential Only
-            </button>
+            </Button>
           </div>
         </div>
         <button
           onClick={handleDecline}
           aria-label="Close cookie notice"
-          className="text-[var(--foreground-subtle)] hover:text-[var(--foreground)] transition-colors p-1"
+          className="text-[var(--foreground-subtle)] hover:text-[var(--foreground)] transition-colors p-1 cursor-pointer"
         >
           <X className="w-4 h-4" />
         </button>
